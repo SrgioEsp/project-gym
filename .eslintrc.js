@@ -17,5 +17,6 @@ module.exports = {
 	plugins: ['react'],
 	rules: {
 		'no-undef': 'warn',
+		'no-unused-vars': 'warn',
 	},
 };
