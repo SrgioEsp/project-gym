@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import { Button } from 'react-bootstrap';
 
@@ -8,9 +9,9 @@ const WelcomeScreen = (props) => {
 		<div>
 			WelcomeScreen
 			<div className='d-grid gap-2'>
-				<Button href='#' variant='primary' size='lg'>
+				<Link to={'/login'} className='btn btn-primary'>
 					Entrar
-				</Button>
+				</Link>
 			</div>
 		</div>
 	);

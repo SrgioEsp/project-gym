@@ -1,11 +1,19 @@
 import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import WelcomeScreen from './components/WelcomeScreen/WelcomeScreen';
 
 function App() {
 	return (
-		<div className='App'>
-			Project GYM
-			<WelcomeScreen></WelcomeScreen>
+		<div>
+			<p>Project GYM</p>
+			<Router>
+				<Routes>
+					<Route path='/' element={<WelcomeScreen></WelcomeScreen>} />
+					<Route path='/login' element={'Login Form'} />
+					<Route path='/home' element={'Home'} />
+					<Route path='*' element={'Home'} />
+				</Routes>
+			</Router>
 		</div>
 	);
 }
