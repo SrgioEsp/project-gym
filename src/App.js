@@ -1,7 +1,7 @@
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import WelcomeScreen from './components/WelcomeScreen/WelcomeScreen';
-import LoginForm from './components/LoginForm/LoginForm';
+import WelcomePage from './pages/WelcomePage';
+import LoginPage from './pages/LoginPage';
 
 function App() {
 	return (
@@ -9,8 +9,8 @@ function App() {
 			<p>Project GYM</p>
 			<Router>
 				<Routes>
-					<Route path='/' element={<WelcomeScreen></WelcomeScreen>} />
-					<Route path='/login' element={<LoginForm></LoginForm>} />
+					<Route path='/' element={<WelcomePage></WelcomePage>} />
+					<Route path='/login' element={<LoginPage></LoginPage>} />
 					<Route path='/home' element={'Home'} />
 					<Route path='*' element={'Home'} />
 				</Routes>

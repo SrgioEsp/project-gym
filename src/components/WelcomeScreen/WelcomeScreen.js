@@ -1,22 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
-import { Button } from 'react-bootstrap';
-
-const WelcomeScreen = (props) => {
+const WelcomeScreen = ({ children }) => {
 	return (
 		<div>
 			<p>WelcomeScreen</p>
-			<div className='d-grid gap-2'>
-				<Link to={'/login'} className='btn btn-primary'>
-					Entrar
-				</Link>
-			</div>
+			<div className='d-grid gap-2'>{children}</div>
 		</div>
 	);
 };
 
-WelcomeScreen.propTypes = {};
+WelcomeScreen.propTypes = {
+	children: PropTypes.node,
+};
 
 export default WelcomeScreen;
