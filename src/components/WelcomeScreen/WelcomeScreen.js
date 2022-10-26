@@ -7,7 +7,7 @@ import { Button } from 'react-bootstrap';
 const WelcomeScreen = (props) => {
 	return (
 		<div>
-			WelcomeScreen
+			<p>WelcomeScreen</p>
 			<div className='d-grid gap-2'>
 				<Link to={'/login'} className='btn btn-primary'>
 					Entrar
