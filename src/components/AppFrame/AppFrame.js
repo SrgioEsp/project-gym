@@ -1,25 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Container, Row } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import Navbar from 'react-bootstrap/Navbar';
 
 const AppFrame = ({ children }) => {
 	return (
 		<Container>
-			<Row>
-				<Navbar>
-					<Container>
-						<Navbar.Brand href='#home'>Project GYM</Navbar.Brand>
-						<Navbar.Toggle />
-						<Navbar.Collapse className='justify-content-end'>
-							<Navbar.Text>
-								Usuario: <a href='#login'>Sergio Prueba</a>
-							</Navbar.Text>
-						</Navbar.Collapse>
-					</Container>
-				</Navbar>
+			<Row className='border p-3 mb-3'>
+				<Col>
+					<Navbar>
+						<Container>
+							<Navbar.Brand href='#home'>Project GYM</Navbar.Brand>
+							<Navbar.Toggle />
+							<Navbar.Collapse className='justify-content-end'>
+								<Navbar.Text>
+									Usuario: <a href='#login'>Sergio Prueba</a>
+								</Navbar.Text>
+							</Navbar.Collapse>
+						</Container>
+					</Navbar>
+				</Col>
 			</Row>
-			<Row>{children}</Row>
+			{children}
 		</Container>
 	);
 };
