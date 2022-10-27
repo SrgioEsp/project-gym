@@ -1,9 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import LoginForm from '../components/LoginForm';
+import { Container, Row, Col } from 'react-bootstrap';
 
 const LoginPage = (props) => {
-	return <LoginForm></LoginForm>;
+	return (
+		<Container>
+			<Row>
+				<Col>
+					<LoginForm></LoginForm>
+				</Col>
+			</Row>
+		</Container>
+	);
 };
 
 LoginPage.propTypes = {};

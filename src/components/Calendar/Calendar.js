@@ -8,6 +8,7 @@ const Calendar = (props) => {
 	const [value, onChange] = useState(new Date());
 	return (
 		<div>
+			<p>Calendar</p>
 			<ReactCalendar onChange={onChange} value={value} />
 		</div>
 	);

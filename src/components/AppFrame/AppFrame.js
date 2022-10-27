@@ -6,15 +6,16 @@ import Navbar from 'react-bootstrap/Navbar';
 const AppFrame = ({ children }) => {
 	return (
 		<Container>
+			<p>AppFrame</p>
 			<Row className='border p-3 mb-3'>
 				<Col>
 					<Navbar>
 						<Container>
-							<Navbar.Brand href='#home'>Project GYM</Navbar.Brand>
+							<Navbar.Brand href='#home'>Mi Gimnasio</Navbar.Brand>
 							<Navbar.Toggle />
 							<Navbar.Collapse className='justify-content-end'>
 								<Navbar.Text>
-									Usuario: <a href='#login'>Sergio Prueba</a>
+									Usuario: <a href='/login'>Sergio Prueba</a>
 								</Navbar.Text>
 							</Navbar.Collapse>
 						</Container>
