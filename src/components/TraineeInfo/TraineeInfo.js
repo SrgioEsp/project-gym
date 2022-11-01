@@ -6,7 +6,7 @@ const TraineeInfo = ({ trainee }) => {
 	return (
 		<div>
 			<p className='h5'>{name}</p>
-			<p>{date.toString()}</p>
+			<p>{date}</p>
 		</div>
 	);
 };

@@ -1,7 +1,20 @@
 import TraineeList from './TraineeList';
 import { fireEvent, render } from '@testing-library/react';
 
-const trainees = ['alumno prueba', 'alumno prueba2', 'alumno prueba3'];
+const trainees = [
+	{
+		name: 'alumno prueba',
+		date: '31/1/2002',
+	},
+	{
+		name: 'alumno prueba2',
+		date: '13/2/2002',
+	},
+	{
+		name: 'alumno prueba3',
+		date: '1/11/2022',
+	},
+];
 
 test('TraineeList renders', async () => {
 	const { findAllByRole } = render(

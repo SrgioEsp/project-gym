@@ -19,12 +19,24 @@ const renderTrainee = (eventOnClickTrainee, trainee) => {
 	);
 };
 
-const TraineeList = ({ trainees, onClickTrainee }) => {
+const TraineeList = ({ trainees, onClickTrainee, currentDay }) => {
+	let currentDayFormat = '';
+	if (currentDay && typeof currentDay === 'object') {
+		currentDayFormat = `${currentDay.getDate()}/${
+			currentDay.getMonth() + 1
+		}/${currentDay.getFullYear()}`;
+		trainees = trainees.filter(({ date }) => date === currentDayFormat);
+	}
+
 	return (
 		<div className='mt-3'>
-			TraineeList
+			{currentDayFormat ? 'TraineeList Filtered' : 'TraineeList'}
 			<ul>
-				{trainees.map((trainee) => renderTrainee(onClickTrainee, trainee))}
+				{trainees.length !== 0 ? (
+					trainees.map((trainee) => renderTrainee(onClickTrainee, trainee))
+				) : (
+					<p className='text-danger'>No se han encontrado alumnos</p>
+				)}
 			</ul>
 		</div>
 	);
@@ -33,6 +45,7 @@ const TraineeList = ({ trainees, onClickTrainee }) => {
 TraineeList.propTypes = {
 	trainees: PropTypes.array.isRequired,
 	onClickTrainee: PropTypes.func.isRequired,
+	currentDay: PropTypes.any,
 };
 
 export default TraineeList;

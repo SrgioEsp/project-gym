@@ -1,26 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Calendar as ReactCalendar } from 'react-calendar';
 
 import 'react-calendar/dist/Calendar.css';
 
-const Calendar = (props) => {
-	const [value, onChange] = useState(new Date());
-
+const Calendar = ({ value, onChange }) => {
 	return (
 		<div>
 			<p>Calendar</p>
-			<ReactCalendar
-				onChange={onChange}
-				onClickDay={(value, event) => {
-					console.log('Value', value);
-				}}
-				value={value}
-			/>
+			<ReactCalendar onChange={onChange} value={value} />
 		</div>
 	);
 };
 
-Calendar.propTypes = {};
+Calendar.propTypes = {
+	value: PropTypes.any.isRequired,
+	onChange: PropTypes.any.isRequired,
+};
 
 export default Calendar;
