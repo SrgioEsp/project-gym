@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TraineeInfo from '../TraineeInfo';
+import { Button } from 'react-bootstrap';
+import { BsFillPencilFill, BsFillPersonXFill } from 'react-icons/bs';
 
 // se va a convertir en una función que retorna otra función
 // const renderTrainee = (eventOnClickTrainee) => (trainee) => {
@@ -14,7 +16,14 @@ import TraineeInfo from '../TraineeInfo';
 const renderTrainee = (eventOnClickTrainee, trainee) => {
 	return (
 		<li key={trainee.name} onClick={eventOnClickTrainee}>
-			<TraineeInfo trainee={trainee}></TraineeInfo>
+			<TraineeInfo trainee={trainee}>
+				{/* <Button variant='warning' onClick={() => console.log('Editar')}>
+					<BsFillPencilFill></BsFillPencilFill>
+				</Button>
+				<Button variant='danger' onClick={() => console.log('Eliminar')}>
+					<BsFillPersonXFill></BsFillPersonXFill>
+				</Button> */}
+			</TraineeInfo>
 		</li>
 	);
 };

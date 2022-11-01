@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const TraineeInfo = ({ trainee }) => {
+const TraineeInfo = ({ trainee, children }) => {
 	const { name, date } = trainee;
 	return (
 		<div>
-			<p className='h5'>{name}</p>
+			<p className='h5'>
+				{name} {children}
+			</p>
 			<p>{date}</p>
 		</div>
 	);
@@ -13,6 +15,7 @@ const TraineeInfo = ({ trainee }) => {
 
 TraineeInfo.propTypes = {
 	trainee: PropTypes.object.isRequired,
+	children: PropTypes.node,
 };
 
 export default TraineeInfo;

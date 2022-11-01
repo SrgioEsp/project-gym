@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import AppFrame from '../components/AppFrame';
-import Calendar from '../components/Calendar';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
 import TraineeList from '../components/TraineeList/TraineeList';
 import { Link } from 'react-router-dom';
+import { BsFillPersonPlusFill } from 'react-icons/bs';
 
 const trainees = [
 	{
@@ -33,39 +33,33 @@ const trainees = [
 	},
 ];
 
-const MainPage = (props) => {
-	const [calendarDay, onChangeCalendarDay] = useState(new Date());
-
+const TraineesPage = (props) => {
 	return (
 		<AppFrame>
-			<Row className='justify-content-center'>
+			<Row>
 				<Col xs='auto'>
-					<Calendar
-						value={calendarDay}
-						onChange={onChangeCalendarDay}
-					></Calendar>
+					<Link to={'/home'} className='btn btn-primary'>
+						Atrás
+					</Link>
 				</Col>
+				{/* <Col className='d-grid gap-2'>
+					<Button>
+						Añadir <BsFillPersonPlusFill></BsFillPersonPlusFill>
+					</Button>
+				</Col> */}
 			</Row>
 			<Row>
 				<Col xs='auto'>
 					<TraineeList
 						trainees={trainees}
 						onClickTrainee={() => {}}
-						currentDay={calendarDay}
 					></TraineeList>
-				</Col>
-			</Row>
-			<Row className='justify-content-center'>
-				<Col xs='auto'>
-					<Link to={'/trainees'} className='btn btn-success'>
-						Alumnos
-					</Link>
 				</Col>
 			</Row>
 		</AppFrame>
 	);
 };
 
-MainPage.propTypes = {};
+TraineesPage.propTypes = {};
 
-export default MainPage;
+export default TraineesPage;
