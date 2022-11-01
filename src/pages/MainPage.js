@@ -5,7 +5,20 @@ import Calendar from '../components/Calendar';
 import { Row, Col } from 'react-bootstrap';
 import TraineeList from '../components/TraineeList/TraineeList';
 
-const trainees = ['alumno prueba', 'alumno prueba2', 'alumno prueba3'];
+const trainees = [
+	{
+		name: 'alumno prueba',
+		date: new Date(),
+	},
+	{
+		name: 'alumno prueba2',
+		date: new Date(),
+	},
+	{
+		name: 'alumno prueba3',
+		date: new Date(),
+	},
+];
 
 const MainPage = (props) => {
 	return (
@@ -23,6 +36,14 @@ const MainPage = (props) => {
 					></TraineeList>
 				</Col>
 			</Row>
+			{/* <Row>
+				<Col xs='auto'>
+					<TraineeList
+						trainees={trainees}
+						onClickTrainee={() => {}}
+					></TraineeList>
+				</Col>
+			</Row> */}
 		</AppFrame>
 	);
 };

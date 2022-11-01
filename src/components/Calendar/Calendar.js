@@ -6,10 +6,17 @@ import 'react-calendar/dist/Calendar.css';
 
 const Calendar = (props) => {
 	const [value, onChange] = useState(new Date());
+
 	return (
 		<div>
 			<p>Calendar</p>
-			<ReactCalendar onChange={onChange} value={value} />
+			<ReactCalendar
+				onChange={onChange}
+				onClickDay={(value, event) => {
+					console.log('Value', value);
+				}}
+				value={value}
+			/>
 		</div>
 	);
 };

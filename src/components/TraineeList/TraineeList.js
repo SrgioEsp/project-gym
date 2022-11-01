@@ -13,7 +13,7 @@ import TraineeInfo from '../TraineeInfo';
 
 const renderTrainee = (eventOnClickTrainee, trainee) => {
 	return (
-		<li key={trainee} onClick={eventOnClickTrainee}>
+		<li key={trainee.name} onClick={eventOnClickTrainee}>
 			<TraineeInfo trainee={trainee}></TraineeInfo>
 		</li>
 	);

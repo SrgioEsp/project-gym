@@ -2,15 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const TraineeInfo = ({ trainee }) => {
+	const { name, date } = trainee;
 	return (
 		<div>
-			<p className='h5'>{trainee}</p>
+			<p className='h5'>{name}</p>
+			<p>{date.toString()}</p>
 		</div>
 	);
 };
 
 TraineeInfo.propTypes = {
-	trainee: PropTypes.string.isRequired,
+	trainee: PropTypes.object.isRequired,
 };
 
 export default TraineeInfo;
