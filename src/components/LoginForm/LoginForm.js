@@ -3,8 +3,13 @@ import PropTypes from 'prop-types';
 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { useNavigate } from 'react-router-dom';
 
 const LoginForm = (props) => {
+	const navigate = useNavigate();
+	const onClickHandle = () => {
+		navigate('/home');
+	};
 	return (
 		<div>
 			<p>LoginForm</p>
@@ -22,8 +27,8 @@ const LoginForm = (props) => {
 				<Form.Group className='mb-3' controlId='formBasicCheckbox'>
 					<Form.Check type='checkbox' label='recordar usuario' />
 				</Form.Group>
-				<Button href='/home' variant='primary' type='submit'>
-					Submit
+				<Button onClick={onClickHandle} variant='primary' type='submit'>
+					Entrar
 				</Button>
 			</Form>
 		</div>

@@ -1,0 +1,1 @@
+export const FETCH_TRAINEES = 'FETCH_TRAINEES';

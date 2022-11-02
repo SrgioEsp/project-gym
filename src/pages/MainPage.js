@@ -6,34 +6,7 @@ import { Row, Col } from 'react-bootstrap';
 import TraineeList from '../components/TraineeList/TraineeList';
 import { Link } from 'react-router-dom';
 
-const trainees = [
-	{
-		name: 'alumno prueba',
-		date: '31/1/2002',
-	},
-	{
-		name: 'alumno prueba2',
-		date: '13/2/2002',
-	},
-	{
-		name: 'alumno prueba3',
-		date: '1/11/2022',
-	},
-	{
-		name: 'alumno prueba4',
-		date: '1/11/2022',
-	},
-	{
-		name: 'alumno prueba5',
-		date: '1/11/2022',
-	},
-	{
-		name: 'alumno prueba6',
-		date: '2/11/2022',
-	},
-];
-
-const MainPage = (props) => {
+const MainPage = ({ trainees }) => {
 	const [calendarDay, onChangeCalendarDay] = useState(new Date());
 
 	return (
@@ -66,6 +39,8 @@ const MainPage = (props) => {
 	);
 };
 
-MainPage.propTypes = {};
+MainPage.propTypes = {
+	trainees: PropTypes.array.isRequired,
+};
 
 export default MainPage;

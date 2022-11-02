@@ -6,34 +6,7 @@ import TraineeList from '../components/TraineeList/TraineeList';
 import { Link } from 'react-router-dom';
 import { BsFillPersonPlusFill } from 'react-icons/bs';
 
-const trainees = [
-	{
-		name: 'alumno prueba',
-		date: '31/1/2002',
-	},
-	{
-		name: 'alumno prueba2',
-		date: '13/2/2002',
-	},
-	{
-		name: 'alumno prueba3',
-		date: '1/11/2022',
-	},
-	{
-		name: 'alumno prueba4',
-		date: '1/11/2022',
-	},
-	{
-		name: 'alumno prueba5',
-		date: '1/11/2022',
-	},
-	{
-		name: 'alumno prueba6',
-		date: '2/11/2022',
-	},
-];
-
-const TraineesPage = (props) => {
+const TraineesPage = ({ trainees }) => {
 	return (
 		<AppFrame>
 			<Row>
@@ -60,6 +33,8 @@ const TraineesPage = (props) => {
 	);
 };
 
-TraineesPage.propTypes = {};
+TraineesPage.propTypes = {
+	trainees: PropTypes.array.isRequired,
+};
 
 export default TraineesPage;

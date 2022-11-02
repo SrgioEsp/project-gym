@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const TraineeInfo = ({ trainee, children }) => {
+const TraineeInfo = ({ trainee }) => {
 	const { name, date } = trainee;
 	return (
 		<div>
-			<p className='h5'>
-				{name} {children}
-			</p>
+			<p className='h5'>{name}</p>
 			<p>{date}</p>
 		</div>
 	);
