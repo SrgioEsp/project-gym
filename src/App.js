@@ -8,6 +8,7 @@ import { helpHttp } from './helpers/helpHttp';
 import { urlTrainees } from './api/urls';
 
 import './App.css';
+import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
 	const [trainees, setTrainees] = useState([]);
@@ -38,7 +39,7 @@ function App() {
 						path='/trainees'
 						element={<TraineesPage trainees={trainees}></TraineesPage>}
 					/>
-					<Route path='*' element={<MainPage trainees={trainees}></MainPage>} />
+					<Route path='*' element={<NotFoundPage></NotFoundPage>} />
 				</Routes>
 			</Router>
 		</div>
