@@ -14,14 +14,12 @@ export const createMockTrainee = async (data, trainees, setTrainees) => {
 	}
 };
 
-export const delMockTrainee = async (lastElement, trainees, setTrainees) => {
+export const delMockTrainee = async (id, trainees, setTrainees) => {
 	try {
 		await helpHttp()
-			.del(`${urlTrainees}/${lastElement}`)
+			.del(`${urlTrainees}/${id}`)
 			.then((res) => {
-				const newData = trainees.filter(
-					(trainee) => trainee.id !== lastElement
-				);
+				const newData = trainees.filter((trainee) => trainee.id !== id);
 				setTrainees(newData);
 			});
 	} catch (error) {

@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TraineeInfo from '../TraineeInfo';
 import { formatDate } from '../../utils';
+import { Button, Col, Row } from 'react-bootstrap';
+import { BsFillPersonPlusFill } from 'react-icons/bs';
 
 // se va a convertir en una función que retorna otra función
 // const renderTrainee = (eventOnClickTrainee) => (trainee) => {
@@ -29,15 +31,28 @@ const TraineeList = ({ trainees, onClickTrainee, currentDay }) => {
 
 	return (
 		<div className='mt-3'>
-			{currentDayFormat ? 'TraineeList Filtered' : 'TraineeList'}
-			<ul>
-				{trainees.length !== 0 ? (
-					trainees.map((trainee) => renderTrainee(onClickTrainee, trainee))
-				) : (
-					// <Spinner></Spinner>
-					<p className='text-danger'>No se han encontrado alumnos</p>
-				)}
-			</ul>
+			<Row className='justify-content-center'>
+				<Col>{currentDayFormat ? 'TraineeList Filtered' : 'TraineeList'}</Col>
+				<Col xs='auto'>
+					{currentDayFormat && (
+						<Button variant='success' size='sm'>
+							Añadir <BsFillPersonPlusFill></BsFillPersonPlusFill>
+						</Button>
+					)}
+				</Col>
+			</Row>
+			<Row>
+				<Col>
+					<ul>
+						{trainees.length !== 0 ? (
+							trainees.map((trainee) => renderTrainee(onClickTrainee, trainee))
+						) : (
+							// <Spinner></Spinner>
+							<p className='text-danger'>No se han encontrado alumnos</p>
+						)}
+					</ul>
+				</Col>
+			</Row>
 		</div>
 	);
 };

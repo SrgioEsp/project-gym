@@ -6,8 +6,6 @@ import TraineeList from '../components/TraineeList/TraineeList';
 import { Link } from 'react-router-dom';
 import { BsFillPersonPlusFill, BsFillPersonXFill } from 'react-icons/bs';
 import Spinner from '../components/Spinner';
-import { helpHttp } from '../helpers/helpHttp';
-import { urlTrainees } from '../api/urls';
 import { formatDate } from '../utils';
 import { createMockTrainee, delMockTrainee } from '../actions/TraineeActions';
 
@@ -35,12 +33,12 @@ const TraineesPage = ({ trainees, setTrainees, spinner }) => {
 					</Link>
 				</Col>
 				<Col xs='auto'>
-					<Button onClick={onClickHandlerAddTrainee}>
+					<Button variant='success' onClick={onClickHandlerAddTrainee}>
 						Añadir <BsFillPersonPlusFill></BsFillPersonPlusFill>
 					</Button>
 				</Col>
 				<Col xs='auto'>
-					<Button onClick={onClickHandlerDelTrainee}>
+					<Button variant='danger' onClick={onClickHandlerDelTrainee}>
 						Eliminar <BsFillPersonXFill></BsFillPersonXFill>
 					</Button>
 				</Col>

@@ -21,7 +21,7 @@ const MainPage = ({ trainees, spinner }) => {
 				</Col>
 			</Row>
 			<Row>
-				<Col xs='auto'>
+				<Col>
 					{trainees && !spinner ? (
 						<TraineeList
 							trainees={trainees}
@@ -33,9 +33,9 @@ const MainPage = ({ trainees, spinner }) => {
 					)}
 				</Col>
 			</Row>
-			<Row className='justify-content-center'>
+			<Row className='justify-content-center mt-3'>
 				<Col xs='auto'>
-					<Link to={'/trainees'} className='btn btn-success'>
+					<Link to={'/trainees'} className='btn btn-primary'>
 						Alumnos
 					</Link>
 				</Col>
