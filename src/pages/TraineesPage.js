@@ -5,8 +5,9 @@ import { Row, Col, Button } from 'react-bootstrap';
 import TraineeList from '../components/TraineeList/TraineeList';
 import { Link } from 'react-router-dom';
 import { BsFillPersonPlusFill } from 'react-icons/bs';
+import Spinner from '../components/Spinner';
 
-const TraineesPage = ({ trainees }) => {
+const TraineesPage = ({ trainees, spinner }) => {
 	return (
 		<AppFrame>
 			<Row>
@@ -23,10 +24,14 @@ const TraineesPage = ({ trainees }) => {
 			</Row>
 			<Row>
 				<Col xs='auto'>
-					<TraineeList
-						trainees={trainees}
-						onClickTrainee={() => {}}
-					></TraineeList>
+					{trainees && !spinner ? (
+						<TraineeList
+							trainees={trainees}
+							onClickTrainee={() => {}}
+						></TraineeList>
+					) : (
+						<Spinner></Spinner>
+					)}
 				</Col>
 			</Row>
 		</AppFrame>
@@ -35,6 +40,7 @@ const TraineesPage = ({ trainees }) => {
 
 TraineesPage.propTypes = {
 	trainees: PropTypes.array.isRequired,
+	spinner: PropTypes.bool.isRequired,
 };
 
 export default TraineesPage;

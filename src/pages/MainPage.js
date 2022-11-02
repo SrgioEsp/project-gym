@@ -5,8 +5,9 @@ import Calendar from '../components/Calendar';
 import { Row, Col } from 'react-bootstrap';
 import TraineeList from '../components/TraineeList/TraineeList';
 import { Link } from 'react-router-dom';
+import Spinner from './../components/Spinner';
 
-const MainPage = ({ trainees }) => {
+const MainPage = ({ trainees, spinner }) => {
 	const [calendarDay, onChangeCalendarDay] = useState(new Date());
 
 	return (
@@ -21,11 +22,15 @@ const MainPage = ({ trainees }) => {
 			</Row>
 			<Row>
 				<Col xs='auto'>
-					<TraineeList
-						trainees={trainees}
-						onClickTrainee={() => {}}
-						currentDay={calendarDay}
-					></TraineeList>
+					{trainees && !spinner ? (
+						<TraineeList
+							trainees={trainees}
+							onClickTrainee={() => {}}
+							currentDay={calendarDay}
+						></TraineeList>
+					) : (
+						<Spinner></Spinner>
+					)}
 				</Col>
 			</Row>
 			<Row className='justify-content-center'>
@@ -41,6 +46,7 @@ const MainPage = ({ trainees }) => {
 
 MainPage.propTypes = {
 	trainees: PropTypes.array.isRequired,
+	spinner: PropTypes.bool.isRequired,
 };
 
 export default MainPage;
