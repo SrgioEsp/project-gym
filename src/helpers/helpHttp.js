@@ -13,7 +13,7 @@ export const helpHttp = () => {
 			: defaultHeader;
 
 		options.body = JSON.stringify(options.body) || false;
-		if (!options.boyd) delete options.body;
+		if (!options.body) delete options.body;
 
 		// console.log(options);
 		// setTimeout(() => controller.abort(), 2500);

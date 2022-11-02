@@ -46,6 +46,7 @@ function App() {
 						element={
 							<TraineesPage
 								trainees={trainees}
+								setTrainees={setTrainees}
 								spinner={loading}
 							></TraineesPage>
 						}

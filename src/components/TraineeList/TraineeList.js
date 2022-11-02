@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TraineeInfo from '../TraineeInfo';
+import { formatDate } from '../../utils';
 
 // se va a convertir en una función que retorna otra función
 // const renderTrainee = (eventOnClickTrainee) => (trainee) => {
@@ -22,9 +23,7 @@ const renderTrainee = (eventOnClickTrainee, trainee) => {
 const TraineeList = ({ trainees, onClickTrainee, currentDay }) => {
 	let currentDayFormat = '';
 	if (currentDay && typeof currentDay === 'object') {
-		currentDayFormat = `${currentDay.getDate()}/${
-			currentDay.getMonth() + 1
-		}/${currentDay.getFullYear()}`;
+		currentDayFormat = formatDate(currentDay);
 		trainees = trainees.filter(({ date }) => date === currentDayFormat);
 	}
 
