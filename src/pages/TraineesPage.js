@@ -4,29 +4,26 @@ import AppFrame from '../components/AppFrame';
 import { Row, Col, Button } from 'react-bootstrap';
 import TraineeList from '../components/TraineeList/TraineeList';
 import { Link } from 'react-router-dom';
-import { BsFillPersonPlusFill } from 'react-icons/bs';
+import { BsFillPersonPlusFill, BsFillPersonXFill } from 'react-icons/bs';
 import Spinner from '../components/Spinner';
 import { helpHttp } from '../helpers/helpHttp';
 import { urlTrainees } from '../api/urls';
 import { formatDate } from '../utils';
+import { createMockTrainee, delMockTrainee } from '../actions/TraineeActions';
 
 const TraineesPage = ({ trainees, setTrainees, spinner }) => {
-	const onClickHandler = () => {
+	const onClickHandlerAddTrainee = () => {
 		console.log('Añadir Alumno');
-		const createMockTrainee = async () => {
-			try {
-				const data = { name: 'alumno prueba', date: formatDate(new Date()) };
-				const options = {
-					body: data,
-					headers: { 'content-type': 'application/json' },
-				};
-				const res = await helpHttp().post(urlTrainees, options);
-				setTrainees([...trainees, res]);
-			} catch (error) {
-				console.log(error);
-			}
-		};
-		createMockTrainee();
+		createMockTrainee(
+			{ name: 'alumno prueba', date: formatDate(new Date()) },
+			trainees,
+			setTrainees
+		);
+	};
+
+	const onClickHandlerDelTrainee = () => {
+		console.log('Eliminar Alumno');
+		delMockTrainee(trainees[trainees.length - 1].id, trainees, setTrainees);
 	};
 
 	return (
@@ -37,9 +34,14 @@ const TraineesPage = ({ trainees, setTrainees, spinner }) => {
 						Atrás
 					</Link>
 				</Col>
-				<Col className='d-grid gap-2'>
-					<Button onClick={onClickHandler}>
+				<Col xs='auto'>
+					<Button onClick={onClickHandlerAddTrainee}>
 						Añadir <BsFillPersonPlusFill></BsFillPersonPlusFill>
+					</Button>
+				</Col>
+				<Col xs='auto'>
+					<Button onClick={onClickHandlerDelTrainee}>
+						Eliminar <BsFillPersonXFill></BsFillPersonXFill>
 					</Button>
 				</Col>
 			</Row>
