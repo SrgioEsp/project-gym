@@ -6,9 +6,10 @@ import MainPage from './pages/MainPage';
 import TraineesPage from './pages/TraineesPage';
 import { helpHttp } from './helpers/helpHttp';
 import { urlTrainees } from './api/urls';
+import NotFoundPage from './pages/NotFoundPage';
+import TraineePage from './pages/TraineePage';
 
 import './App.css';
-import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
 	const [trainees, setTrainees] = useState([]);
@@ -51,6 +52,7 @@ function App() {
 							></TraineesPage>
 						}
 					/>
+					<Route path='/trainees/:id' element={<TraineePage></TraineePage>} />
 					<Route path='*' element={<NotFoundPage></NotFoundPage>} />
 				</Routes>
 			</Router>
