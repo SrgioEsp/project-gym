@@ -33,9 +33,12 @@ const TraineesPage = ({ trainees, setTrainees, spinner }) => {
 					</Link>
 				</Col>
 				<Col xs='auto'>
-					<Button variant='success' onClick={onClickHandlerAddTrainee}>
+					{/* <Button variant='success' onClick={onClickHandlerAddTrainee}>
 						Añadir <BsFillPersonPlusFill></BsFillPersonPlusFill>
-					</Button>
+					</Button> */}
+					<Link to='/trainees/new' className='btn btn-success'>
+						Añadir <BsFillPersonPlusFill></BsFillPersonPlusFill>
+					</Link>
 				</Col>
 				<Col xs='auto'>
 					<Button variant='danger' onClick={onClickHandlerDelTrainee}>

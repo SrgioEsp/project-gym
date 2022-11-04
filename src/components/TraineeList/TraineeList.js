@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TraineeInfo from '../TraineeInfo';
 import { formatDate } from '../../utils';
-import { Button, Col, Row } from 'react-bootstrap';
-import { BsFillPersonPlusFill } from 'react-icons/bs';
+import { Col, Row } from 'react-bootstrap';
 
 // se va a convertir en una función que retorna otra función
 // const renderTrainee = (eventOnClickTrainee) => (trainee) => {
@@ -33,13 +32,6 @@ const TraineeList = ({ trainees, onClickTrainee, currentDay }) => {
 		<div className='mt-3'>
 			<Row className='justify-content-center'>
 				<Col>{currentDayFormat ? 'TraineeList Filtered' : 'TraineeList'}</Col>
-				<Col xs='auto'>
-					{currentDayFormat && (
-						<Button variant='success' size='sm'>
-							Añadir <BsFillPersonPlusFill></BsFillPersonPlusFill>
-						</Button>
-					)}
-				</Col>
 			</Row>
 			<Row>
 				<Col>

@@ -18,5 +18,6 @@ module.exports = {
 	rules: {
 		'no-undef': 'warn',
 		'no-unused-vars': 'warn',
+		'no-debugger': 'warn',
 	},
 };
