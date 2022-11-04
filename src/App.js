@@ -52,7 +52,16 @@ function App() {
 							></TraineesPage>
 						}
 					/>
-					<Route path='/trainees/:id' element={<TraineePage></TraineePage>} />
+					<Route
+						path='/trainees/new'
+						element={
+							<TraineePage
+								trainees={trainees}
+								setTrainees={setTrainees}
+							></TraineePage>
+						}
+					/>
+					{/* <Route path='/trainees/:id' element={<TraineePage></TraineePage>} />F */}
 					<Route path='*' element={<NotFoundPage></NotFoundPage>} />
 				</Routes>
 			</Router>

@@ -7,12 +7,12 @@ import { Link } from 'react-router-dom';
 import { BsFillPersonPlusFill, BsFillPersonXFill } from 'react-icons/bs';
 import Spinner from '../components/Spinner';
 import { formatDate } from '../utils';
-import { createMockTrainee, delMockTrainee } from '../actions/TraineeActions';
+import { createTrainee, delMockTrainee } from '../actions/TraineeActions';
 
 const TraineesPage = ({ trainees, setTrainees, spinner }) => {
 	const onClickHandlerAddTrainee = () => {
 		console.log('Añadir Alumno');
-		createMockTrainee(
+		createTrainee(
 			{ name: 'alumno prueba', date: formatDate(new Date()) },
 			trainees,
 			setTrainees
@@ -33,9 +33,12 @@ const TraineesPage = ({ trainees, setTrainees, spinner }) => {
 					</Link>
 				</Col>
 				<Col xs='auto'>
-					<Button variant='success' onClick={onClickHandlerAddTrainee}>
+					{/* <Button variant='success' onClick={onClickHandlerAddTrainee}>
 						Añadir <BsFillPersonPlusFill></BsFillPersonPlusFill>
-					</Button>
+					</Button> */}
+					<Link to='/trainees/new' className='btn btn-success'>
+						Añadir <BsFillPersonPlusFill></BsFillPersonPlusFill>
+					</Link>
 				</Col>
 				<Col xs='auto'>
 					<Button variant='danger' onClick={onClickHandlerDelTrainee}>
