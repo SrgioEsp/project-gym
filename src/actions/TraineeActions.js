@@ -1,17 +1,24 @@
 import { urlTrainees } from '../api/urls';
 import { helpHttp } from '../helpers/helpHttp';
 
-export const createMockTrainee = async (data, trainees, setTrainees) => {
+export const createTrainee = async (data, trainees, setTrainees) => {
+	let result;
 	try {
 		const options = {
 			body: data,
 			headers: { 'content-type': 'application/json' },
 		};
-		const res = await helpHttp().post(urlTrainees, options);
-		setTrainees([...trainees, res]);
+		await helpHttp()
+			.post(urlTrainees, options)
+			.then((res) => {
+				result = res;
+				setTrainees([...trainees, res]);
+			});
 	} catch (error) {
 		console.log(error);
+		result = error;
 	}
+	return result;
 };
 
 export const delMockTrainee = async (id, trainees, setTrainees) => {

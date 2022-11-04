@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Col, Row } from 'react-bootstrap';
-import { createMockTrainee } from '../../actions/TraineeActions';
+import { createTrainee } from '../../actions/TraineeActions';
 import { formatDate } from '../../utils';
 
 const validate = (nombre, fechaEntrada) => {
@@ -12,7 +12,13 @@ const validate = (nombre, fechaEntrada) => {
 const TraineeForm = ({ trainees, setTrainees }) => {
 	const [name, setName] = useState('');
 	const [fechaEntrada, setfechaEntrada] = useState('');
+	const [msgAdd, setMsgAdd] = useState(null);
 
+	const delMsg = () => {
+		setTimeout(() => {
+			setMsgAdd(null);
+		}, 3000);
+	};
 	const errMsg = validate(name, fechaEntrada);
 
 	const onSubmitHandler = (ev) => {
@@ -21,7 +27,7 @@ const TraineeForm = ({ trainees, setTrainees }) => {
 		const edad = ev.target.edad.value;
 		const peso = ev.target.peso.value;
 		const altura = ev.target.altura.value;
-		const result = createMockTrainee(
+		createTrainee(
 			{
 				name,
 				date,
@@ -31,8 +37,7 @@ const TraineeForm = ({ trainees, setTrainees }) => {
 			},
 			trainees,
 			setTrainees
-		);
-		console.log(result);
+		).then((res) => setMsgAdd('Alumno creado correctamente'));
 	};
 
 	return (
@@ -40,6 +45,8 @@ const TraineeForm = ({ trainees, setTrainees }) => {
 			<Row className='justify-content-center'>
 				<Col xs='auto'>
 					<p className='text-danger'>{errMsg}</p>
+					{msgAdd && <p className='bg-success text-white'>{msgAdd}</p>}
+					{delMsg()}
 				</Col>
 			</Row>
 			<Row>
