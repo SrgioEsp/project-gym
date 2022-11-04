@@ -2,17 +2,17 @@
 	"users": [
 		{
 			"id": 1,
-			"name": "profesor prueba",
+			"name": "entrenador",
 			"password": "test"
 		},
 		{
 			"id": 2,
-			"name": "profesor prueba2",
+			"name": "entrenador2",
 			"password": "test2"
 		},
 		{
 			"id": 3,
-			"name": "profesor prueba3",
+			"name": "entrenador3",
 			"password": "test3"
 		}
 	],
