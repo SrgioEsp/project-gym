@@ -1,49 +1,31 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import AppFrame from '../components/AppFrame';
-import { Row, Col, Button } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import TraineeList from '../components/TraineeList/TraineeList';
 import { Link } from 'react-router-dom';
-import { BsFillPersonPlusFill, BsFillPersonXFill } from 'react-icons/bs';
+import { BsFillPersonPlusFill } from 'react-icons/bs';
 import Spinner from '../components/Spinner';
-import { formatDate } from '../utils';
-import { createTrainee, delMockTrainee } from '../actions/TraineeActions';
+import { delTrainee } from '../actions/TraineeActions';
 
 const TraineesPage = ({ trainees, setTrainees, spinner }) => {
-	const onClickHandlerAddTrainee = () => {
-		console.log('Añadir Alumno');
-		createTrainee(
-			{ name: 'alumno prueba', date: formatDate(new Date()) },
-			trainees,
-			setTrainees
-		);
-	};
-
-	const onClickHandlerDelTrainee = () => {
-		console.log('Eliminar Alumno');
-		delMockTrainee(trainees[trainees.length - 1].id, trainees, setTrainees);
+	const onClickHandlerDelTrainee = (id) => {
+		const msj = confirm('Desea eliminar el alumno');
+		if (msj) delTrainee(id, trainees, setTrainees);
 	};
 
 	return (
 		<AppFrame>
 			<Row>
-				<Col xs='auto'>
+				<Col>
 					<Link to={'/home'} className='btn btn-primary'>
 						Atrás
 					</Link>
 				</Col>
 				<Col xs='auto'>
-					{/* <Button variant='success' onClick={onClickHandlerAddTrainee}>
-						Añadir <BsFillPersonPlusFill></BsFillPersonPlusFill>
-					</Button> */}
 					<Link to='/trainees/new' className='btn btn-success'>
 						Añadir <BsFillPersonPlusFill></BsFillPersonPlusFill>
 					</Link>
-				</Col>
-				<Col xs='auto'>
-					<Button variant='danger' onClick={onClickHandlerDelTrainee}>
-						Eliminar <BsFillPersonXFill></BsFillPersonXFill>
-					</Button>
 				</Col>
 			</Row>
 			<Row>
@@ -51,7 +33,9 @@ const TraineesPage = ({ trainees, setTrainees, spinner }) => {
 					{trainees && !spinner ? (
 						<TraineeList
 							trainees={trainees}
-							onClickTrainee={() => {}}
+							onClickTrainee={(id) => {
+								onClickHandlerDelTrainee(id);
+							}}
 						></TraineeList>
 					) : (
 						<Spinner></Spinner>

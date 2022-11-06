@@ -21,15 +21,19 @@ export const createTrainee = async (data, trainees, setTrainees) => {
 	return result;
 };
 
-export const delMockTrainee = async (id, trainees, setTrainees) => {
+export const delTrainee = async (id, trainees, setTrainees) => {
+	let result;
 	try {
 		await helpHttp()
 			.del(`${urlTrainees}/${id}`)
 			.then((res) => {
+				result = res;
 				const newData = trainees.filter((trainee) => trainee.id !== id);
 				setTrainees(newData);
 			});
 	} catch (error) {
 		console.log(error);
+		result = error;
 	}
+	return result;
 };

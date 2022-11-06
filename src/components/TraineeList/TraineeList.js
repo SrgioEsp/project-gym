@@ -2,21 +2,28 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import TraineeInfo from '../TraineeInfo';
 import { formatDate } from '../../utils';
-import { Col, Row } from 'react-bootstrap';
+import { Button, Col, Row } from 'react-bootstrap';
+import { BsFillPersonXFill } from 'react-icons/bs';
 
-// se va a convertir en una función que retorna otra función
-// const renderTrainee = (eventOnClickTrainee) => (trainee) => {
-// 	return (
-// 		<li key={trainee} onClick={eventOnClickTrainee}>
-// 			<TraineeInfo trainee={trainee}></TraineeInfo>
-// 		</li>
-// 	);
-// };
-
-const renderTrainee = (eventOnClickTrainee, trainee) => {
+const renderTrainee = (eventOnClickTrainee, trainee, currentDayFormat) => {
 	return (
-		<li key={trainee.id} onClick={eventOnClickTrainee}>
-			<TraineeInfo trainee={trainee}></TraineeInfo>
+		<li key={trainee.id}>
+			<Row>
+				<Col>
+					<TraineeInfo trainee={trainee}></TraineeInfo>
+				</Col>
+				<Col xs='auto'>
+					{!currentDayFormat && (
+						<Button
+							variant='danger'
+							size='sm'
+							onClick={() => eventOnClickTrainee(trainee.id)}
+						>
+							Eliminar <BsFillPersonXFill></BsFillPersonXFill>
+						</Button>
+					)}
+				</Col>
+			</Row>
 		</li>
 	);
 };
@@ -37,7 +44,9 @@ const TraineeList = ({ trainees, onClickTrainee, currentDay }) => {
 				<Col>
 					<ul>
 						{trainees.length !== 0 ? (
-							trainees.map((trainee) => renderTrainee(onClickTrainee, trainee))
+							trainees.map((trainee) =>
+								renderTrainee(onClickTrainee, trainee, currentDayFormat)
+							)
 						) : (
 							// <Spinner></Spinner>
 							<p className='text-danger'>No se han encontrado alumnos</p>
