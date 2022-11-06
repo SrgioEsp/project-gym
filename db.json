@@ -1,68 +1,76 @@
 {
-	"users": [
-		{
-			"id": 1,
-			"name": "entrenador",
-			"password": "test"
-		},
-		{
-			"id": 2,
-			"name": "entrenador2",
-			"password": "test2"
-		},
-		{
-			"id": 3,
-			"name": "entrenador3",
-			"password": "test3"
-		}
-	],
-	"trainees": [
-		{
-			"id": 1,
-			"name": "alumno prueba",
-			"date": "31/1/2002"
-		},
-		{
-			"id": 2,
-			"name": "alumno prueba2",
-			"date": "13/2/2002"
-		},
-		{
-			"id": 3,
-			"name": "alumno prueba3",
-			"date": "3/11/2022"
-		},
-		{
-			"id": 4,
-			"name": "alumno prueba4",
-			"date": "3/11/2022"
-		},
-		{
-			"id": 5,
-			"name": "alumno prueba5",
-			"date": "4/11/2022"
-		},
-		{
-			"id": 6,
-			"name": "alumno prueba6",
-			"date": "2/11/2022"
-		}
-	],
-	"posts": [
-		{
-			"id": 1,
-			"title": "json-server",
-			"author": "typicode"
-		}
-	],
-	"comments": [
-		{
-			"id": 1,
-			"body": "some comment",
-			"postId": 1
-		}
-	],
-	"profile": {
-		"name": "typicode"
-	}
+  "users": [
+    {
+      "id": 1,
+      "name": "entrenador",
+      "password": "test"
+    },
+    {
+      "id": 2,
+      "name": "entrenador2",
+      "password": "test2"
+    },
+    {
+      "id": 3,
+      "name": "entrenador3",
+      "password": "test3"
+    }
+  ],
+  "trainees": [
+    {
+      "id": 1,
+      "name": "alumno prueba",
+      "date": "31/1/2002"
+    },
+    {
+      "id": 2,
+      "name": "alumno prueba2",
+      "date": "13/2/2002"
+    },
+    {
+      "id": 3,
+      "name": "alumno prueba3",
+      "date": "3/11/2022"
+    },
+    {
+      "id": 4,
+      "name": "alumno prueba4",
+      "date": "3/11/2022"
+    },
+    {
+      "id": 5,
+      "name": "alumno prueba5",
+      "date": "4/11/2022"
+    },
+    {
+      "id": 6,
+      "name": "alumno prueba6",
+      "date": "2/11/2022"
+    },
+    {
+      "name": "Sergio",
+      "date": "6/11/2022",
+      "edad": "20",
+      "peso": "72",
+      "altura": "177",
+      "id": 7
+    }
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "title": "json-server",
+      "author": "typicode"
+    }
+  ],
+  "comments": [
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
 }

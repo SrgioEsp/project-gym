@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import AppFrame from '../components/AppFrame';
 import { Row, Col } from 'react-bootstrap';
@@ -7,8 +7,11 @@ import { Link } from 'react-router-dom';
 import { BsFillPersonPlusFill } from 'react-icons/bs';
 import Spinner from '../components/Spinner';
 import { delTrainee } from '../actions/TraineeActions';
+import { AppContext } from '../contexts/AppContext';
 
-const TraineesPage = ({ trainees, setTrainees, spinner }) => {
+const TraineesPage = ({ spinner }) => {
+	const { trainees, setTrainees } = useContext(AppContext);
+
 	const onClickHandlerDelTrainee = (id) => {
 		const msj = confirm('Desea eliminar el alumno');
 		if (msj) delTrainee(id, trainees, setTrainees);
@@ -32,7 +35,6 @@ const TraineesPage = ({ trainees, setTrainees, spinner }) => {
 				<Col xs='auto'>
 					{trainees && !spinner ? (
 						<TraineeList
-							trainees={trainees}
 							onClickTrainee={(id) => {
 								onClickHandlerDelTrainee(id);
 							}}
@@ -47,8 +49,6 @@ const TraineesPage = ({ trainees, setTrainees, spinner }) => {
 };
 
 TraineesPage.propTypes = {
-	trainees: PropTypes.array.isRequired,
-	setTrainees: PropTypes.func,
 	spinner: PropTypes.bool.isRequired,
 };
 

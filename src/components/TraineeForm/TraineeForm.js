@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Col, Row } from 'react-bootstrap';
 import { createTrainee } from '../../actions/TraineeActions';
 import { formatDate } from '../../utils';
+import { AppContext } from '../../contexts/AppContext';
 
 const validate = (nombre, fechaEntrada) => {
 	if (nombre === '') return 'Introduzca un nombre';
 	if (!fechaEntrada) return 'Introduzca una fecha';
 };
 
-const TraineeForm = ({ trainees, setTrainees }) => {
+const TraineeForm = () => {
+	const { trainees, setTrainees } = useContext(AppContext);
 	const [name, setName] = useState('');
 	const [fechaEntrada, setfechaEntrada] = useState('');
 	const [msgAdd, setMsgAdd] = useState(null);
@@ -123,9 +125,6 @@ const TraineeForm = ({ trainees, setTrainees }) => {
 	);
 };
 
-TraineeForm.propTypes = {
-	trainees: PropTypes.array.isRequired,
-	setTrainees: PropTypes.func.isRequired,
-};
+TraineeForm.propTypes = {};
 
 export default TraineeForm;

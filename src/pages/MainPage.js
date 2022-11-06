@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import AppFrame from '../components/AppFrame';
 import Calendar from '../components/Calendar';
@@ -6,8 +6,10 @@ import { Row, Col } from 'react-bootstrap';
 import TraineeList from '../components/TraineeList/TraineeList';
 import { Link } from 'react-router-dom';
 import Spinner from './../components/Spinner';
+import { AppContext } from '../contexts/AppContext';
 
-const MainPage = ({ trainees, spinner }) => {
+const MainPage = ({ spinner }) => {
+	const { trainees } = useContext(AppContext);
 	const [calendarDay, onChangeCalendarDay] = useState(new Date());
 
 	return (
@@ -24,7 +26,6 @@ const MainPage = ({ trainees, spinner }) => {
 				<Col>
 					{trainees && !spinner ? (
 						<TraineeList
-							trainees={trainees}
 							onClickTrainee={() => {}}
 							currentDay={calendarDay}
 						></TraineeList>
@@ -45,7 +46,6 @@ const MainPage = ({ trainees, spinner }) => {
 };
 
 MainPage.propTypes = {
-	trainees: PropTypes.array.isRequired,
 	spinner: PropTypes.bool.isRequired,
 };
 

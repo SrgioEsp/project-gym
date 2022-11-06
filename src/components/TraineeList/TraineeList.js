@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import TraineeInfo from '../TraineeInfo';
 import { formatDate } from '../../utils';
 import { Button, Col, Row } from 'react-bootstrap';
 import { BsFillPersonXFill } from 'react-icons/bs';
+import { AppContext } from '../../contexts/AppContext';
 
 const renderTrainee = (eventOnClickTrainee, trainee, currentDayFormat) => {
 	return (
@@ -28,7 +29,8 @@ const renderTrainee = (eventOnClickTrainee, trainee, currentDayFormat) => {
 	);
 };
 
-const TraineeList = ({ trainees, onClickTrainee, currentDay }) => {
+const TraineeList = ({ onClickTrainee, currentDay }) => {
+	let { trainees } = useContext(AppContext);
 	let currentDayFormat = '';
 	if (currentDay && typeof currentDay === 'object') {
 		currentDayFormat = formatDate(currentDay);
@@ -48,7 +50,6 @@ const TraineeList = ({ trainees, onClickTrainee, currentDay }) => {
 								renderTrainee(onClickTrainee, trainee, currentDayFormat)
 							)
 						) : (
-							// <Spinner></Spinner>
 							<p className='text-danger'>No se han encontrado alumnos</p>
 						)}
 					</ul>
@@ -59,9 +60,8 @@ const TraineeList = ({ trainees, onClickTrainee, currentDay }) => {
 };
 
 TraineeList.propTypes = {
-	trainees: PropTypes.array.isRequired,
 	onClickTrainee: PropTypes.func.isRequired,
-	currentDay: PropTypes.any,
+	currentDay: PropTypes.object,
 };
 
 export default TraineeList;

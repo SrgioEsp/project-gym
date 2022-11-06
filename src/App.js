@@ -10,6 +10,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import TraineePage from './pages/TraineePage';
 
 import './App.css';
+import { AppContext } from './contexts/AppContext';
 
 function App() {
 	const [trainees, setTrainees] = useState([]);
@@ -30,7 +31,7 @@ function App() {
 	}, []);
 
 	return (
-		<div>
+		<AppContext.Provider value={{ trainees, setTrainees }}>
 			<p>Project GYM</p>
 			<Router>
 				<Routes>
@@ -38,34 +39,18 @@ function App() {
 					<Route path='/login' element={<LoginPage></LoginPage>} />
 					<Route
 						path='/home'
-						element={
-							<MainPage trainees={trainees} spinner={loading}></MainPage>
-						}
+						element={<MainPage spinner={loading}></MainPage>}
 					/>
 					<Route
 						path='/trainees'
-						element={
-							<TraineesPage
-								trainees={trainees}
-								setTrainees={setTrainees}
-								spinner={loading}
-							></TraineesPage>
-						}
+						element={<TraineesPage spinner={loading}></TraineesPage>}
 					/>
-					<Route
-						path='/trainees/new'
-						element={
-							<TraineePage
-								trainees={trainees}
-								setTrainees={setTrainees}
-							></TraineePage>
-						}
-					/>
+					<Route path='/trainees/new' element={<TraineePage></TraineePage>} />
 					{/* <Route path='/trainees/:id' element={<TraineePage></TraineePage>} />F */}
 					<Route path='*' element={<NotFoundPage></NotFoundPage>} />
 				</Routes>
 			</Router>
-		</div>
+		</AppContext.Provider>
 	);
 }
 

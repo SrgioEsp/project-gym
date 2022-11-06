@@ -6,7 +6,7 @@ import { Col, Row } from 'react-bootstrap';
 import TraineeForm from '../components/TraineeForm/TraineeForm';
 import { Link } from 'react-router-dom';
 
-const TraineePage = ({ trainee, trainees, setTrainees }) => {
+const TraineePage = ({ trainee }) => {
 	return (
 		<AppFrame>
 			<Row>
@@ -18,10 +18,7 @@ const TraineePage = ({ trainee, trainees, setTrainees }) => {
 			</Row>
 			<Row className='justify-content-center'>
 				<Col xs='auto'>
-					<TraineeForm
-						trainees={trainees}
-						setTrainees={setTrainees}
-					></TraineeForm>
+					<TraineeForm></TraineeForm>
 				</Col>
 			</Row>
 			{/* <Row>
@@ -35,8 +32,6 @@ const TraineePage = ({ trainee, trainees, setTrainees }) => {
 
 TraineePage.propTypes = {
 	trainee: PropTypes.object,
-	trainees: PropTypes.array.isRequired,
-	setTrainees: PropTypes.func.isRequired,
 };
 
 export default TraineePage;
