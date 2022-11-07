@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import { useNavigate } from 'react-router-dom';
@@ -6,13 +6,14 @@ import { Col, Container, Row } from 'react-bootstrap';
 
 import { helpHttp } from './../../helpers/helpHttp';
 import { urlUsers } from '../../api/urls';
+import { AppContext } from '../../contexts/AppContext';
 
 const validate = (nombre, pass) => {
 	if (nombre === '') return 'Introduzca usuario';
 	if (pass === '') return 'Introduzca contraseña';
 };
 
-const login = async (data, navigate, setIsInvalid, setUsers) => {
+const login = async (data, navigate, setIsInvalid, setUsers, setUser) => {
 	try {
 		const res = await helpHttp().get(urlUsers);
 		if (res) {
@@ -20,6 +21,7 @@ const login = async (data, navigate, setIsInvalid, setUsers) => {
 				(user) => user.name === data.nombre && user.password === data.pass
 			);
 			if (user.length !== 0) {
+				setUser({ id: user[0].id, name: user[0].name });
 				navigate('/home');
 			} else {
 				setIsInvalid(true);
@@ -32,6 +34,8 @@ const login = async (data, navigate, setIsInvalid, setUsers) => {
 };
 
 const LoginForm = (props) => {
+	const { setUser } = useContext(AppContext);
+
 	const [nombre, setNombre] = useState('');
 	const [pass, setPass] = useState('');
 	const [isInvalid, setIsInvalid] = useState(false);
@@ -46,9 +50,14 @@ const LoginForm = (props) => {
 			const user = users.filter(
 				(user) => user.name === nombre && user.password === pass
 			);
-			user.length !== 0 ? navigate('/home') : setIsInvalid(true);
+			if (user.length !== 0) {
+				setUser({ id: user[0].id, name: user[0].name });
+				navigate('/home');
+			} else {
+				setIsInvalid(true);
+			}
 		} else {
-			login({ nombre, pass }, navigate, setIsInvalid, setUsers);
+			login({ nombre, pass }, navigate, setIsInvalid, setUsers, setUser);
 		}
 	};
 

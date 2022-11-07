@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import AppFrame from '../components/AppFrame';
 import { Row, Col } from 'react-bootstrap';
 import TraineeList from '../components/TraineeList/TraineeList';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { BsFillPersonPlusFill } from 'react-icons/bs';
 import Spinner from '../components/Spinner';
 import { delTrainee } from '../actions/TraineeActions';
@@ -11,6 +11,9 @@ import { AppContext } from '../contexts/AppContext';
 
 const TraineesPage = ({ spinner }) => {
 	const { trainees, setTrainees } = useContext(AppContext);
+	const navigate = useNavigate();
+
+	if (!trainees || trainees.length === 0) navigate('/home');
 
 	const onClickHandlerDelTrainee = (id) => {
 		const msj = confirm('Desea eliminar el alumno');

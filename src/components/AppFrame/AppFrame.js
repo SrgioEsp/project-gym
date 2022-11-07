@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Col, Container, Row } from 'react-bootstrap';
 import Navbar from 'react-bootstrap/Navbar';
+import { AppContext } from '../../contexts/AppContext';
 
 const AppFrame = ({ children }) => {
+	const { user } = useContext(AppContext);
 	return (
 		<Container>
 			<p>AppFrame</p>
@@ -15,7 +17,7 @@ const AppFrame = ({ children }) => {
 							<Navbar.Toggle />
 							<Navbar.Collapse className='justify-content-end'>
 								<Navbar.Text>
-									Usuario: <a href='/login'>Sergio Prueba</a>
+									Usuario: <a href='/login'>{user.name}</a>
 								</Navbar.Text>
 							</Navbar.Collapse>
 						</Container>

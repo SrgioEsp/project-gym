@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AppFrame from '../components/AppFrame';
 import Calendar from '../components/Calendar';
@@ -7,10 +7,29 @@ import TraineeList from '../components/TraineeList/TraineeList';
 import { Link } from 'react-router-dom';
 import Spinner from './../components/Spinner';
 import { AppContext } from '../contexts/AppContext';
+import { helpHttp } from './../helpers/helpHttp';
+import { urlTrainees } from './../api/urls';
 
-const MainPage = ({ spinner }) => {
-	const { trainees } = useContext(AppContext);
+const MainPage = ({ spinner, setLoading }) => {
+	const { trainees, setTrainees } = useContext(AppContext);
 	const [calendarDay, onChangeCalendarDay] = useState(new Date());
+
+	useEffect(() => {
+		if (!trainees || trainees.length === 0) {
+			setLoading(true);
+			const getTrainees = async () => {
+				try {
+					const data = await helpHttp().get(urlTrainees);
+					setTrainees(data);
+					setLoading(false);
+				} catch (error) {
+					console.log(error);
+					setLoading(false);
+				}
+			};
+			getTrainees();
+		}
+	}, []);
 
 	return (
 		<AppFrame>
@@ -47,6 +66,7 @@ const MainPage = ({ spinner }) => {
 
 MainPage.propTypes = {
 	spinner: PropTypes.bool.isRequired,
+	setLoading: PropTypes.func.isRequired,
 };
 
 export default MainPage;

@@ -11,7 +11,7 @@ const TraineePage = ({ trainee }) => {
 		<AppFrame>
 			<Row>
 				<Col xs='auto'>
-					<Link to={'/home'} className='btn btn-primary'>
+					<Link to={'/trainees'} className='btn btn-primary'>
 						Atrás
 					</Link>
 				</Col>

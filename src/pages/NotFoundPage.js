@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Col, Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { AppContext } from '../contexts/AppContext';
 
 const NotFoundPage = (props) => {
+	const { user } = useContext(AppContext);
 	return (
 		<Container>
 			<Row className='justify-content-center'>
@@ -13,7 +15,7 @@ const NotFoundPage = (props) => {
 			</Row>
 			<Row className='justify-content-center'>
 				<Col xs='auto'>
-					<Link to='/home' className='btn btn-primary'>
+					<Link to={user ? '/home' : '/login'} className='btn btn-primary'>
 						Inicio
 					</Link>
 				</Col>
