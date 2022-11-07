@@ -11,7 +11,7 @@ import { helpHttp } from './../helpers/helpHttp';
 import { urlTrainees } from './../api/urls';
 
 const MainPage = ({ spinner, setLoading }) => {
-	const { trainees, setTrainees } = useContext(AppContext);
+	const { trainees, setTrainees, user } = useContext(AppContext);
 	const [calendarDay, onChangeCalendarDay] = useState(new Date());
 
 	useEffect(() => {
@@ -19,7 +19,7 @@ const MainPage = ({ spinner, setLoading }) => {
 			setLoading(true);
 			const getTrainees = async () => {
 				try {
-					const data = await helpHttp().get(urlTrainees);
+					const data = await helpHttp().get(`${urlTrainees}?userId=${user.id}`);
 					setTrainees(data);
 					setLoading(false);
 				} catch (error) {
