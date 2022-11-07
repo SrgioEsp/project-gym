@@ -13,6 +13,7 @@ const TraineesPage = ({ spinner }) => {
 	const { trainees, setTrainees } = useContext(AppContext);
 	const navigate = useNavigate();
 
+	// You should call navigate() in a React.useEffect(), not when your component is first rendered.
 	if (!trainees || trainees.length === 0) navigate('/home');
 
 	const onClickHandlerDelTrainee = (id) => {
