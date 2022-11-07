@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AppFrame from '../components/AppFrame';
 import { Row, Col } from 'react-bootstrap';
@@ -13,7 +13,10 @@ const TraineesPage = ({ spinner }) => {
 	const { trainees, setTrainees } = useContext(AppContext);
 	const navigate = useNavigate();
 
-	if (!trainees || trainees.length === 0) navigate('/home');
+	// You should call navigate() in a React.useEffect(), not when your component is first rendered.
+	// useEffect(() => {
+	// 	if (!trainees || trainees.length === 0) navigate('/home');
+	// }, []);
 
 	const onClickHandlerDelTrainee = (id) => {
 		const msj = confirm('Desea eliminar el alumno');

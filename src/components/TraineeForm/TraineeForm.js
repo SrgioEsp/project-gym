@@ -11,7 +11,7 @@ const validate = (nombre, fechaEntrada) => {
 };
 
 const TraineeForm = () => {
-	const { trainees, setTrainees } = useContext(AppContext);
+	const { trainees, setTrainees, user } = useContext(AppContext);
 	const [name, setName] = useState('');
 	const [fechaEntrada, setfechaEntrada] = useState('');
 	const [msgAdd, setMsgAdd] = useState(null);
@@ -36,6 +36,7 @@ const TraineeForm = () => {
 				edad,
 				peso,
 				altura,
+				userId: user.id,
 			},
 			trainees,
 			setTrainees
