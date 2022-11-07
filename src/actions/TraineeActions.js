@@ -1,19 +1,15 @@
 import { urlTrainees } from '../api/urls';
 import { helpHttp } from '../helpers/helpHttp';
 
-export const createTrainee = async (data, trainees, setTrainees) => {
+export const createTrainee = async (data) => {
 	let result;
 	try {
 		const options = {
 			body: data,
 			headers: { 'content-type': 'application/json' },
 		};
-		await helpHttp()
-			.post(urlTrainees, options)
-			.then((res) => {
-				result = res;
-				setTrainees([...trainees, res]);
-			});
+		const res = await helpHttp().post(urlTrainees, options);
+		result = res;
 	} catch (error) {
 		console.log(error);
 		result = error;
@@ -21,16 +17,11 @@ export const createTrainee = async (data, trainees, setTrainees) => {
 	return result;
 };
 
-export const delTrainee = async (id, trainees, setTrainees) => {
+export const delTrainee = async (id) => {
 	let result;
 	try {
-		await helpHttp()
-			.del(`${urlTrainees}/${id}`)
-			.then((res) => {
-				result = res;
-				const newData = trainees.filter((trainee) => trainee.id !== id);
-				setTrainees(newData);
-			});
+		const res = await helpHttp().del(`${urlTrainees}/${id}`);
+		result = res;
 	} catch (error) {
 		console.log(error);
 		result = error;

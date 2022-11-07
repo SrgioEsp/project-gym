@@ -7,8 +7,7 @@ import TraineeList from '../components/TraineeList/TraineeList';
 import { Link } from 'react-router-dom';
 import Spinner from './../components/Spinner';
 import { AppContext } from '../contexts/AppContext';
-import { helpHttp } from './../helpers/helpHttp';
-import { urlTrainees } from './../api/urls';
+import { getTraineesByUserId } from '../actions/TraineesActions';
 
 const MainPage = ({ spinner, setLoading }) => {
 	const { trainees, setTrainees, user } = useContext(AppContext);
@@ -17,17 +16,12 @@ const MainPage = ({ spinner, setLoading }) => {
 	useEffect(() => {
 		if (!trainees || trainees.length === 0) {
 			setLoading(true);
-			const getTrainees = async () => {
-				try {
-					const data = await helpHttp().get(`${urlTrainees}?userId=${user.id}`);
-					setTrainees(data);
-					setLoading(false);
-				} catch (error) {
-					console.log(error);
+			getTraineesByUserId(user.id).then((res) => {
+				if (res) {
+					setTrainees(res);
 					setLoading(false);
 				}
-			};
-			getTrainees();
+			});
 		}
 	}, []);
 

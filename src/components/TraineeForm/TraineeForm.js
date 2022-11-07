@@ -5,6 +5,14 @@ import { createTrainee } from '../../actions/TraineeActions';
 import { formatDate } from '../../utils';
 import { AppContext } from '../../contexts/AppContext';
 
+const emptyFields = (setName, setfechaEntrada, ev) => {
+	setName('');
+	setfechaEntrada('');
+	ev.target.edad.value = '';
+	ev.target.peso.value = '';
+	ev.target.altura.value = '';
+};
+
 const validate = (nombre, fechaEntrada) => {
 	if (nombre === '') return 'Introduzca un nombre';
 	if (!fechaEntrada) return 'Introduzca una fecha';
@@ -29,18 +37,18 @@ const TraineeForm = () => {
 		const edad = ev.target.edad.value;
 		const peso = ev.target.peso.value;
 		const altura = ev.target.altura.value;
-		createTrainee(
-			{
-				name,
-				date,
-				edad,
-				peso,
-				altura,
-				userId: user.id,
-			},
-			trainees,
-			setTrainees
-		).then((res) => setMsgAdd('Alumno creado correctamente'));
+		createTrainee({
+			name,
+			date,
+			edad,
+			peso,
+			altura,
+			userId: user.id,
+		}).then((res) => {
+			setTrainees([...trainees, res]);
+			setMsgAdd('Alumno creado correctamente');
+			emptyFields(setName, setfechaEntrada, ev);
+		});
 	};
 
 	return (

@@ -8,8 +8,7 @@ import { BsFillPersonPlusFill } from 'react-icons/bs';
 import Spinner from '../components/Spinner';
 import { delTrainee } from '../actions/TraineeActions';
 import { AppContext } from '../contexts/AppContext';
-import { helpHttp } from './../helpers/helpHttp';
-import { urlTrainees } from './../api/urls';
+import { getTraineesByUserId } from '../actions/TraineesActions';
 
 const TraineesPage = ({ spinner, setLoading }) => {
 	const { trainees, setTrainees, user } = useContext(AppContext);
@@ -17,23 +16,22 @@ const TraineesPage = ({ spinner, setLoading }) => {
 	useEffect(() => {
 		if (!trainees || trainees.length === 0) {
 			setLoading(true);
-			const getTrainees = async () => {
-				try {
-					const data = await helpHttp().get(`${urlTrainees}?userId=${user.id}`);
-					setTrainees(data);
-					setLoading(false);
-				} catch (error) {
-					console.log(error);
+			getTraineesByUserId(user.id).then((res) => {
+				if (res) {
+					setTrainees(res);
 					setLoading(false);
 				}
-			};
-			getTrainees();
+			});
 		}
 	}, []);
 
 	const onClickHandlerDelTrainee = (id) => {
 		const msj = confirm('Desea eliminar el alumno');
-		if (msj) delTrainee(id, trainees, setTrainees);
+		if (msj)
+			delTrainee(id, trainees, setTrainees).then((res) => {
+				const newData = trainees.filter((trainee) => trainee.id !== id);
+				setTrainees(newData);
+			});
 	};
 
 	return (
