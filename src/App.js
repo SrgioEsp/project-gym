@@ -6,6 +6,7 @@ import MainPage from './pages/MainPage';
 import TraineesPage from './pages/TraineesPage';
 import NotFoundPage from './pages/NotFoundPage';
 import TraineePage from './pages/TraineePage';
+import { storage } from './storage';
 
 import './App.css';
 import { AppContext } from './contexts/AppContext';
@@ -15,13 +16,19 @@ function App() {
 	const [trainees, setTrainees] = useState([]);
 	const [loading, setLoading] = useState(false);
 
+	if (storage.get('user_session')) {
+		if (!user) {
+			setUser(storage.get('user_session'));
+		}
+	}
+
 	return (
 		<AppContext.Provider value={{ user, setUser, trainees, setTrainees }}>
 			<p>Project GYM</p>
 			<Router>
 				<Routes>
 					<Route path='/' element={<WelcomePage></WelcomePage>} />
-					<Route path='/login' element={<LoginPage></LoginPage>} />
+					{!user && <Route path='/login' element={<LoginPage></LoginPage>} />}
 					{user && (
 						<Route
 							path='/home'
@@ -33,7 +40,12 @@ function App() {
 					{user && (
 						<Route
 							path='/trainees'
-							element={<TraineesPage spinner={loading}></TraineesPage>}
+							element={
+								<TraineesPage
+									spinner={loading}
+									setLoading={setLoading}
+								></TraineesPage>
+							}
 						/>
 					)}
 					{user && (

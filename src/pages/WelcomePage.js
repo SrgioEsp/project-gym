@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import WelcomeScreen from '../components/WelcomeScreen';
 import { Link } from 'react-router-dom';
 import { Col, Container, Row } from 'react-bootstrap';
+import { storage } from './../storage';
 
 const WelcomePage = (props) => {
 	return (
@@ -10,7 +11,10 @@ const WelcomePage = (props) => {
 			<Row>
 				<Col>
 					<WelcomeScreen>
-						<Link to={'/login'} className='btn btn-primary'>
+						<Link
+							to={storage.get('user_session') ? '/home' : '/login'}
+							className='btn btn-primary'
+						>
 							Entrar
 						</Link>
 					</WelcomeScreen>

@@ -3,20 +3,33 @@ import PropTypes from 'prop-types';
 import AppFrame from '../components/AppFrame';
 import { Row, Col } from 'react-bootstrap';
 import TraineeList from '../components/TraineeList/TraineeList';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { BsFillPersonPlusFill } from 'react-icons/bs';
 import Spinner from '../components/Spinner';
 import { delTrainee } from '../actions/TraineeActions';
 import { AppContext } from '../contexts/AppContext';
+import { helpHttp } from './../helpers/helpHttp';
+import { urlTrainees } from './../api/urls';
 
-const TraineesPage = ({ spinner }) => {
-	const { trainees, setTrainees } = useContext(AppContext);
-	const navigate = useNavigate();
+const TraineesPage = ({ spinner, setLoading }) => {
+	const { trainees, setTrainees, user } = useContext(AppContext);
 
-	// You should call navigate() in a React.useEffect(), not when your component is first rendered.
-	// useEffect(() => {
-	// 	if (!trainees || trainees.length === 0) navigate('/home');
-	// }, []);
+	useEffect(() => {
+		if (!trainees || trainees.length === 0) {
+			setLoading(true);
+			const getTrainees = async () => {
+				try {
+					const data = await helpHttp().get(`${urlTrainees}?userId=${user.id}`);
+					setTrainees(data);
+					setLoading(false);
+				} catch (error) {
+					console.log(error);
+					setLoading(false);
+				}
+			};
+			getTrainees();
+		}
+	}, []);
 
 	const onClickHandlerDelTrainee = (id) => {
 		const msj = confirm('Desea eliminar el alumno');
@@ -56,6 +69,7 @@ const TraineesPage = ({ spinner }) => {
 
 TraineesPage.propTypes = {
 	spinner: PropTypes.bool.isRequired,
+	setLoading: PropTypes.func.isRequired,
 };
 
 export default TraineesPage;

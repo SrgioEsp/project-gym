@@ -7,6 +7,7 @@ import { Col, Container, Row } from 'react-bootstrap';
 import { helpHttp } from './../../helpers/helpHttp';
 import { urlUsers } from '../../api/urls';
 import { AppContext } from '../../contexts/AppContext';
+import { storage } from '../../storage';
 
 const validate = (nombre, pass) => {
 	if (nombre === '') return 'Introduzca usuario';
@@ -22,6 +23,7 @@ const login = async (data, navigate, setIsInvalid, setUsers, setUser) => {
 			);
 			if (user.length !== 0) {
 				setUser({ id: user[0].id, name: user[0].name });
+				storage.set('user_session', { id: user[0].id, name: user[0].name });
 				navigate('/home');
 			} else {
 				setIsInvalid(true);
@@ -52,6 +54,7 @@ const LoginForm = (props) => {
 			);
 			if (user.length !== 0) {
 				setUser({ id: user[0].id, name: user[0].name });
+				storage.set('user_session', { id: user[0].id, name: user[0].name });
 				navigate('/home');
 			} else {
 				setIsInvalid(true);
