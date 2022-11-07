@@ -51,7 +51,17 @@ function App() {
 					{user && (
 						<Route path='/trainees/new' element={<TraineePage></TraineePage>} />
 					)}
-					{/* <Route path='/trainees/:id' element={<TraineePage></TraineePage>} />F */}
+					{user && (
+						<Route
+							path='/trainees/:name'
+							element={
+								<TraineePage
+									spinner={loading}
+									setLoading={setLoading}
+								></TraineePage>
+							}
+						/>
+					)}
 					<Route path='*' element={<NotFoundPage></NotFoundPage>} />
 				</Routes>
 			</Router>

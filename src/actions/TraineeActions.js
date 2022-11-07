@@ -1,6 +1,18 @@
 import { urlTrainees } from '../api/urls';
 import { helpHttp } from '../helpers/helpHttp';
 
+export const getTrainee = async (id) => {
+	let result;
+	try {
+		const res = await helpHttp().get(`${urlTrainees}/${id}`);
+		result = res;
+	} catch (error) {
+		console.log(error);
+		result = error;
+	}
+	return result;
+};
+
 export const createTrainee = async (data) => {
 	let result;
 	try {

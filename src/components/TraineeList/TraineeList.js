@@ -5,32 +5,42 @@ import { formatDate } from '../../utils';
 import { Button, Col, Row } from 'react-bootstrap';
 import { BsFillPersonXFill } from 'react-icons/bs';
 import { AppContext } from '../../contexts/AppContext';
+import { useNavigate } from 'react-router-dom';
 
-const renderTrainee = (eventOnClickTrainee, trainee, currentDayFormat) => {
+const renderTrainee = (
+	eventOnClickTrainee,
+	trainee,
+	currentDayFormat,
+	navigate
+) => {
 	return (
-		<li key={trainee.id}>
-			<Row>
-				<Col>
+		<Row key={trainee.id}>
+			<Col>
+				<li
+					onClick={() => navigate(`/trainees/${trainee.name}?id=${trainee.id}`)}
+				>
 					<TraineeInfo trainee={trainee}></TraineeInfo>
-				</Col>
-				<Col xs='auto'>
-					{!currentDayFormat && (
-						<Button
-							variant='danger'
-							size='sm'
-							onClick={() => eventOnClickTrainee(trainee.id)}
-						>
-							Eliminar <BsFillPersonXFill></BsFillPersonXFill>
-						</Button>
-					)}
-				</Col>
-			</Row>
-		</li>
+				</li>
+			</Col>
+			<Col xs='auto'>
+				{!currentDayFormat && (
+					<Button
+						variant='danger'
+						size='sm'
+						onClick={() => eventOnClickTrainee(trainee.id)}
+					>
+						Eliminar <BsFillPersonXFill></BsFillPersonXFill>
+					</Button>
+				)}
+			</Col>
+		</Row>
 	);
 };
 
 const TraineeList = ({ onClickTrainee, currentDay }) => {
 	let { trainees } = useContext(AppContext);
+	const navigate = useNavigate();
+
 	let currentDayFormat = '';
 	if (currentDay && typeof currentDay === 'object') {
 		currentDayFormat = formatDate(currentDay);
@@ -47,7 +57,12 @@ const TraineeList = ({ onClickTrainee, currentDay }) => {
 					<ul>
 						{trainees.length !== 0 ? (
 							trainees.map((trainee) =>
-								renderTrainee(onClickTrainee, trainee, currentDayFormat)
+								renderTrainee(
+									onClickTrainee,
+									trainee,
+									currentDayFormat,
+									navigate
+								)
 							)
 						) : (
 							<p className='text-danger'>No se han encontrado alumnos</p>
