@@ -11,7 +11,7 @@ export const getLoginUser = async (data) => {
 		const res = await helpHttp().post(urlUsers, options);
 		result = res;
 	} catch (error) {
-		console.log(error);
+		console.error(error);
 		result = error;
 	}
 	return result;

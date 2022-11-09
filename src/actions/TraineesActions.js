@@ -13,7 +13,7 @@ export const getTraineesByUserId = async (userId) => {
 			});
 	} catch (error) {
 		console.log(error);
-		result = error;
+		result = [];
 	}
 	return result;
 };
