@@ -1,70 +1,45 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-
 import { useNavigate } from 'react-router-dom';
 import { Col, Container, Row } from 'react-bootstrap';
-
-import { helpHttp } from './../../helpers/helpHttp';
-import { urlUsers } from '../../api/urls';
 import { AppContext } from '../../contexts/AppContext';
 import { storage } from '../../storage';
+import { getLoginUser } from '../../actions/UserActions';
 
-const validate = (nombre, pass) => {
-	if (nombre === '') return 'Introduzca usuario';
-	if (pass === '') return 'Introduzca contraseña';
+const validate = (name, password) => {
+	if (name === '') return 'Introduzca usuario';
+	if (password === '') return 'Introduzca contraseña';
 };
 
-const login = async (data, navigate, setIsInvalid, setUsers, setUser) => {
-	try {
-		const res = await helpHttp().get(urlUsers);
-		if (res) {
-			const user = res.filter(
-				(user) => user.name === data.nombre && user.password === data.pass
-			);
-			if (user.length !== 0) {
-				setUser({ id: user[0].id, name: user[0].name });
-				storage.set('user_session', { id: user[0].id, name: user[0].name });
-				navigate('/home');
-			} else {
-				setIsInvalid(true);
-				setUsers(res);
-			}
+const login = async (data, navigate, setIsInvalid, setUser) => {
+	getLoginUser(data).then((res) => {
+		if (res && res.id && res.name) {
+			setUser(res);
+			storage.set('user_session', res);
+			navigate('/home');
+		} else {
+			setIsInvalid(true);
 		}
-	} catch (error) {
-		console.log(error);
-	}
+	});
 };
 
 const LoginForm = (props) => {
 	const { setUser } = useContext(AppContext);
 
-	const [nombre, setNombre] = useState('');
-	const [pass, setPass] = useState('');
+	const [name, setName] = useState('');
+	const [password, setPassword] = useState('');
 	const [isInvalid, setIsInvalid] = useState(false);
-	const [users, setUsers] = useState(null);
+	// const [users, setUsers] = useState(null);
 	const navigate = useNavigate();
 
-	const errMsg = validate(nombre, pass);
+	const errMsg = validate(name, password);
 
 	const onSubmitHandler = (ev) => {
 		ev.preventDefault();
-		if (users) {
-			const user = users.filter(
-				(user) => user.name === nombre && user.password === pass
-			);
-			if (user.length !== 0) {
-				setUser({ id: user[0].id, name: user[0].name });
-				storage.set('user_session', { id: user[0].id, name: user[0].name });
-				navigate('/home');
-			} else {
-				setIsInvalid(true);
-			}
-		} else {
-			login({ nombre, pass }, navigate, setIsInvalid, setUsers, setUser);
-		}
+		login({ name, password }, navigate, setIsInvalid, setUser);
 	};
 
-	validate(nombre, pass);
+	validate(name, password);
 
 	return (
 		<Container>
@@ -81,11 +56,11 @@ const LoginForm = (props) => {
 							<Col xs='auto'>
 								<input
 									type='text'
-									name='nombre'
+									name='name'
 									placeholder='Nombre de Usuario'
 									autoComplete='off'
-									value={nombre}
-									onChange={(ev) => setNombre(ev.target.value)}
+									value={name}
+									onChange={(ev) => setName(ev.target.value)}
 									onFocus={(ev) => {
 										if (isInvalid) setIsInvalid(false);
 									}}
@@ -96,10 +71,10 @@ const LoginForm = (props) => {
 							<Col xs='auto'>
 								<input
 									type='password'
-									name='pass'
+									name='password'
 									placeholder='Contraseña'
-									value={pass}
-									onChange={(ev) => setPass(ev.target.value)}
+									value={password}
+									onChange={(ev) => setPassword(ev.target.value)}
 									onFocus={(ev) => {
 										if (isInvalid) setIsInvalid(false);
 									}}

@@ -1,10 +1,10 @@
-import { urlTrainees } from '../api/urls';
+import { urlTrainee } from '../api/urls';
 import { helpHttp } from '../helpers/helpHttp';
 
 export const getTrainee = async (id) => {
 	let result;
 	try {
-		const res = await helpHttp().get(`${urlTrainees}/${id}`);
+		const res = await helpHttp().get(`${urlTrainee}/${id}`);
 		result = res;
 	} catch (error) {
 		console.log(error);
@@ -20,7 +20,7 @@ export const createTrainee = async (data) => {
 			body: data,
 			headers: { 'content-type': 'application/json' },
 		};
-		const res = await helpHttp().post(urlTrainees, options);
+		const res = await helpHttp().post(urlTrainee, options);
 		result = res;
 	} catch (error) {
 		console.log(error);
@@ -32,7 +32,7 @@ export const createTrainee = async (data) => {
 export const delTrainee = async (id) => {
 	let result;
 	try {
-		const res = await helpHttp().del(`${urlTrainees}/${id}`);
+		const res = await helpHttp().del(`${urlTrainee}/${id}`);
 		result = res;
 	} catch (error) {
 		console.log(error);
