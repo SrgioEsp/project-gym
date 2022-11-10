@@ -40,3 +40,15 @@ export const delTrainee = async (id) => {
 	}
 	return result;
 };
+
+export const updateTrainee = async (id) => {
+	let result;
+	try {
+		const res = await helpHttp().put(`${urlTrainee}/${id}`);
+		result = res;
+	} catch (error) {
+		console.log(error);
+		result = error;
+	}
+	return result;
+};
