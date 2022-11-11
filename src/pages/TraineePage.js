@@ -4,8 +4,6 @@ import AppFrame from '../components/AppFrame';
 import { Col, Row } from 'react-bootstrap';
 import TraineeForm from '../components/TraineeForm/TraineeForm';
 import { Link, useLocation } from 'react-router-dom';
-import TraineeData from '../components/TraineeData/TraineeData';
-import { TraineeContext } from '../contexts/TraineeContext';
 import { getTrainee } from '../actions/TraineeActions';
 import Spinner from '../components/Spinner';
 
@@ -23,11 +21,11 @@ const TraineePage = ({ spinner, setLoading }) => {
 				setLoading(false);
 			});
 		}
-	}, []);
+	}, [setTrainee, setLoading]);
 
 	return (
 		<AppFrame>
-			<TraineeContext.Provider value={{ trainee, setTrainee }}>
+			<div>
 				<Row>
 					<Col xs='auto'>
 						<Link to={'/trainees'} className='btn btn-primary'>
@@ -35,23 +33,19 @@ const TraineePage = ({ spinner, setLoading }) => {
 						</Link>
 					</Col>
 				</Row>
-				{!id && (
+				{!spinner ? (
 					<Row className='justify-content-center'>
 						<Col xs='auto'>
-							<TraineeForm></TraineeForm>
-						</Col>
-					</Row>
-				)}
-				{id && !spinner ? (
-					<Row className='justify-content-center'>
-						<Col xs='auto'>
-							<TraineeData id={id}></TraineeData>
+							<TraineeForm
+								trainee={trainee}
+								setTrainee={setTrainee}
+							></TraineeForm>
 						</Col>
 					</Row>
 				) : (
-					spinner && <Spinner></Spinner>
+					<Spinner></Spinner>
 				)}
-			</TraineeContext.Provider>
+			</div>
 		</AppFrame>
 	);
 };

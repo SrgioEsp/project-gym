@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Col, Row } from 'react-bootstrap';
 import { createTrainee } from '../../actions/TraineeActions';
-import { formatDate } from '../../utils';
+import { formatDate, inputDateFormat } from '../../utils';
 import { AppContext } from '../../contexts/AppContext';
 
 const emptyFields = (setName, setfechaEntrada, ev) => {
@@ -18,7 +18,7 @@ const validate = (nombre, fechaEntrada) => {
 	if (!fechaEntrada) return 'Introduzca una fecha';
 };
 
-const TraineeForm = () => {
+const TraineeForm = ({ trainee, setTrainee }) => {
 	const { trainees, setTrainees, user } = useContext(AppContext);
 	const [name, setName] = useState('');
 	const [fechaEntrada, setfechaEntrada] = useState('');
@@ -37,18 +37,20 @@ const TraineeForm = () => {
 		const edad = ev.target.edad.value;
 		const peso = ev.target.peso.value;
 		const altura = ev.target.altura.value;
-		createTrainee({
-			name,
-			date,
-			edad,
-			peso,
-			altura,
-			userId: user.id,
-		}).then((res) => {
-			setTrainees([...trainees, res]);
-			setMsgAdd('Alumno creado correctamente');
-			emptyFields(setName, setfechaEntrada, ev);
-		});
+		if (!trainee) {
+			createTrainee({
+				name,
+				date,
+				edad,
+				peso,
+				altura,
+				userId: user.id,
+			}).then((res) => {
+				setTrainees([...trainees, res]);
+				setMsgAdd('Alumno creado correctamente');
+				emptyFields(setName, setfechaEntrada, ev);
+			});
+		}
 	};
 
 	return (
@@ -67,8 +69,10 @@ const TraineeForm = () => {
 						name='nombre'
 						placeholder='Nombre Alumno'
 						autoComplete='off'
-						value={name}
-						onChange={(ev) => setName(ev.target.value)}
+						value={trainee ? trainee.name : name}
+						onChange={(ev) => {
+							setName(ev.target.value);
+						}}
 					/>
 				</Col>
 			</Row>
@@ -77,8 +81,10 @@ const TraineeForm = () => {
 					<input
 						type='date'
 						name='fechaEntrada'
-						value={fechaEntrada}
-						onChange={(ev) => setfechaEntrada(ev.target.value)}
+						value={trainee ? inputDateFormat(trainee.date) : fechaEntrada}
+						onChange={(ev) => {
+							setfechaEntrada(ev.target.value);
+						}}
 					/>
 				</Col>
 			</Row>
@@ -89,6 +95,8 @@ const TraineeForm = () => {
 						name='edad'
 						autoComplete='off'
 						placeholder='Edad'
+						value={trainee ? trainee.edad : ''}
+						onChange={(ev) => {}}
 					/>
 				</Col>
 			</Row>
@@ -99,6 +107,8 @@ const TraineeForm = () => {
 						name='peso'
 						autoComplete='off'
 						placeholder='Peso'
+						value={trainee ? trainee.peso : ''}
+						onChange={(ev) => {}}
 					/>
 				</Col>
 			</Row>
@@ -109,31 +119,38 @@ const TraineeForm = () => {
 						name='altura'
 						autoComplete='off'
 						placeholder='Altura'
+						value={trainee ? trainee.altura : ''}
+						onChange={(ev) => {}}
 					/>
 				</Col>
 			</Row>
 			<Row>
 				<Col xs='auto'>
 					<Button type='submit' disabled={errMsg} variant='success' size='sm'>
-						Añadir
+						{trainee ? 'Editar' : 'Añadir'}
 					</Button>
-					<Button
-						type='reset'
-						variant='danger'
-						size='sm'
-						onClick={() => {
-							setName('');
-							setfechaEntrada('');
-						}}
-					>
-						Cancelar
-					</Button>
+					{!trainee && (
+						<Button
+							type='reset'
+							variant='danger'
+							size='sm'
+							onClick={() => {
+								setName('');
+								setfechaEntrada('');
+							}}
+						>
+							Cancelar
+						</Button>
+					)}
 				</Col>
 			</Row>
 		</form>
 	);
 };
 
-TraineeForm.propTypes = {};
+TraineeForm.propTypes = {
+	trainee: PropTypes.any,
+	setTrainee: PropTypes.func,
+};
 
 export default TraineeForm;

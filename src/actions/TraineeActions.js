@@ -8,7 +8,7 @@ export const getTrainee = async (id) => {
 		result = res;
 	} catch (error) {
 		console.log(error);
-		result = error;
+		result = null;
 	}
 	return result;
 };
