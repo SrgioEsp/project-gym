@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AppFrame from '../components/AppFrame';
 import { Row, Col } from 'react-bootstrap';
@@ -7,9 +7,33 @@ import Spinner from '../components/Spinner';
 
 import GroupList from '../components/GroupList/GroupList';
 import { AppContext } from '../contexts/AppContext';
+import { getGroupsByUserId } from '../actions/GroupsActions';
+import { getTraineesByUserId } from '../actions/TraineesActions';
 
 const GroupsPage = ({ spinner, setLoading }) => {
-	const { groups, setGroups } = useContext(AppContext);
+	const { groups, setGroups, user, trainees, setTrainees } =
+		useContext(AppContext);
+
+	useEffect(() => {
+		if (!trainees || trainees.length === 0) {
+			setLoading(true);
+			getTraineesByUserId(user.id).then((res) => {
+				if (res) {
+					setTrainees(res);
+					setLoading(false);
+				}
+			});
+		}
+		if (!groups || groups.length === 0) {
+			setLoading(true);
+			getGroupsByUserId(user.id).then((res) => {
+				if (res) {
+					setGroups(res);
+					setLoading(false);
+				}
+			});
+		}
+	}, [trainees, setLoading, setTrainees, groups, setGroups]);
 
 	const onClickHandlerDelGroup = (id) => {
 		const msj = confirm('Desea eliminar el grupo');
