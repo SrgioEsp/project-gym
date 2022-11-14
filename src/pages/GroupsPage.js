@@ -1,0 +1,62 @@
+import React, { useContext } from 'react';
+import PropTypes from 'prop-types';
+import AppFrame from '../components/AppFrame';
+import { Row, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import Spinner from '../components/Spinner';
+
+import GroupList from '../components/GroupList/GroupList';
+import { AppContext } from '../contexts/AppContext';
+
+const GroupsPage = ({ spinner, setLoading }) => {
+	const { groups, setGroups } = useContext(AppContext);
+
+	const onClickHandlerDelGroup = (id) => {
+		const msj = confirm('Desea eliminar el grupo');
+		if (msj)
+			delGroup(id, groups, setGroups).then((res) => {
+				const newData = groups.filter((group) => group.id !== id);
+				setGroups(newData);
+			});
+	};
+
+	return (
+		<AppFrame>
+			<Row>
+				<Col>
+					<Link to={'/home'} className='btn btn-primary'>
+						Atrás
+					</Link>
+				</Col>
+				<Col>
+					<h5>GRUPOS</h5>
+				</Col>
+				<Col xs='auto'>
+					<Link to='/groups/new' className='btn btn-success'>
+						Añadir
+					</Link>
+				</Col>
+			</Row>
+			<Row className='mt-3'>
+				<Col xs='auto'>
+					{groups && !spinner ? (
+						<GroupList
+							onClickGroup={(id) => {
+								// onClickHandlerDelGroup(id);
+							}}
+						></GroupList>
+					) : (
+						<Spinner></Spinner>
+					)}
+				</Col>
+			</Row>
+		</AppFrame>
+	);
+};
+
+GroupsPage.propTypes = {
+	spinner: PropTypes.bool.isRequired,
+	setLoading: PropTypes.func.isRequired,
+};
+
+export default GroupsPage;

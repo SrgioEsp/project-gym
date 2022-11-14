@@ -13,8 +13,8 @@ import GroupSelect from '../components/GroupSelect/GroupSelect';
 import GroupForm from '../components/GroupForm/GroupForm';
 
 const MainPage = ({ spinner, setLoading }) => {
-	const [groups, setGroups] = useState('');
-	const { trainees, setTrainees, user } = useContext(AppContext);
+	const { trainees, setTrainees, user, groups, setGroups } =
+		useContext(AppContext);
 	const [calendarDay, onChangeCalendarDay] = useState(new Date());
 
 	useEffect(() => {
@@ -27,7 +27,7 @@ const MainPage = ({ spinner, setLoading }) => {
 				}
 			});
 		}
-		if (!groups) {
+		if (!groups || trainees.length === 0) {
 			setLoading(true);
 			getGroupsByUserId(user.id).then((res) => {
 				if (res) {
@@ -73,6 +73,13 @@ const MainPage = ({ spinner, setLoading }) => {
 				</Col>
 			</Row>
 
+			<Row className='justify-content-center mt-3'>
+				<Col xs='auto'>
+					<Link to={'/groups'} className='btn btn-success'>
+						Grupos
+					</Link>
+				</Col>
+			</Row>
 			<Row className='justify-content-center mt-3'>
 				<Col xs='auto'>
 					<p>Crear nuevo Grupo</p>
