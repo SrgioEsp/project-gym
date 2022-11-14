@@ -76,7 +76,7 @@ const MainPage = ({ spinner, setLoading }) => {
 			<Row className='justify-content-center mt-3'>
 				<Col xs='auto'>
 					<p>Crear nuevo Grupo</p>
-					<GroupForm currentDay={calendarDay}></GroupForm>
+					<GroupForm groups={groups} setGroups={setGroups}></GroupForm>
 				</Col>
 			</Row>
 		</AppFrame>

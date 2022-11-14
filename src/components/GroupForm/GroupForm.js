@@ -9,7 +9,7 @@ const getSelectedValues = (eleId) => {
 	return document.querySelectorAll(`#${eleId} option:checked`);
 };
 
-const GroupForm = ({ currentDay }) => {
+const GroupForm = ({ groups, setGroups }) => {
 	const { trainees, user } = useContext(AppContext);
 	const onSubmitHandler = (ev) => {
 		ev.preventDefault();
@@ -29,7 +29,10 @@ const GroupForm = ({ currentDay }) => {
 				groupType,
 				name,
 				days,
-			}).then((res) => console.log(res));
+			}).then((res) => {
+				console.log(res);
+				setGroups([...groups, res]);
+			});
 		}
 	};
 	return (
@@ -110,7 +113,8 @@ const GroupForm = ({ currentDay }) => {
 };
 
 GroupForm.propTypes = {
-	currentDay: PropTypes.object.isRequired,
+	groups: PropTypes.any.isRequired,
+	setGroups: PropTypes.func.isRequired,
 };
 
 export default GroupForm;
