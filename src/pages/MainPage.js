@@ -8,8 +8,11 @@ import { Link } from 'react-router-dom';
 import Spinner from './../components/Spinner';
 import { AppContext } from '../contexts/AppContext';
 import { getTraineesByUserId } from '../actions/TraineesActions';
+import { getGroupsByUserId } from '../actions/GroupsActions';
+import GroupSelect from '../components/GroupSelect/GroupSelect';
 
 const MainPage = ({ spinner, setLoading }) => {
+	const [groups, setGroups] = useState('');
 	const { trainees, setTrainees, user } = useContext(AppContext);
 	const [calendarDay, onChangeCalendarDay] = useState(new Date());
 
@@ -23,7 +26,16 @@ const MainPage = ({ spinner, setLoading }) => {
 				}
 			});
 		}
-	}, []);
+		if (!groups || groups.length === 0) {
+			setLoading(true);
+			getGroupsByUserId(user.id).then((res) => {
+				if (res) {
+					setGroups(res);
+					setLoading(false);
+				}
+			});
+		}
+	}, [trainees, setLoading, setTrainees, groups, setGroups]);
 
 	return (
 		<AppFrame>
@@ -35,7 +47,7 @@ const MainPage = ({ spinner, setLoading }) => {
 					></Calendar>
 				</Col>
 			</Row>
-			<Row>
+			{/* <Row>
 				<Col>
 					{trainees && !spinner ? (
 						<TraineeList
@@ -45,6 +57,15 @@ const MainPage = ({ spinner, setLoading }) => {
 					) : (
 						<Spinner></Spinner>
 					)}
+				</Col>
+			</Row> */}
+			<Row className='justify-content-center mt-3'>
+				<Col xs='auto'>
+					<GroupSelect
+						groups={groups}
+						setGroups={setGroups}
+						currentDay={calendarDay}
+					></GroupSelect>
 				</Col>
 			</Row>
 			<Row className='justify-content-center mt-3'>
