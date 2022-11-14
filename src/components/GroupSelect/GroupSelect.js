@@ -43,7 +43,7 @@ const renderGroup = (group, trainees) => {
 	);
 };
 
-const GroupSelect = ({ groups }) => {
+const GroupSelect = ({ groups, currentDay }) => {
 	const { trainees } = useContext(AppContext);
 	const [groupType, setGroupType] = useState('');
 	return (
@@ -67,7 +67,11 @@ const GroupSelect = ({ groups }) => {
 					<ul>
 						{groups && groups.length !== 0 ? (
 							groups
-								.filter((group) => group.groupType === groupType)
+								.filter(
+									(group) =>
+										group.groupType === groupType &&
+										group.days.includes(currentDay.getDay())
+								)
 								.map((group) => renderGroup(group, trainees))
 						) : (
 							<p className='text-danger'>No se han encontrado alumnos</p>

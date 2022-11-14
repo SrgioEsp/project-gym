@@ -2,25 +2,33 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Col, Row } from 'react-bootstrap';
 import { AppContext } from '../../contexts/AppContext';
-import { formatDate } from '../../utils';
 import { GROUP_TYPES } from '../../constants';
 import { createGroup } from '../../actions/GroupsActions';
+
+const getSelectedValues = (eleId) => {
+	return document.querySelectorAll(`#${eleId} option:checked`);
+};
 
 const GroupForm = ({ currentDay }) => {
 	const { trainees, user } = useContext(AppContext);
 	const onSubmitHandler = (ev) => {
 		ev.preventDefault();
-		const date = formatDate(currentDay);
 		const name = ev.target.name.value;
-		const traineeId = ev.target.selectTrainee.value;
 		const groupType = ev.target.groupType.value;
-		if (name && traineeId && groupType) {
+
+		const selectedTrainees = getSelectedValues('traineeSelector');
+		const selectedDays = getSelectedValues('daySelector');
+
+		const traineeIds = Array.from(selectedTrainees).map((el) => el.value);
+		const days = Array.from(selectedDays).map((el) => Number(el.value));
+
+		if (name && traineeIds && groupType && days) {
 			createGroup({
 				userId: user.id,
-				trainees: [traineeId],
+				trainees: traineeIds,
 				groupType,
 				name,
-				date,
+				days,
 			}).then((res) => console.log(res));
 		}
 	};
@@ -39,10 +47,11 @@ const GroupForm = ({ currentDay }) => {
 			<Row>
 				<Col>
 					<select
+						multiple
+						id='traineeSelector'
 						className='form-select'
 						name='selectTrainee'
 						aria-label='Floating label select example'
-						onChange={(ev) => {}}
 					>
 						<option disabled>Alumnos</option>
 						{trainees.map((trainee) => {
@@ -52,6 +61,25 @@ const GroupForm = ({ currentDay }) => {
 								</option>
 							);
 						})}
+					</select>
+				</Col>
+			</Row>
+			<Row>
+				<Col>
+					<select
+						multiple
+						id='daySelector'
+						className='form-select'
+						name='selectDays'
+						aria-label='Floating label select example'
+					>
+						<option value={1}>Lunes</option>
+						<option value={2}>Martes</option>
+						<option value={3}>Miercoes</option>
+						<option value={4}>Jueves</option>
+						<option value={5}>Viernes</option>
+						<option value={6}>Sabado</option>
+						<option value={0}>Domingo</option>
 					</select>
 				</Col>
 			</Row>

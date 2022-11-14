@@ -27,7 +27,7 @@ const MainPage = ({ spinner, setLoading }) => {
 				}
 			});
 		}
-		if (!groups || groups.length === 0) {
+		if (!groups) {
 			setLoading(true);
 			getGroupsByUserId(user.id).then((res) => {
 				if (res) {
