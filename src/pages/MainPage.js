@@ -10,6 +10,7 @@ import { AppContext } from '../contexts/AppContext';
 import { getTraineesByUserId } from '../actions/TraineesActions';
 import { getGroupsByUserId } from '../actions/GroupsActions';
 import GroupSelect from '../components/GroupSelect/GroupSelect';
+import GroupForm from '../components/GroupForm/GroupForm';
 
 const MainPage = ({ spinner, setLoading }) => {
 	const [groups, setGroups] = useState('');
@@ -61,11 +62,7 @@ const MainPage = ({ spinner, setLoading }) => {
 			</Row> */}
 			<Row className='justify-content-center mt-3'>
 				<Col xs='auto'>
-					<GroupSelect
-						groups={groups}
-						setGroups={setGroups}
-						currentDay={calendarDay}
-					></GroupSelect>
+					<GroupSelect groups={groups} currentDay={calendarDay}></GroupSelect>
 				</Col>
 			</Row>
 			<Row className='justify-content-center mt-3'>
@@ -73,6 +70,13 @@ const MainPage = ({ spinner, setLoading }) => {
 					<Link to={'/trainees'} className='btn btn-primary'>
 						Alumnos
 					</Link>
+				</Col>
+			</Row>
+
+			<Row className='justify-content-center mt-3'>
+				<Col xs='auto'>
+					<p>Crear nuevo Grupo</p>
+					<GroupForm currentDay={calendarDay}></GroupForm>
 				</Col>
 			</Row>
 		</AppFrame>

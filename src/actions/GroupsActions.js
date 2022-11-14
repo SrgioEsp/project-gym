@@ -1,4 +1,4 @@
-import { urlGroups } from '../api/urls';
+import { urlGroup, urlGroups } from '../api/urls';
 import { helpHttp } from '../helpers/helpHttp';
 
 export const getGroupsByUserId = async (userId) => {
@@ -14,6 +14,22 @@ export const getGroupsByUserId = async (userId) => {
 	} catch (error) {
 		console.log(error);
 		result = [];
+	}
+	return result;
+};
+
+export const createGroup = async (data) => {
+	let result;
+	try {
+		const options = {
+			body: data,
+			headers: { 'content-type': 'application/json' },
+		};
+		const res = await helpHttp().post(urlGroup, options);
+		result = res;
+	} catch (error) {
+		console.log(error);
+		result = error;
 	}
 	return result;
 };

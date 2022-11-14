@@ -19,7 +19,7 @@ const renderTrainee = (filteredTrainee) => {
 	}
 };
 
-const renderGroup = (group, trainees, currentDay) => {
+const renderGroup = (group, trainees) => {
 	return (
 		<Row key={group.id}>
 			<Col>
@@ -29,9 +29,7 @@ const renderGroup = (group, trainees, currentDay) => {
 						{group.trainees && group.trainees !== 0 ? (
 							group.trainees.map((traineeId) => {
 								const filteredTrainee = trainees.filter(
-									(trainee) =>
-										trainee.id === traineeId &&
-										trainee.date === formatDate(currentDay)
+									(trainee) => trainee.id === traineeId
 								);
 								return renderTrainee(filteredTrainee);
 							})
@@ -45,7 +43,7 @@ const renderGroup = (group, trainees, currentDay) => {
 	);
 };
 
-const GroupSelect = ({ groups, setGroups, currentDay }) => {
+const GroupSelect = ({ groups }) => {
 	const { trainees } = useContext(AppContext);
 	const [groupType, setGroupType] = useState('');
 	return (
@@ -70,7 +68,7 @@ const GroupSelect = ({ groups, setGroups, currentDay }) => {
 						{groups && groups.length !== 0 ? (
 							groups
 								.filter((group) => group.groupType === groupType)
-								.map((group) => renderGroup(group, trainees, currentDay))
+								.map((group) => renderGroup(group, trainees))
 						) : (
 							<p className='text-danger'>No se han encontrado alumnos</p>
 						)}
@@ -83,7 +81,6 @@ const GroupSelect = ({ groups, setGroups, currentDay }) => {
 
 GroupSelect.propTypes = {
 	groups: PropTypes.any,
-	setGroups: PropTypes.func.isRequired,
 	currentDay: PropTypes.object.isRequired,
 };
 
