@@ -36,7 +36,7 @@ const MainPage = ({ spinner, setLoading }) => {
 				}
 			});
 		}
-	}, [trainees, setLoading, setTrainees, groups, setGroups]);
+	}, []);
 
 	return (
 		<AppFrame>
@@ -62,7 +62,11 @@ const MainPage = ({ spinner, setLoading }) => {
 			</Row> */}
 			<Row className='justify-content-center mt-3'>
 				<Col xs='auto'>
-					<GroupSelect groups={groups} currentDay={calendarDay}></GroupSelect>
+					{groups && !spinner ? (
+						<GroupSelect groups={groups} currentDay={calendarDay}></GroupSelect>
+					) : (
+						<Spinner></Spinner>
+					)}
 				</Col>
 			</Row>
 			<Row className='justify-content-center mt-3'>
@@ -82,8 +86,14 @@ const MainPage = ({ spinner, setLoading }) => {
 			</Row>
 			<Row className='justify-content-center mt-3'>
 				<Col xs='auto'>
-					<p>Crear nuevo Grupo</p>
-					<GroupForm groups={groups} setGroups={setGroups}></GroupForm>
+					{trainees && !spinner ? (
+						<div>
+							<p>Crear nuevo Grupo</p>
+							<GroupForm groups={groups} setGroups={setGroups}></GroupForm>
+						</div>
+					) : (
+						<Spinner></Spinner>
+					)}
 				</Col>
 			</Row>
 		</AppFrame>

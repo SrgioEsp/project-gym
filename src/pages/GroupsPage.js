@@ -33,7 +33,7 @@ const GroupsPage = ({ spinner, setLoading }) => {
 				}
 			});
 		}
-	}, [trainees, setLoading, setTrainees, groups, setGroups]);
+	}, []);
 
 	const onClickHandlerDelGroup = (id) => {
 		const msj = confirm('Desea eliminar el grupo');

@@ -74,7 +74,7 @@ const GroupSelect = ({ groups, currentDay }) => {
 								)
 								.map((group) => renderGroup(group, trainees))
 						) : (
-							<p className='text-danger'>No se han encontrado alumnos</p>
+							<p className='text-danger'>No se han encontrado grupos</p>
 						)}
 					</ul>
 				</Col>
