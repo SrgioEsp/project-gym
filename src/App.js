@@ -10,10 +10,12 @@ import { storage } from './storage';
 
 import './App.css';
 import { AppContext } from './contexts/AppContext';
+import GroupsPage from './pages/GroupsPage';
 
 function App() {
 	const [user, setUser] = useState(null);
 	const [trainees, setTrainees] = useState([]);
+	const [groups, setGroups] = useState([]);
 	const [loading, setLoading] = useState(false);
 
 	if (storage.get('user_session')) {
@@ -23,7 +25,9 @@ function App() {
 	}
 
 	return (
-		<AppContext.Provider value={{ user, setUser, trainees, setTrainees }}>
+		<AppContext.Provider
+			value={{ user, setUser, trainees, setTrainees, groups, setGroups }}
+		>
 			<p>Project GYM</p>
 			<Router>
 				<Routes>
@@ -59,6 +63,19 @@ function App() {
 									spinner={loading}
 									setLoading={setLoading}
 								></TraineePage>
+							}
+						/>
+					)}
+					{user && (
+						<Route
+							path='/groups'
+							element={
+								<GroupsPage
+									spinner={loading}
+									setLoading={setLoading}
+									groups={groups}
+									setGroups={setGroups}
+								></GroupsPage>
 							}
 						/>
 					)}
