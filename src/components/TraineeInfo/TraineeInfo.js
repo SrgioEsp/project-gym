@@ -5,8 +5,9 @@ const TraineeInfo = ({ trainee }) => {
 	const { name, date } = trainee;
 	return (
 		<div>
-			<p className='h5'>{name}</p>
-			<p>{date}</p>
+			<p>
+				<b>{name}</b> {date}
+			</p>
 		</div>
 	);
 };

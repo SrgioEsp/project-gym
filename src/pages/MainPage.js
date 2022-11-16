@@ -8,9 +8,13 @@ import { Link } from 'react-router-dom';
 import Spinner from './../components/Spinner';
 import { AppContext } from '../contexts/AppContext';
 import { getTraineesByUserId } from '../actions/TraineesActions';
+import { getGroupsByUserId } from '../actions/GroupsActions';
+import GroupSelect from '../components/GroupSelect/GroupSelect';
+import GroupForm from '../components/GroupForm/GroupForm';
 
 const MainPage = ({ spinner, setLoading }) => {
-	const { trainees, setTrainees, user } = useContext(AppContext);
+	const { trainees, setTrainees, user, groups, setGroups } =
+		useContext(AppContext);
 	const [calendarDay, onChangeCalendarDay] = useState(new Date());
 
 	useEffect(() => {
@@ -19,6 +23,15 @@ const MainPage = ({ spinner, setLoading }) => {
 			getTraineesByUserId(user.id).then((res) => {
 				if (res) {
 					setTrainees(res);
+					setLoading(false);
+				}
+			});
+		}
+		if (!groups || groups.length === 0) {
+			setLoading(true);
+			getGroupsByUserId(user.id).then((res) => {
+				if (res) {
+					setGroups(res);
 					setLoading(false);
 				}
 			});
@@ -35,7 +48,7 @@ const MainPage = ({ spinner, setLoading }) => {
 					></Calendar>
 				</Col>
 			</Row>
-			<Row>
+			{/* <Row>
 				<Col>
 					{trainees && !spinner ? (
 						<TraineeList
@@ -46,12 +59,41 @@ const MainPage = ({ spinner, setLoading }) => {
 						<Spinner></Spinner>
 					)}
 				</Col>
+			</Row> */}
+			<Row className='justify-content-center mt-3'>
+				<Col xs='auto'>
+					{groups && !spinner ? (
+						<GroupSelect groups={groups} currentDay={calendarDay}></GroupSelect>
+					) : (
+						<Spinner></Spinner>
+					)}
+				</Col>
 			</Row>
 			<Row className='justify-content-center mt-3'>
 				<Col xs='auto'>
 					<Link to={'/trainees'} className='btn btn-primary'>
 						Alumnos
 					</Link>
+				</Col>
+			</Row>
+
+			<Row className='justify-content-center mt-3'>
+				<Col xs='auto'>
+					<Link to={'/groups'} className='btn btn-success'>
+						Grupos
+					</Link>
+				</Col>
+			</Row>
+			<Row className='justify-content-center mt-3'>
+				<Col xs='auto'>
+					{trainees && !spinner ? (
+						<div>
+							<p>Crear nuevo Grupo</p>
+							<GroupForm groups={groups} setGroups={setGroups}></GroupForm>
+						</div>
+					) : (
+						<Spinner></Spinner>
+					)}
 				</Col>
 			</Row>
 		</AppFrame>
