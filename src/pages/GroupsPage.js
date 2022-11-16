@@ -7,7 +7,7 @@ import Spinner from '../components/Spinner';
 
 import GroupList from '../components/GroupList/GroupList';
 import { AppContext } from '../contexts/AppContext';
-import { getGroupsByUserId } from '../actions/GroupsActions';
+import { delGroup, getGroupsByUserId } from '../actions/GroupsActions';
 import { getTraineesByUserId } from '../actions/TraineesActions';
 
 const GroupsPage = ({ spinner, setLoading }) => {
@@ -38,7 +38,7 @@ const GroupsPage = ({ spinner, setLoading }) => {
 	const onClickHandlerDelGroup = (id) => {
 		const msj = confirm('Desea eliminar el grupo');
 		if (msj)
-			delGroup(id, groups, setGroups).then((res) => {
+			delGroup(id).then((res) => {
 				const newData = groups.filter((group) => group.id !== id);
 				setGroups(newData);
 			});
@@ -66,7 +66,7 @@ const GroupsPage = ({ spinner, setLoading }) => {
 					{groups && !spinner ? (
 						<GroupList
 							onClickGroup={(id) => {
-								// onClickHandlerDelGroup(id);
+								onClickHandlerDelGroup(id);
 							}}
 						></GroupList>
 					) : (

@@ -33,3 +33,11 @@ export const createGroup = async (data) => {
 	}
 	return result;
 };
+
+export const delGroup = async (id) => {
+	try {
+		return await helpHttp().del(`${urlGroup}/${id}`);
+	} catch (error) {
+		console.log(error);
+	}
+};
