@@ -19,19 +19,15 @@ export const getGroupsByUserId = async (userId) => {
 };
 
 export const createGroup = async (data) => {
-	let result;
 	try {
 		const options = {
 			body: data,
 			headers: { 'content-type': 'application/json' },
 		};
-		const res = await helpHttp().post(urlGroup, options);
-		result = res;
+		return await helpHttp().post(urlGroup, options);
 	} catch (error) {
 		console.log(error);
-		result = error;
 	}
-	return result;
 };
 
 export const delGroup = async (id) => {

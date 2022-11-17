@@ -5,3 +5,13 @@ export const GROUP_TYPES = {
 	TRIO: 'TRIO',
 	CUARTETO: 'CUARTETO',
 };
+
+export const daysOfWeek = [
+	'Lunes',
+	'Martes',
+	'Miércoles',
+	'Jueves',
+	'Viernes',
+	'Sábado',
+	'Domingo',
+];
