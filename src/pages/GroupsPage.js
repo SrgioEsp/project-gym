@@ -9,6 +9,7 @@ import GroupList from '../components/GroupList/GroupList';
 import { AppContext } from '../contexts/AppContext';
 import { delGroup, getGroupsByUserId } from '../actions/GroupsActions';
 import { getTraineesByUserId } from '../actions/TraineesActions';
+import GroupModal from '../components/GroupModal/GroupModal';
 
 const GroupsPage = ({ spinner, setLoading }) => {
 	const { groups, setGroups, user, trainees, setTrainees } =
@@ -56,9 +57,7 @@ const GroupsPage = ({ spinner, setLoading }) => {
 					<h5>GRUPOS</h5>
 				</Col>
 				<Col xs='auto'>
-					<Link to='/groups/new' className='btn btn-success'>
-						Añadir
-					</Link>
+					<GroupModal></GroupModal>
 				</Col>
 			</Row>
 			<Row className='mt-3'>

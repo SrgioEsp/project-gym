@@ -1,45 +1,45 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Col, Row } from 'react-bootstrap';
 import { AppContext } from '../../contexts/AppContext';
-import { GROUP_TYPES } from '../../constants';
-import { createGroup } from '../../actions/GroupsActions';
+import { daysOfWeek } from '../../constants';
+import MultiSelect from '../MultiSelect/MultiSelect';
 
-const getSelectedValues = (eleId) => {
-	return document.querySelectorAll(`#${eleId} option:checked`);
-};
-
-const GroupForm = ({ groups, setGroups }) => {
+const GroupForm = () => {
 	const { trainees, user } = useContext(AppContext);
+	const [dropdownIdTrainee, setDropDownIdTrainee] = useState([]);
+	const [day, setDay] = useState('');
+	const [startTime, setStartTime] = useState('');
+	const [endTime, setEndTime] = useState('');
+	const [weekdays, setWeekdays] = useState([]);
+
+	const onClickHandleCreateSession = () => {
+		if (day !== '' && startTime !== '' && endTime !== '') {
+			const duplicateDay = weekdays.find((obj) => obj.day === day);
+			if (duplicateDay === undefined) {
+				setWeekdays([
+					...weekdays,
+					{
+						day,
+						startTime,
+						endTime,
+					},
+				]);
+			} else {
+				console.log('No puede haber dos sesiones del mismo grupo en un día');
+			}
+		}
+	};
+
 	const onSubmitHandler = (ev) => {
 		ev.preventDefault();
-		const name = ev.target.name.value;
-		const groupType = ev.target.groupType.value;
-
-		const selectedTrainees = getSelectedValues('traineeSelector');
-		const selectedDays = getSelectedValues('daySelector');
-
-		const traineeIds = Array.from(selectedTrainees).map((el) => el.value);
-		const days = Array.from(selectedDays).map((el) => Number(el.value));
-
-		if (name && traineeIds && groupType && days) {
-			createGroup({
-				userId: user.id,
-				trainees: traineeIds,
-				groupType,
-				name,
-				days,
-			}).then((res) => {
-				console.log(res);
-				setGroups([...groups, res]);
-			});
-		}
 	};
 	return (
 		<form onSubmit={onSubmitHandler}>
 			<Row>
 				<Col>
 					<input
+						className='form-control'
 						type='text'
 						name='name'
 						placeholder='Nombre Grupo'
@@ -47,74 +47,79 @@ const GroupForm = ({ groups, setGroups }) => {
 					/>
 				</Col>
 			</Row>
+			<Row className='my-3'>
+				<Col>
+					<MultiSelect
+						state={dropdownIdTrainee}
+						setState={setDropDownIdTrainee}
+						arrayValues={trainees}
+						textDropdown={'Selección alumnos'}
+					></MultiSelect>
+				</Col>
+			</Row>
 			<Row>
 				<Col>
+					Dia
 					<select
-						multiple
-						id='traineeSelector'
+						defaultValue={''}
 						className='form-select'
-						name='selectTrainee'
-						aria-label='Floating label select example'
+						onChange={(ev) => setDay(ev.target.value)}
 					>
-						<option disabled>Alumnos</option>
-						{trainees.map((trainee) => {
-							return (
-								<option key={trainee.id} value={trainee.id}>
-									{trainee.name}
-								</option>
-							);
+						<option value={''} disabled>
+							- - -
+						</option>
+						{daysOfWeek.map((d) => {
+							return <option key={d}>{d}</option>;
 						})}
 					</select>
 				</Col>
-			</Row>
-			<Row>
 				<Col>
-					<select
-						multiple
-						id='daySelector'
-						className='form-select'
-						name='selectDays'
-						aria-label='Floating label select example'
-					>
-						<option value={1}>Lunes</option>
-						<option value={2}>Martes</option>
-						<option value={3}>Miercoes</option>
-						<option value={4}>Jueves</option>
-						<option value={5}>Viernes</option>
-						<option value={6}>Sabado</option>
-						<option value={0}>Domingo</option>
-					</select>
+					Hora Inicio
+					<input
+						className='form-control'
+						type={'time'}
+						onChange={(ev) => setStartTime(ev.target.value)}
+					/>
+				</Col>
+				<Col>
+					Hora Fin
+					<input
+						className='form-control'
+						type={'time'}
+						onChange={(ev) => setEndTime(ev.target.value)}
+					/>
 				</Col>
 			</Row>
 			<Row>
-				<Col>
-					<select
-						className='form-select'
-						name='groupType'
-						aria-label='Floating label select example'
+				<Col xs='auto' className='mt-3'>
+					<Button
+						variant='success'
+						size='sm'
+						onClick={() => onClickHandleCreateSession()}
 					>
-						<option disabled>Grupo</option>
-						<option value=''>Individual</option>
-						<option value={GROUP_TYPES.DUO}>Duos</option>
-						<option value={GROUP_TYPES.TRIO}>Trios</option>
-						<option value={GROUP_TYPES.CUARTETO}>Cuartetos</option>
-					</select>
+						Añadir Sesión
+					</Button>
 				</Col>
 			</Row>
 			<Row>
-				<Col xs='auto'>
+				<Col xs='auto' className='mt-3'>
+					{weekdays.length !== 0 &&
+						weekdays.map((obj) => {
+							return obj.day + ' ' + obj.startTime + ' ' + obj.endTime + ' ';
+						})}
+				</Col>
+			</Row>
+			{/* <Row>
+				<Col xs='auto' className='mt-3'>
 					<Button type='submit' variant='success' size='sm'>
 						Añadir
 					</Button>
 				</Col>
-			</Row>
+			</Row> */}
 		</form>
 	);
 };
 
-GroupForm.propTypes = {
-	groups: PropTypes.any.isRequired,
-	setGroups: PropTypes.func.isRequired,
-};
+GroupForm.propTypes = {};
 
 export default GroupForm;

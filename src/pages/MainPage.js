@@ -3,14 +3,12 @@ import PropTypes from 'prop-types';
 import AppFrame from '../components/AppFrame';
 import Calendar from '../components/Calendar';
 import { Row, Col } from 'react-bootstrap';
-import TraineeList from '../components/TraineeList/TraineeList';
 import { Link } from 'react-router-dom';
 import Spinner from './../components/Spinner';
 import { AppContext } from '../contexts/AppContext';
 import { getTraineesByUserId } from '../actions/TraineesActions';
 import { getGroupsByUserId } from '../actions/GroupsActions';
 import GroupSelect from '../components/GroupSelect/GroupSelect';
-import GroupForm from '../components/GroupForm/GroupForm';
 
 const MainPage = ({ spinner, setLoading }) => {
 	const { trainees, setTrainees, user, groups, setGroups } =
@@ -48,18 +46,6 @@ const MainPage = ({ spinner, setLoading }) => {
 					></Calendar>
 				</Col>
 			</Row>
-			{/* <Row>
-				<Col>
-					{trainees && !spinner ? (
-						<TraineeList
-							onClickTrainee={() => {}}
-							currentDay={calendarDay}
-						></TraineeList>
-					) : (
-						<Spinner></Spinner>
-					)}
-				</Col>
-			</Row> */}
 			<Row className='justify-content-center mt-3'>
 				<Col xs='auto'>
 					{groups && !spinner ? (
@@ -82,18 +68,6 @@ const MainPage = ({ spinner, setLoading }) => {
 					<Link to={'/groups'} className='btn btn-success'>
 						Grupos
 					</Link>
-				</Col>
-			</Row>
-			<Row className='justify-content-center mt-3'>
-				<Col xs='auto'>
-					{trainees && !spinner ? (
-						<div>
-							<p>Crear nuevo Grupo</p>
-							<GroupForm groups={groups} setGroups={setGroups}></GroupForm>
-						</div>
-					) : (
-						<Spinner></Spinner>
-					)}
 				</Col>
 			</Row>
 		</AppFrame>
