@@ -8,7 +8,7 @@ export const getTrainee = async (id) => {
 		result = res;
 	} catch (error) {
 		console.log(error);
-		result = error;
+		result = null;
 	}
 	return result;
 };
@@ -30,13 +30,21 @@ export const createTrainee = async (data) => {
 };
 
 export const delTrainee = async (id) => {
-	let result;
 	try {
-		const res = await helpHttp().del(`${urlTrainee}/${id}`);
-		result = res;
+		return await helpHttp().del(`${urlTrainee}/${id}`);
 	} catch (error) {
 		console.log(error);
-		result = error;
 	}
-	return result;
+};
+
+export const updateTrainee = async (id, body) => {
+	try {
+		const options = {
+			body,
+			headers: { 'content-type': 'application/json' },
+		};
+		return await helpHttp().put(`${urlTrainee}/${id}`, options);
+	} catch (error) {
+		console.log(error);
+	}
 };
