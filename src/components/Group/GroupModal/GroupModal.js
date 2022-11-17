@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-import MultiSelect from '../MultiSelect/MultiSelect';
+import MultiSelect from '../../MultiSelect/MultiSelect';
 import GroupSessionInfo from '../GroupSession/GroupSessionInfo';
-import { createGroup } from '../../actions/GroupsActions';
-import { AppContext } from '../../contexts/AppContext';
-import { daysOfWeek } from '../../constants';
+import { createGroup } from '../../../actions/GroupsActions';
+import { AppContext } from '../../../contexts/AppContext';
+import { daysOfWeek } from '../../../constants';
 import { Button, Col, Row } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import Modal from 'react-bootstrap/Modal';

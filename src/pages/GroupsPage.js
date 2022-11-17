@@ -5,11 +5,11 @@ import { Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import Spinner from '../components/Spinner';
 
-import GroupList from '../components/GroupList/GroupList';
+import GroupList from '../components/Group/GroupList';
 import { AppContext } from '../contexts/AppContext';
 import { delGroup, getGroupsByUserId } from '../actions/GroupsActions';
 import { getTraineesByUserId } from '../actions/TraineesActions';
-import GroupModal from '../components/GroupModal/GroupModal';
+import GroupModal from '../components/Group/GroupModal';
 
 const GroupsPage = ({ spinner, setLoading }) => {
 	const { groups, setGroups, user, trainees, setTrainees } =
