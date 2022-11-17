@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Button, Col, Row } from 'react-bootstrap';
-import { createTrainee } from '../../actions/TraineeActions';
+import { createTrainee, updateTrainee } from '../../actions/TraineeActions';
 import { formatDate, inputDateFormat } from '../../utils';
 import { AppContext } from '../../contexts/AppContext';
 
@@ -20,8 +20,13 @@ const validate = (nombre, fechaEntrada) => {
 
 const TraineeForm = ({ trainee, setTrainee }) => {
 	const { trainees, setTrainees, user } = useContext(AppContext);
-	const [name, setName] = useState('');
-	const [fechaEntrada, setfechaEntrada] = useState('');
+	const [name, setName] = useState(trainee?.name || '');
+	const [fechaEntrada, setfechaEntrada] = useState(
+		trainee?.date ? inputDateFormat(trainee.date) : ''
+	);
+	const [edad, setEdad] = useState(trainee?.edad || undefined);
+	const [peso, setPeso] = useState(trainee?.peso || undefined);
+	const [altura, setAltura] = useState(trainee?.altura || undefined);
 	const [msgAdd, setMsgAdd] = useState(null);
 
 	const delMsg = () => {
@@ -50,6 +55,24 @@ const TraineeForm = ({ trainee, setTrainee }) => {
 				setMsgAdd('Alumno creado correctamente');
 				emptyFields(setName, setfechaEntrada, ev);
 			});
+		} else {
+			updateTrainee(trainee.id, {
+				name,
+				date,
+				edad,
+				peso,
+				altura,
+				userId: user.id,
+			}).then((res) => {
+				console.log(res);
+				const trainneIndex = trainees.findIndex(
+					(trainee) => trainee.id === res.id
+				);
+				console.log(trainneIndex);
+				trainees[trainneIndex] = res;
+				setTrainees(trainees);
+				setMsgAdd('Alumno actualizado correctamente');
+			});
 		}
 	};
 
@@ -69,7 +92,7 @@ const TraineeForm = ({ trainee, setTrainee }) => {
 						name='nombre'
 						placeholder='Nombre Alumno'
 						autoComplete='off'
-						value={trainee ? trainee.name : name}
+						value={name}
 						onChange={(ev) => {
 							setName(ev.target.value);
 						}}
@@ -81,7 +104,7 @@ const TraineeForm = ({ trainee, setTrainee }) => {
 					<input
 						type='date'
 						name='fechaEntrada'
-						value={trainee ? inputDateFormat(trainee.date) : fechaEntrada}
+						value={fechaEntrada}
 						onChange={(ev) => {
 							setfechaEntrada(ev.target.value);
 						}}
@@ -95,8 +118,10 @@ const TraineeForm = ({ trainee, setTrainee }) => {
 						name='edad'
 						autoComplete='off'
 						placeholder='Edad'
-						value={trainee ? trainee.edad : ''}
-						onChange={(ev) => {}}
+						value={edad}
+						onChange={(ev) => {
+							setEdad(ev.target.value);
+						}}
 					/>
 				</Col>
 			</Row>
@@ -107,8 +132,10 @@ const TraineeForm = ({ trainee, setTrainee }) => {
 						name='peso'
 						autoComplete='off'
 						placeholder='Peso'
-						value={trainee ? trainee.peso : ''}
-						onChange={(ev) => {}}
+						value={peso}
+						onChange={(ev) => {
+							setPeso(ev.target.value);
+						}}
 					/>
 				</Col>
 			</Row>
@@ -119,8 +146,10 @@ const TraineeForm = ({ trainee, setTrainee }) => {
 						name='altura'
 						autoComplete='off'
 						placeholder='Altura'
-						value={trainee ? trainee.altura : ''}
-						onChange={(ev) => {}}
+						value={altura}
+						onChange={(ev) => {
+							setAltura(ev.target.value);
+						}}
 					/>
 				</Col>
 			</Row>

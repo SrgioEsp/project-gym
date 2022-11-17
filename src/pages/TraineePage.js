@@ -21,7 +21,7 @@ const TraineePage = ({ spinner, setLoading }) => {
 				setLoading(false);
 			});
 		}
-	}, [setTrainee, setLoading]);
+	}, []);
 
 	return (
 		<AppFrame>

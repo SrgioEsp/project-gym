@@ -28,7 +28,7 @@ const TraineesPage = ({ spinner, setLoading }) => {
 	const onClickHandlerDelTrainee = (id) => {
 		const msj = confirm('Desea eliminar el alumno');
 		if (msj)
-			delTrainee(id, trainees, setTrainees).then((res) => {
+			delTrainee(id).then((res) => {
 				const newData = trainees.filter((trainee) => trainee.id !== id);
 				setTrainees(newData);
 			});
