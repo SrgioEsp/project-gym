@@ -1,14 +1,14 @@
 import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AppFrame from '../components/AppFrame';
-import { Row, Col } from 'react-bootstrap';
-import TraineeList from '../components/TraineeList/TraineeList';
-import { Link } from 'react-router-dom';
-import { BsFillPersonPlusFill } from 'react-icons/bs';
+import TraineeList from '../components/Trainee/TraineeList';
 import Spinner from '../components/Spinner';
-import { delTrainee } from '../actions/TraineeActions';
 import { AppContext } from '../contexts/AppContext';
 import { getTraineesByUserId } from '../actions/TraineesActions';
+import { delTrainee } from '../actions/TraineeActions';
+import { Link } from 'react-router-dom';
+import { Row, Col } from 'react-bootstrap';
+import { BsFillPersonPlusFill } from 'react-icons/bs';
 
 const TraineesPage = ({ spinner, setLoading }) => {
 	const { trainees, setTrainees, user } = useContext(AppContext);

@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
+import { AppContext } from '../../contexts/AppContext';
+import { getLoginUser } from '../../actions/UserActions';
+import { storage } from '../../storage';
 import { useNavigate } from 'react-router-dom';
 import { Col, Container, Row } from 'react-bootstrap';
-import { AppContext } from '../../contexts/AppContext';
-import { storage } from '../../storage';
-import { getLoginUser } from '../../actions/UserActions';
 
 const validate = (name, password) => {
 	if (name === '') return 'Introduzca usuario';
@@ -29,7 +29,6 @@ const LoginForm = (props) => {
 	const [name, setName] = useState('');
 	const [password, setPassword] = useState('');
 	const [isInvalid, setIsInvalid] = useState(false);
-	// const [users, setUsers] = useState(null);
 	const navigate = useNavigate();
 
 	const errMsg = validate(name, password);

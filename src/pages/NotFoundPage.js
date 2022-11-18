@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Col, Container, Row } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import { AppContext } from '../contexts/AppContext';
+import { Link } from 'react-router-dom';
+import { Col, Container, Row } from 'react-bootstrap';
 
 const NotFoundPage = (props) => {
 	const { user } = useContext(AppContext);

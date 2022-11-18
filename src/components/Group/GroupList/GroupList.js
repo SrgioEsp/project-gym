@@ -1,8 +1,8 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Col, Dropdown, Row } from 'react-bootstrap';
 import TraineeInfo from '../../Trainee/TraineeInfo';
 import { AppContext } from '../../../contexts/AppContext';
+import { Button, Col, Dropdown, Row } from 'react-bootstrap';
 
 const renderTrainee = (filteredTrainee) => {
 	if (filteredTrainee && filteredTrainee.length !== 0) {

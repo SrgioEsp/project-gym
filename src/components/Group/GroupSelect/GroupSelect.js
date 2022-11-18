@@ -1,9 +1,8 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
+import TraineeInfo from '../../Trainee/TraineeInfo';
+import { AppContext } from '../../../contexts/AppContext';
 import { Col, Row } from 'react-bootstrap';
-import TraineeInfo from '../TraineeInfo';
-import { AppContext } from '../../contexts/AppContext';
-import { formatDate } from '../../utils';
 
 const renderTrainee = (filteredTrainee) => {
 	if (filteredTrainee && filteredTrainee.length !== 0) {

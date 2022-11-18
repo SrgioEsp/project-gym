@@ -2,13 +2,13 @@ import React, { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AppFrame from '../components/AppFrame';
 import Calendar from '../components/Calendar';
-import { Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import GroupSelect from '../components/Group/GroupSelect';
 import Spinner from './../components/Spinner';
 import { AppContext } from '../contexts/AppContext';
 import { getTraineesByUserId } from '../actions/TraineesActions';
 import { getGroupsByUserId } from '../actions/GroupsActions';
-import GroupSelect from '../components/GroupSelect/GroupSelect';
+import { Link } from 'react-router-dom';
+import { Row, Col } from 'react-bootstrap';
 
 const MainPage = ({ spinner, setLoading }) => {
 	const { trainees, setTrainees, user, groups, setGroups } =

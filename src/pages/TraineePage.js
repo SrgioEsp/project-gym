@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AppFrame from '../components/AppFrame';
-import { Col, Row } from 'react-bootstrap';
 import TraineeForm from '../components/Trainee/TraineeForm';
-import { Link, useLocation } from 'react-router-dom';
-import { getTrainee } from '../actions/TraineeActions';
 import Spinner from '../components/Spinner';
+import { getTrainee } from '../actions/TraineeActions';
+import { Link, useLocation } from 'react-router-dom';
+import { Col, Row } from 'react-bootstrap';
 
 const TraineePage = ({ spinner, setLoading }) => {
 	const [trainee, setTrainee] = useState(null);

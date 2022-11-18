@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Col, Container, Row } from 'react-bootstrap';
 import { TraineeContext } from '../../contexts/TraineeContext';
+import { Col, Container, Row } from 'react-bootstrap';
 
 const TraineeData = () => {
 	const { trainee } = useContext(TraineeContext);

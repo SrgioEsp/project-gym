@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import TraineeInfo from '../TraineeInfo';
-import { formatDate } from '../../utils';
-import { Button, Col, Row } from 'react-bootstrap';
-import { BsFillPersonXFill } from 'react-icons/bs';
-import { AppContext } from '../../contexts/AppContext';
+import { AppContext } from '../../../contexts/AppContext';
+import { formatDate } from '../../../utils';
 import { useNavigate } from 'react-router-dom';
+import { BsFillPersonXFill } from 'react-icons/bs';
+import { Button, Col, Row } from 'react-bootstrap';
 
 const renderTrainee = (
 	eventOnClickTrainee,

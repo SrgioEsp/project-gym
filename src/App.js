@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import WelcomePage from './pages/WelcomePage';
 import LoginPage from './pages/LoginPage';
 import MainPage from './pages/MainPage';
 import TraineesPage from './pages/TraineesPage';
 import NotFoundPage from './pages/NotFoundPage';
 import TraineePage from './pages/TraineePage';
+import GroupsPage from './pages/GroupsPage';
+import { AppContext } from './contexts/AppContext';
 import { storage } from './storage';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import './App.css';
-import { AppContext } from './contexts/AppContext';
-import GroupsPage from './pages/GroupsPage';
 
 function App() {
 	const [user, setUser] = useState(null);

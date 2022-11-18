@@ -1,15 +1,14 @@
 import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AppFrame from '../components/AppFrame';
-import { Row, Col } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
-import Spinner from '../components/Spinner';
-
 import GroupList from '../components/Group/GroupList';
+import GroupModal from '../components/Group/GroupModal';
+import Spinner from '../components/Spinner';
 import { AppContext } from '../contexts/AppContext';
 import { delGroup, getGroupsByUserId } from '../actions/GroupsActions';
 import { getTraineesByUserId } from '../actions/TraineesActions';
-import GroupModal from '../components/Group/GroupModal';
+import { Row, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 
 const GroupsPage = ({ spinner, setLoading }) => {
 	const { groups, setGroups, user, trainees, setTrainees } =

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import WelcomeScreen from '../components/WelcomeScreen';
+import { storage } from './../storage';
 import { Link } from 'react-router-dom';
 import { Col, Container, Row } from 'react-bootstrap';
-import { storage } from './../storage';
 
 const WelcomePage = (props) => {
 	return (

@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { Button, Col, Row } from 'react-bootstrap';
+import { AppContext } from '../../../contexts/AppContext';
 import { createTrainee, updateTrainee } from '../../../actions/TraineeActions';
 import { formatDate, inputDateFormat } from '../../../utils';
-import { AppContext } from '../../../contexts/AppContext';
+import { Button, Col, Row } from 'react-bootstrap';
 
 const emptyFields = (setName, setfechaEntrada, ev) => {
 	setName('');
