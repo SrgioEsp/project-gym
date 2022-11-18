@@ -7,6 +7,7 @@ import Spinner from './../components/Spinner';
 import { AppContext } from '../contexts/AppContext';
 import { getTraineesByUserId } from '../actions/TraineesActions';
 import { getGroupsByUserId } from '../actions/GroupsActions';
+import { setGroupType } from '../utils';
 import { Link } from 'react-router-dom';
 import { Row, Col } from 'react-bootstrap';
 
@@ -29,6 +30,7 @@ const MainPage = ({ spinner, setLoading }) => {
 			setLoading(true);
 			getGroupsByUserId(user.id).then((res) => {
 				if (res) {
+					res = res.map((grupo) => setGroupType(grupo));
 					setGroups(res);
 					setLoading(false);
 				}

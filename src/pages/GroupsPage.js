@@ -7,8 +7,9 @@ import Spinner from '../components/Spinner';
 import { AppContext } from '../contexts/AppContext';
 import { delGroup, getGroupsByUserId } from '../actions/GroupsActions';
 import { getTraineesByUserId } from '../actions/TraineesActions';
-import { Row, Col } from 'react-bootstrap';
+import { setGroupType } from '../utils';
 import { Link } from 'react-router-dom';
+import { Row, Col } from 'react-bootstrap';
 
 const GroupsPage = ({ spinner, setLoading }) => {
 	const { groups, setGroups, user, trainees, setTrainees } =
@@ -28,6 +29,7 @@ const GroupsPage = ({ spinner, setLoading }) => {
 			setLoading(true);
 			getGroupsByUserId(user.id).then((res) => {
 				if (res) {
+					res = res.map((group) => setGroupType(group));
 					setGroups(res);
 					setLoading(false);
 				}

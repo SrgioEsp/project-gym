@@ -5,6 +5,7 @@ import GroupSessionInfo from '../GroupSession/GroupSessionInfo';
 import { createGroup } from '../../../actions/GroupsActions';
 import { AppContext } from '../../../contexts/AppContext';
 import { daysOfWeek } from '../../../constants';
+import { setGroupType } from '../../../utils';
 import { Button, Col, Row } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import Modal from 'react-bootstrap/Modal';
@@ -106,6 +107,7 @@ const GroupModal = () => {
 					weekdays,
 				},
 			}).then((res) => {
+				res = setGroupType(res);
 				console.log(res);
 				setGroups([...groups, res]);
 				closeModal();

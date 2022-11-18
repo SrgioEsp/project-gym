@@ -9,3 +9,26 @@ export const inputDateFormat = (date) => {
 	const day = aDate[0].length === 1 ? `0${aDate[0]}` : aDate[0];
 	return `${year}-${month}-${day}`;
 };
+
+export const setGroupType = (group) => {
+	switch (group.trainees.length) {
+		case 0:
+			break;
+		case 1:
+			group.groupType = 'INDIVIDUAL';
+			break;
+		case 2:
+			group.groupType = 'DUO';
+			break;
+		case 3:
+			group.groupType = 'TRIO';
+			break;
+		case 4:
+			group.groupType = 'CUARTETO';
+			break;
+		default:
+			group.groupType = 'GRUPO GRANDE';
+			break;
+	}
+	return group;
+};
