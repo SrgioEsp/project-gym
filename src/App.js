@@ -53,9 +53,6 @@ function App() {
 						/>
 					)}
 					{user && (
-						<Route path='/trainees/new' element={<TraineePage></TraineePage>} />
-					)}
-					{user && (
 						<Route
 							path='/trainees/:name'
 							element={

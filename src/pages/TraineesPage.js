@@ -8,7 +8,7 @@ import { getTraineesByUserId } from '../actions/TraineesActions';
 import { delTrainee } from '../actions/TraineeActions';
 import { Link } from 'react-router-dom';
 import { Row, Col } from 'react-bootstrap';
-import { BsFillPersonPlusFill } from 'react-icons/bs';
+import TraineeModal from '../components/Trainee/TraineeModal/TraineeModal';
 
 const TraineesPage = ({ spinner, setLoading }) => {
 	const { trainees, setTrainees, user } = useContext(AppContext);
@@ -43,9 +43,7 @@ const TraineesPage = ({ spinner, setLoading }) => {
 					</Link>
 				</Col>
 				<Col xs='auto'>
-					<Link to='/trainees/new' className='btn btn-success'>
-						Añadir <BsFillPersonPlusFill></BsFillPersonPlusFill>
-					</Link>
+					<TraineeModal></TraineeModal>
 				</Col>
 			</Row>
 			<Row>

@@ -14,19 +14,15 @@ export const getTrainee = async (id) => {
 };
 
 export const createTrainee = async (data) => {
-	let result;
 	try {
 		const options = {
 			body: data,
 			headers: { 'content-type': 'application/json' },
 		};
-		const res = await helpHttp().post(urlTrainee, options);
-		result = res;
+		return await helpHttp().post(urlTrainee, options);
 	} catch (error) {
 		console.log(error);
-		result = error;
 	}
-	return result;
 };
 
 export const delTrainee = async (id) => {
