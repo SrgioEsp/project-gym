@@ -66,9 +66,8 @@ const SessionSelect = ({ sessions, currentDay }) => {
 				<option value={SESSION_TYPES.DUO}>{SESSION_TYPES.DUO}</option>
 				<option value={SESSION_TYPES.TRIO}>{SESSION_TYPES.TRIO}</option>
 				<option value={SESSION_TYPES.CUARTETO}>{SESSION_TYPES.CUARTETO}</option>
-				<option value={SESSION_TYPES.GRUPO_GRANDE}>
-					{SESSION_TYPES.GRUPO_GRANDE}
-				</option>
+				<option value={SESSION_TYPES.QUINTETO}>{SESSION_TYPES.QUINTETO}</option>
+				<option value={SESSION_TYPES.GRUPOS}>{SESSION_TYPES.GRUPOS}</option>
 			</select>
 			<Row>
 				<Col>

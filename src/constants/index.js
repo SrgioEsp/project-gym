@@ -4,7 +4,8 @@ export const SESSION_TYPES = {
 	DUO: 'DUO',
 	TRIO: 'TRIO',
 	CUARTETO: 'CUARTETO',
-	GRUPO_GRANDE: 'GRUPO GRANDE',
+	QUINTETO: 'QUINTETO',
+	GRUPOS: 'GRUPOS',
 };
 
 export const daysOfWeek = [
