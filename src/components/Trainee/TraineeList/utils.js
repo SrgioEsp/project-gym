@@ -1,17 +1,17 @@
 import { convertWeekDaysToNumber } from '../../../utils';
 
-export const getNextSession = (groups, traineeId) => {
-	const getGroupsByTraineeId = groups.filter((group) =>
-		group.trainees.find((id) => traineeId === id)
+export const getNextSession = (sessions, traineeId) => {
+	const getSessionsByTraineeId = sessions.filter((session) =>
+		session.trainees.find((id) => traineeId === id)
 	);
 	const currentDay = new Date();
 
 	let nextSession = {};
 
-	if (getGroupsByTraineeId.length !== 0) {
+	if (getSessionsByTraineeId.length !== 0) {
 		// SI TIENE UN GRUPO
-		if (getGroupsByTraineeId.length < 2) {
-			const session = getGroupsByTraineeId[0].days.weekdays.map(
+		if (getSessionsByTraineeId.length < 2) {
+			const session = getSessionsByTraineeId[0].days.weekdays.map(
 				(session) => session
 			);
 			if (session.length !== 0 && session.length < 2) {
@@ -32,8 +32,8 @@ export const getNextSession = (groups, traineeId) => {
 		} else {
 			// SI TIENE MÁS DE UN GRUPO
 			const sessions = [];
-			getGroupsByTraineeId.map((group) =>
-				group.days.weekdays.map((session) => {
+			getSessionsByTraineeId.map((session) =>
+				session.days.weekdays.map((session) => {
 					if (currentDay.getDay() === convertWeekDaysToNumber(session.day)) {
 						const hour = Number(session.startTime.split(':')[0]);
 						const min = Number(session.startTime.split(':')[1]);

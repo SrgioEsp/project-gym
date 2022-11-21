@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const GroupSessionInfo = ({ session }) => {
+const SessionTableInfo = ({ session }) => {
 	return (
 		<>
 			<td>
@@ -32,8 +32,8 @@ const GroupSessionInfo = ({ session }) => {
 	);
 };
 
-GroupSessionInfo.propTypes = {
+SessionTableInfo.propTypes = {
 	session: PropTypes.any,
 };
 
-export default GroupSessionInfo;
+export default SessionTableInfo;

@@ -5,7 +5,7 @@ import MainPage from './pages/MainPage';
 import TraineesPage from './pages/TraineesPage';
 import NotFoundPage from './pages/NotFoundPage';
 import TraineePage from './pages/TraineePage';
-import GroupsPage from './pages/GroupsPage';
+import SessionsPage from './pages/SessionsPage';
 import { AppContext } from './contexts/AppContext';
 import { storage } from './storage';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -15,7 +15,7 @@ import './App.css';
 function App() {
 	const [user, setUser] = useState(null);
 	const [trainees, setTrainees] = useState([]);
-	const [groups, setGroups] = useState([]);
+	const [sessions, setSessions] = useState([]);
 	const [loading, setLoading] = useState(false);
 
 	if (storage.get('user_session')) {
@@ -26,7 +26,7 @@ function App() {
 
 	return (
 		<AppContext.Provider
-			value={{ user, setUser, trainees, setTrainees, groups, setGroups }}
+			value={{ user, setUser, trainees, setTrainees, sessions, setSessions }}
 		>
 			<p>Project GYM</p>
 			<Router>
@@ -65,14 +65,14 @@ function App() {
 					)}
 					{user && (
 						<Route
-							path='/groups'
+							path='/sessions'
 							element={
-								<GroupsPage
+								<SessionsPage
 									spinner={loading}
 									setLoading={setLoading}
-									groups={groups}
-									setGroups={setGroups}
-								></GroupsPage>
+									sessions={sessions}
+									setSessions={setSessions}
+								></SessionsPage>
 							}
 						/>
 					)}

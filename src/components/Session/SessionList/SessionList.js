@@ -18,17 +18,17 @@ const renderTrainee = (filteredTrainee) => {
 	}
 };
 
-const renderGroup = (group, trainees, onClickGroup) => {
+const renderSession = (session, trainees, onClickSession) => {
 	return (
-		<Row key={group.id}>
+		<Row key={session.id}>
 			<Col>
 				<li>
 					<div className='d-flex justify-content-between mb-2'>
-						{group.name} <i>{group.groupType}</i>{' '}
+						{session.name} <i>{session.sessionType}</i>{' '}
 						<Dropdown>
 							<Dropdown.Toggle
 								variant='secondary'
-								id={`action${group.id}`}
+								id={`action${session.id}`}
 								size='sm'
 							>
 								Acciones
@@ -38,7 +38,7 @@ const renderGroup = (group, trainees, onClickGroup) => {
 									<Button
 										variant='danger'
 										size='sm'
-										onClick={() => onClickGroup(group.id)}
+										onClick={() => onClickSession(session.id)}
 									>
 										Eliminar Grupo
 									</Button>
@@ -47,8 +47,8 @@ const renderGroup = (group, trainees, onClickGroup) => {
 						</Dropdown>
 					</div>
 					<ul>
-						{group.trainees && group.trainees !== 0 ? (
-							group.trainees.map((traineeId) => {
+						{session.trainees && session.trainees !== 0 ? (
+							session.trainees.map((traineeId) => {
 								const filteredTrainee = trainees.filter(
 									(trainee) => trainee.id === traineeId
 								);
@@ -64,14 +64,14 @@ const renderGroup = (group, trainees, onClickGroup) => {
 	);
 };
 
-const GroupList = ({ onClickGroup }) => {
-	const { trainees, groups } = useContext(AppContext);
+const SessionList = ({ onClickSession }) => {
+	const { trainees, sessions } = useContext(AppContext);
 	return (
 		<Row>
 			<Col>
 				<ul>
-					{groups && groups.length !== 0 ? (
-						groups.map((group) => renderGroup(group, trainees, onClickGroup))
+					{sessions && sessions.length !== 0 ? (
+						sessions.map((session) => renderSession(session, trainees, onClickSession))
 					) : (
 						<p className='text-danger'>No se han encontrado grupos</p>
 					)}
@@ -81,8 +81,8 @@ const GroupList = ({ onClickGroup }) => {
 	);
 };
 
-GroupList.propTypes = {
-	onClickGroup: PropTypes.func,
+SessionList.propTypes = {
+	onClickSession: PropTypes.func,
 };
 
-export default GroupList;
+export default SessionList;

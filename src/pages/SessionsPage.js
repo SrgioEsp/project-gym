@@ -1,18 +1,18 @@
 import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AppFrame from '../components/AppFrame';
-import GroupList from '../components/Group/GroupList';
-import GroupModal from '../components/Group/GroupModal';
+import SessionList from '../components/Session/SessionList';
+import SessionModal from '../components/Session/SessionModal';
 import Spinner from '../components/Spinner';
 import { AppContext } from '../contexts/AppContext';
-import { delGroup, getGroupsByUserId } from '../actions/GroupsActions';
+import { delSession, getSessionsByUserId } from '../actions/SessionsActions';
 import { getTraineesByUserId } from '../actions/TraineesActions';
-import { setGroupType } from '../utils';
+import { setSessionType } from '../utils';
 import { Link } from 'react-router-dom';
 import { Row, Col } from 'react-bootstrap';
 
-const GroupsPage = ({ spinner, setLoading }) => {
-	const { groups, setGroups, user, trainees, setTrainees } =
+const SessionsPage = ({ spinner, setLoading }) => {
+	const { sessions, setSessions, user, trainees, setTrainees } =
 		useContext(AppContext);
 
 	useEffect(() => {
@@ -25,24 +25,24 @@ const GroupsPage = ({ spinner, setLoading }) => {
 				}
 			});
 		}
-		if (!groups || groups.length === 0) {
+		if (!sessions || sessions.length === 0) {
 			setLoading(true);
-			getGroupsByUserId(user.id).then((res) => {
+			getSessionsByUserId(user.id).then((res) => {
 				if (res) {
-					res = res.map((group) => setGroupType(group));
-					setGroups(res);
+					res = res.map((session) => setSessionType(session));
+					setSessions(res);
 					setLoading(false);
 				}
 			});
 		}
 	}, []);
 
-	const onClickHandlerDelGroup = (id) => {
+	const onClickHandlerDelSession = (id) => {
 		const msj = confirm('Desea eliminar el grupo');
 		if (msj)
-			delGroup(id).then((res) => {
-				const newData = groups.filter((group) => group.id !== id);
-				setGroups(newData);
+			delSession(id).then((res) => {
+				const newData = sessions.filter((session) => session.id !== id);
+				setSessions(newData);
 			});
 	};
 
@@ -58,17 +58,17 @@ const GroupsPage = ({ spinner, setLoading }) => {
 					<h5>GRUPOS</h5>
 				</Col>
 				<Col xs='auto'>
-					<GroupModal></GroupModal>
+					<SessionModal></SessionModal>
 				</Col>
 			</Row>
 			<Row className='mt-3'>
 				<Col xs='auto'>
-					{groups && !spinner ? (
-						<GroupList
-							onClickGroup={(id) => {
-								onClickHandlerDelGroup(id);
+					{sessions && !spinner ? (
+						<SessionList
+							onClickSession={(id) => {
+								onClickHandlerDelSession(id);
 							}}
-						></GroupList>
+						></SessionList>
 					) : (
 						<Spinner></Spinner>
 					)}
@@ -78,9 +78,9 @@ const GroupsPage = ({ spinner, setLoading }) => {
 	);
 };
 
-GroupsPage.propTypes = {
+SessionsPage.propTypes = {
 	spinner: PropTypes.bool.isRequired,
 	setLoading: PropTypes.func.isRequired,
 };
 
-export default GroupsPage;
+export default SessionsPage;

@@ -1,11 +1,11 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import MultiSelect from '../../MultiSelect/MultiSelect';
-import GroupSessionInfo from '../GroupSession/GroupSessionInfo';
-import { createGroup } from '../../../actions/GroupsActions';
+import SessionSessionInfo from '../SessionTableInfo/SessionTableInfo';
+import { createSession } from '../../../actions/SessionsActions';
 import { AppContext } from '../../../contexts/AppContext';
 import { daysOfWeek } from '../../../constants';
-import { setGroupType } from '../../../utils';
+import { setSessionType } from '../../../utils';
 import { Button, Col, Row } from 'react-bootstrap';
 import Table from 'react-bootstrap/Table';
 import Modal from 'react-bootstrap/Modal';
@@ -29,7 +29,7 @@ const emptyFields = (
 const renderSession = (session, onClickHandlerRemoveSession) => {
 	return (
 		<tr key={session.day}>
-			<GroupSessionInfo session={session}></GroupSessionInfo>
+			<SessionSessionInfo session={session}></SessionSessionInfo>
 			<td>
 				<Button
 					variant='danger'
@@ -42,9 +42,9 @@ const renderSession = (session, onClickHandlerRemoveSession) => {
 	);
 };
 
-const GroupModal = () => {
+const SessionModal = () => {
 	const [show, setShow] = useState(false);
-	const { trainees, user, groups, setGroups } = useContext(AppContext);
+	const { trainees, user, sessions, setSessions } = useContext(AppContext);
 	const [name, setName] = useState('');
 	const [dropdownIdTrainee, setDropDownIdTrainee] = useState([]);
 	const [day, setDay] = useState('');
@@ -99,7 +99,7 @@ const GroupModal = () => {
 			weekdays.length !== 0 &&
 			dropdownIdTrainee.length !== 0
 		) {
-			createGroup({
+			createSession({
 				userId: user.id,
 				name,
 				trainees: dropdownIdTrainee,
@@ -107,9 +107,9 @@ const GroupModal = () => {
 					weekdays,
 				},
 			}).then((res) => {
-				res = setGroupType(res);
+				res = setSessionType(res);
 				console.log(res);
-				setGroups([...groups, res]);
+				setSessions([...sessions, res]);
 				closeModal();
 			});
 		}
@@ -230,6 +230,6 @@ const GroupModal = () => {
 	);
 };
 
-GroupModal.propTypes = {};
+SessionModal.propTypes = {};
 
-export default GroupModal;
+export default SessionModal;

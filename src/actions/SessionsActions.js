@@ -1,11 +1,11 @@
-import { urlGroup, urlGroups } from '../api/urls';
+import { urlSession, urlSessions } from '../api/urls';
 import { helpHttp } from '../helpers/helpHttp';
 
-export const getGroupsByUserId = async (userId) => {
+export const getSessionsByUserId = async (userId) => {
 	let result;
 	try {
 		await helpHttp()
-			.get(`${urlGroups}/${userId}`)
+			.get(`${urlSessions}/${userId}`)
 			.then((res) => {
 				if (res) {
 					result = res;
@@ -18,21 +18,21 @@ export const getGroupsByUserId = async (userId) => {
 	return result;
 };
 
-export const createGroup = async (data) => {
+export const createSession = async (data) => {
 	try {
 		const options = {
 			body: data,
 			headers: { 'content-type': 'application/json' },
 		};
-		return await helpHttp().post(urlGroup, options);
+		return await helpHttp().post(urlSession, options);
 	} catch (error) {
 		console.log(error);
 	}
 };
 
-export const delGroup = async (id) => {
+export const delSession = async (id) => {
 	try {
-		return await helpHttp().del(`${urlGroup}/${id}`);
+		return await helpHttp().del(`${urlSession}/${id}`);
 	} catch (error) {
 		console.log(error);
 	}

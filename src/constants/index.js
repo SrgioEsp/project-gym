@@ -1,5 +1,5 @@
 export const FETCH_TRAINEES = 'FETCH_TRAINEES';
-export const GROUP_TYPES = {
+export const SESSION_TYPES = {
 	INDIVIDUAL: 'INDIVIDUAL',
 	DUO: 'DUO',
 	TRIO: 'TRIO',

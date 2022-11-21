@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import TraineeInfo from '../../Trainee/TraineeInfo';
 import { AppContext } from '../../../contexts/AppContext';
 import { Col, Row } from 'react-bootstrap';
-import { GROUP_TYPES } from '../../../constants';
+import { SESSION_TYPES } from '../../../constants';
 import { mapWeekDays } from '../../../utils';
 
 const renderTrainee = (filteredTrainee) => {
@@ -20,15 +20,15 @@ const renderTrainee = (filteredTrainee) => {
 	}
 };
 
-const renderGroup = (group, trainees) => {
+const renderSession = (session, trainees) => {
 	return (
-		<Row key={group.id}>
+		<Row key={session.id}>
 			<Col>
 				<li>
-					<p>{group.name}</p>
+					<p>{session.name}</p>
 					<ul>
-						{group.trainees && group.trainees !== 0 ? (
-							group.trainees.map((traineeId) => {
+						{session.trainees && session.trainees !== 0 ? (
+							session.trainees.map((traineeId) => {
 								const filteredTrainee = trainees.filter(
 									(trainee) => trainee.id === traineeId
 								);
@@ -44,9 +44,9 @@ const renderGroup = (group, trainees) => {
 	);
 };
 
-const GroupSelect = ({ groups, currentDay }) => {
+const SessionSelect = ({ sessions, currentDay }) => {
 	const { trainees } = useContext(AppContext);
-	const [groupType, setGroupType] = useState('');
+	const [sessionType, setSessionType] = useState('');
 	return (
 		<div>
 			Grupos:{' '}
@@ -55,33 +55,33 @@ const GroupSelect = ({ groups, currentDay }) => {
 				className='form-select'
 				aria-label='Floating label select example'
 				onChange={(ev) => {
-					setGroupType(ev.target.value);
+					setSessionType(ev.target.value);
 				}}
 			>
 				<option value={''} disabled>
 					Grupos
 				</option>
-				<option value={GROUP_TYPES.INDIVIDUAL}>{GROUP_TYPES.INDIVIDUAL}</option>
-				<option value={GROUP_TYPES.DUO}>{GROUP_TYPES.DUO}</option>
-				<option value={GROUP_TYPES.TRIO}>{GROUP_TYPES.TRIO}</option>
-				<option value={GROUP_TYPES.CUARTETO}>{GROUP_TYPES.CUARTETO}</option>
-				<option value={GROUP_TYPES.GRUPO_GRANDE}>
-					{GROUP_TYPES.GRUPO_GRANDE}
+				<option value={SESSION_TYPES.INDIVIDUAL}>{SESSION_TYPES.INDIVIDUAL}</option>
+				<option value={SESSION_TYPES.DUO}>{SESSION_TYPES.DUO}</option>
+				<option value={SESSION_TYPES.TRIO}>{SESSION_TYPES.TRIO}</option>
+				<option value={SESSION_TYPES.CUARTETO}>{SESSION_TYPES.CUARTETO}</option>
+				<option value={SESSION_TYPES.GRUPO_GRANDE}>
+					{SESSION_TYPES.GRUPO_GRANDE}
 				</option>
 			</select>
 			<Row>
 				<Col>
 					<ul>
-						{groups && groups.length !== 0 ? (
-							groups
+						{sessions && sessions.length !== 0 ? (
+							sessions
 								.filter(
-									(group) =>
-										group.groupType === groupType &&
-										group.days.weekdays
+									(session) =>
+										session.sessionType === sessionType &&
+										session.days.weekdays
 											.map((session) => session.day)
 											.includes(mapWeekDays[currentDay.getDay()]) === true
 								)
-								.map((group) => renderGroup(group, trainees))
+								.map((session) => renderSession(session, trainees))
 						) : (
 							<p className='text-danger'>No se han encontrado grupos</p>
 						)}
@@ -92,9 +92,9 @@ const GroupSelect = ({ groups, currentDay }) => {
 	);
 };
 
-GroupSelect.propTypes = {
-	groups: PropTypes.any,
+SessionSelect.propTypes = {
+	sessions: PropTypes.any,
 	currentDay: PropTypes.object.isRequired,
 };
 
-export default GroupSelect;
+export default SessionSelect;

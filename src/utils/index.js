@@ -10,27 +10,27 @@ export const inputDateFormat = (date) => {
 	return `${year}-${month}-${day}`;
 };
 
-export const setGroupType = (group) => {
-	switch (group.trainees.length) {
+export const setSessionType = (session) => {
+	switch (session.trainees.length) {
 		case 0:
 			break;
 		case 1:
-			group.groupType = 'INDIVIDUAL';
+			session.sessionType = 'INDIVIDUAL';
 			break;
 		case 2:
-			group.groupType = 'DUO';
+			session.sessionType = 'DUO';
 			break;
 		case 3:
-			group.groupType = 'TRIO';
+			session.sessionType = 'TRIO';
 			break;
 		case 4:
-			group.groupType = 'CUARTETO';
+			session.sessionType = 'CUARTETO';
 			break;
 		default:
-			group.groupType = 'GRUPO GRANDE';
+			session.sessionType = 'GRUPO GRANDE';
 			break;
 	}
-	return group;
+	return session;
 };
 
 export const mapWeekDays = {

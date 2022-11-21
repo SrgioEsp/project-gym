@@ -2,17 +2,17 @@ import React, { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AppFrame from '../components/AppFrame';
 import Calendar from '../components/Calendar';
-import GroupSelect from '../components/Group/GroupSelect';
+import SessionSelect from '../components/Session/SessionSelect';
 import Spinner from './../components/Spinner';
 import { AppContext } from '../contexts/AppContext';
 import { getTraineesByUserId } from '../actions/TraineesActions';
-import { getGroupsByUserId } from '../actions/GroupsActions';
-import { setGroupType } from '../utils';
+import { getSessionsByUserId } from '../actions/SessionsActions';
+import { setSessionType } from '../utils';
 import { Link } from 'react-router-dom';
 import { Row, Col } from 'react-bootstrap';
 
 const MainPage = ({ spinner, setLoading }) => {
-	const { trainees, setTrainees, user, groups, setGroups } =
+	const { trainees, setTrainees, user, sessions, setSessions } =
 		useContext(AppContext);
 	const [calendarDay, onChangeCalendarDay] = useState(new Date());
 
@@ -26,12 +26,12 @@ const MainPage = ({ spinner, setLoading }) => {
 				}
 			});
 		}
-		if (!groups || groups.length === 0) {
+		if (!sessions || sessions.length === 0) {
 			setLoading(true);
-			getGroupsByUserId(user.id).then((res) => {
+			getSessionsByUserId(user.id).then((res) => {
 				if (res) {
-					res = res.map((grupo) => setGroupType(grupo));
-					setGroups(res);
+					res = res.map((grupo) => setSessionType(grupo));
+					setSessions(res);
 					setLoading(false);
 				}
 			});
@@ -50,8 +50,8 @@ const MainPage = ({ spinner, setLoading }) => {
 			</Row>
 			<Row className='justify-content-center mt-3'>
 				<Col xs='auto'>
-					{groups && !spinner ? (
-						<GroupSelect groups={groups} currentDay={calendarDay}></GroupSelect>
+					{sessions && !spinner ? (
+						<SessionSelect sessions={sessions} currentDay={calendarDay}></SessionSelect>
 					) : (
 						<Spinner></Spinner>
 					)}
@@ -67,7 +67,7 @@ const MainPage = ({ spinner, setLoading }) => {
 
 			<Row className='justify-content-center mt-3'>
 				<Col xs='auto'>
-					<Link to={'/groups'} className='btn btn-success'>
+					<Link to={'/sessions'} className='btn btn-success'>
 						Grupos
 					</Link>
 				</Col>
