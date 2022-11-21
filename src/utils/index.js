@@ -26,8 +26,11 @@ export const setSessionType = (session) => {
 		case 4:
 			session.sessionType = 'CUARTETO';
 			break;
+		case 5:
+			session.sessionType = 'QUINTETO';
+			break;
 		default:
-			session.sessionType = 'GRUPO GRANDE';
+			session.sessionType = 'GRUPOS';
 			break;
 	}
 	return session;
