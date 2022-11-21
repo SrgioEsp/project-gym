@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import MultiSelect from '../../MultiSelect/MultiSelect';
 import SessionSessionInfo from '../SessionTableInfo/SessionTableInfo';
+import Calendar from '../../Calendar';
 import { createSession } from '../../../actions/SessionsActions';
 import { AppContext } from '../../../contexts/AppContext';
 import { daysOfWeek } from '../../../constants';
@@ -68,19 +69,21 @@ const SessionModal = () => {
 	};
 
 	const onClickHandleCreateSessionDay = () => {
-		if (day !== '' && startTime !== '' && endTime !== '') {
-			const duplicateDay = weekdays.find((obj) => obj.day === day);
-			if (duplicateDay === undefined) {
-				setWeekdays([
-					...weekdays,
-					{
-						day,
-						startTime,
-						endTime,
-					},
-				]);
-			} else {
-				console.log('Ya se ha creado una sesión para este día');
+		if (weekdays.length < dropdownIdTrainee.length) {
+			if (day !== '' && startTime !== '' && endTime !== '') {
+				const duplicateDay = weekdays.find((obj) => obj.day === day);
+				if (duplicateDay === undefined) {
+					setWeekdays([
+						...weekdays,
+						{
+							day,
+							startTime,
+							endTime,
+						},
+					]);
+				} else {
+					console.log('Ya se ha creado una sesión para este día');
+				}
 			}
 		}
 	};
@@ -149,6 +152,11 @@ const SessionModal = () => {
 								></MultiSelect>
 							</Col>
 						</Row>
+						{/* <Row>
+							<Col>
+								<Calendar></Calendar>
+							</Col>
+						</Row> */}
 						<Row>
 							<Col>
 								Dia
@@ -187,6 +195,7 @@ const SessionModal = () => {
 						<Row>
 							<Col xs='auto' className='mt-3'>
 								<Button
+									disabled={dropdownIdTrainee.length === 0}
 									variant='success'
 									size='sm'
 									onClick={() => onClickHandleCreateSessionDay()}
