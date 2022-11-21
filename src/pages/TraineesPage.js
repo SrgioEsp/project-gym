@@ -47,7 +47,7 @@ const TraineesPage = ({ spinner, setLoading }) => {
 				</Col>
 			</Row>
 			<Row>
-				<Col xs='auto'>
+				<Col>
 					{trainees && !spinner ? (
 						<TraineeList
 							onClickTrainee={(id) => {

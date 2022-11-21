@@ -62,7 +62,7 @@ const SessionsPage = ({ spinner, setLoading }) => {
 				</Col>
 			</Row>
 			<Row className='mt-3'>
-				<Col xs='auto'>
+				<Col>
 					{sessions && !spinner ? (
 						<SessionList
 							onClickSession={(id) => {
