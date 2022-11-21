@@ -28,7 +28,6 @@ function App() {
 		<AppContext.Provider
 			value={{ user, setUser, trainees, setTrainees, sessions, setSessions }}
 		>
-			<p>Project GYM</p>
 			<Router>
 				<Routes>
 					<Route path='/' element={<WelcomePage></WelcomePage>} />

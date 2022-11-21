@@ -7,7 +7,6 @@ import 'react-calendar/dist/Calendar.css';
 const Calendar = ({ value, onChange }) => {
 	return (
 		<div>
-			<p>Calendar</p>
 			<ReactCalendar onChange={onChange} value={value} />
 		</div>
 	);

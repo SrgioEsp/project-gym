@@ -49,7 +49,6 @@ const SessionSelect = ({ sessions, currentDay }) => {
 	const [sessionType, setSessionType] = useState('');
 	return (
 		<div>
-			Grupos:{' '}
 			<select
 				defaultValue={''}
 				className='form-select'
@@ -59,9 +58,11 @@ const SessionSelect = ({ sessions, currentDay }) => {
 				}}
 			>
 				<option value={''} disabled>
-					Grupos
+					Sesiones
 				</option>
-				<option value={SESSION_TYPES.INDIVIDUAL}>{SESSION_TYPES.INDIVIDUAL}</option>
+				<option value={SESSION_TYPES.INDIVIDUAL}>
+					{SESSION_TYPES.INDIVIDUAL}
+				</option>
 				<option value={SESSION_TYPES.DUO}>{SESSION_TYPES.DUO}</option>
 				<option value={SESSION_TYPES.TRIO}>{SESSION_TYPES.TRIO}</option>
 				<option value={SESSION_TYPES.CUARTETO}>{SESSION_TYPES.CUARTETO}</option>
@@ -78,12 +79,12 @@ const SessionSelect = ({ sessions, currentDay }) => {
 									(session) =>
 										session.sessionType === sessionType &&
 										session.days.weekdays
-											.map((session) => session.day)
+											.map((weekday) => weekday.day)
 											.includes(mapWeekDays[currentDay.getDay()]) === true
 								)
 								.map((session) => renderSession(session, trainees))
 						) : (
-							<p className='text-danger'>No se han encontrado grupos</p>
+							<p className='text-danger'>No se han encontrado sesiones</p>
 						)}
 					</ul>
 				</Col>

@@ -26,14 +26,14 @@ const emptyFields = (
 	setWeekdays([]);
 };
 
-const renderSession = (session, onClickHandlerRemoveSession) => {
+const renderSessionDay = (session, onClickHandlerRemoveSessionDay) => {
 	return (
 		<tr key={session.day}>
 			<SessionSessionInfo session={session}></SessionSessionInfo>
 			<td>
 				<Button
 					variant='danger'
-					onClick={() => onClickHandlerRemoveSession(session.day)}
+					onClick={() => onClickHandlerRemoveSessionDay(session.day)}
 				>
 					-
 				</Button>
@@ -67,7 +67,7 @@ const SessionModal = () => {
 		handleClose();
 	};
 
-	const onClickHandleCreateSession = () => {
+	const onClickHandleCreateSessionDay = () => {
 		if (day !== '' && startTime !== '' && endTime !== '') {
 			const duplicateDay = weekdays.find((obj) => obj.day === day);
 			if (duplicateDay === undefined) {
@@ -80,12 +80,12 @@ const SessionModal = () => {
 					},
 				]);
 			} else {
-				console.log('No puede haber dos sesiones del mismo grupo en un día');
+				console.log('Ya se ha creado una sesión para este día');
 			}
 		}
 	};
 
-	const onClickHandlerRemoveSession = (day) => {
+	const onClickHandlerRemoveSessionDay = (day) => {
 		const weekdaysWithoutDay = weekdays.filter(
 			(weekday) => weekday.day !== day
 		);
@@ -108,7 +108,6 @@ const SessionModal = () => {
 				},
 			}).then((res) => {
 				res = setSessionType(res);
-				console.log(res);
 				setSessions([...sessions, res]);
 				closeModal();
 			});
@@ -123,7 +122,7 @@ const SessionModal = () => {
 
 			<Modal show={show} onHide={handleClose}>
 				<Modal.Header closeButton>
-					<Modal.Title>Crear Grupo</Modal.Title>
+					<Modal.Title>Crear Sesión</Modal.Title>
 				</Modal.Header>
 				<form onSubmit={onSubmitHandler}>
 					<Modal.Body>
@@ -133,7 +132,7 @@ const SessionModal = () => {
 									className='form-control'
 									type='text'
 									name='name'
-									placeholder='Nombre Grupo'
+									placeholder='Nombre Sesión'
 									autoComplete='off'
 									value={name}
 									onChange={(ev) => setName(ev.target.value)}
@@ -190,9 +189,9 @@ const SessionModal = () => {
 								<Button
 									variant='success'
 									size='sm'
-									onClick={() => onClickHandleCreateSession()}
+									onClick={() => onClickHandleCreateSessionDay()}
 								>
-									Añadir Sesión
+									Añadir Nuevo Día
 								</Button>
 							</Col>
 						</Row>
@@ -208,8 +207,8 @@ const SessionModal = () => {
 									</thead>
 									<tbody>
 										{weekdays.length !== 0 &&
-											weekdays.map((session) =>
-												renderSession(session, onClickHandlerRemoveSession)
+											weekdays.map((day) =>
+												renderSessionDay(day, onClickHandlerRemoveSessionDay)
 											)}
 									</tbody>
 								</Table>

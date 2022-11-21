@@ -40,7 +40,7 @@ const renderSession = (session, trainees, onClickSession) => {
 										size='sm'
 										onClick={() => onClickSession(session.id)}
 									>
-										Eliminar Grupo
+										Eliminar Sesión
 									</Button>
 								</Dropdown.Item>
 							</Dropdown.Menu>
@@ -71,9 +71,11 @@ const SessionList = ({ onClickSession }) => {
 			<Col>
 				<ul>
 					{sessions && sessions.length !== 0 ? (
-						sessions.map((session) => renderSession(session, trainees, onClickSession))
+						sessions.map((session) =>
+							renderSession(session, trainees, onClickSession)
+						)
 					) : (
-						<p className='text-danger'>No se han encontrado grupos</p>
+						<p className='text-danger'>No se han encontrado sesiones</p>
 					)}
 				</ul>
 			</Col>

@@ -51,7 +51,10 @@ const MainPage = ({ spinner, setLoading }) => {
 			<Row className='justify-content-center mt-3'>
 				<Col xs='auto'>
 					{sessions && !spinner ? (
-						<SessionSelect sessions={sessions} currentDay={calendarDay}></SessionSelect>
+						<SessionSelect
+							sessions={sessions}
+							currentDay={calendarDay}
+						></SessionSelect>
 					) : (
 						<Spinner></Spinner>
 					)}
@@ -68,7 +71,7 @@ const MainPage = ({ spinner, setLoading }) => {
 			<Row className='justify-content-center mt-3'>
 				<Col xs='auto'>
 					<Link to={'/sessions'} className='btn btn-success'>
-						Grupos
+						Sesiones
 					</Link>
 				</Col>
 			</Row>

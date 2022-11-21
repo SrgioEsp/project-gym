@@ -55,7 +55,7 @@ const SessionsPage = ({ spinner, setLoading }) => {
 					</Link>
 				</Col>
 				<Col>
-					<h5>GRUPOS</h5>
+					<h5>SESIONES</h5>
 				</Col>
 				<Col xs='auto'>
 					<SessionModal></SessionModal>

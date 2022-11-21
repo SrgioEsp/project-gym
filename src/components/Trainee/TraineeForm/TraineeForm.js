@@ -64,11 +64,9 @@ const TraineeForm = ({ trainee, setTrainee }) => {
 				altura,
 				userId: user.id,
 			}).then((res) => {
-				console.log(res);
 				const trainneIndex = trainees.findIndex(
 					(trainee) => trainee.id === res.id
 				);
-				console.log(trainneIndex);
 				trainees[trainneIndex] = res;
 				setTrainees(trainees);
 				setMsgAdd('Alumno actualizado correctamente');

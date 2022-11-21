@@ -9,7 +9,6 @@ const AppFrame = ({ children }) => {
 	const { user } = useContext(AppContext);
 	return (
 		<Container>
-			<p>AppFrame</p>
 			<Row className='border p-3 mb-3'>
 				<Col>
 					<Navbar>
