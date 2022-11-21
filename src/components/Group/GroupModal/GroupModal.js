@@ -154,7 +154,7 @@ const GroupModal = () => {
 							<Col>
 								Dia
 								<select
-									defaultValue={''}
+									defaultValue={day}
 									className='form-select'
 									onChange={(ev) => setDay(ev.target.value)}
 								>
@@ -171,6 +171,7 @@ const GroupModal = () => {
 								<input
 									className='form-control'
 									type={'time'}
+									value={startTime}
 									onChange={(ev) => setStartTime(ev.target.value)}
 								/>
 							</Col>
@@ -179,6 +180,7 @@ const GroupModal = () => {
 								<input
 									className='form-control'
 									type={'time'}
+									value={endTime}
 									onChange={(ev) => setEndTime(ev.target.value)}
 								/>
 							</Col>

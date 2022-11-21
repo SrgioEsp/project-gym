@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import TraineeInfo from '../../Trainee/TraineeInfo';
 import { AppContext } from '../../../contexts/AppContext';
 import { Col, Row } from 'react-bootstrap';
+import { GROUP_TYPES } from '../../../constants';
+import { mapWeekDays } from '../../../utils';
 
 const renderTrainee = (filteredTrainee) => {
 	if (filteredTrainee && filteredTrainee.length !== 0) {
@@ -49,17 +51,23 @@ const GroupSelect = ({ groups, currentDay }) => {
 		<div>
 			Grupos:{' '}
 			<select
+				defaultValue={''}
 				className='form-select'
 				aria-label='Floating label select example'
 				onChange={(ev) => {
 					setGroupType(ev.target.value);
 				}}
 			>
-				<option disabled>Grupos</option>
-				<option value=''>Individual</option>
-				<option value='DUO'>Duos</option>
-				<option value='TRIO'>Trios</option>
-				<option value='CUARTETO'>Cuartetos</option>
+				<option value={''} disabled>
+					Grupos
+				</option>
+				<option value={GROUP_TYPES.INDIVIDUAL}>{GROUP_TYPES.INDIVIDUAL}</option>
+				<option value={GROUP_TYPES.DUO}>{GROUP_TYPES.DUO}</option>
+				<option value={GROUP_TYPES.TRIO}>{GROUP_TYPES.TRIO}</option>
+				<option value={GROUP_TYPES.CUARTETO}>{GROUP_TYPES.CUARTETO}</option>
+				<option value={GROUP_TYPES.GRUPO_GRANDE}>
+					{GROUP_TYPES.GRUPO_GRANDE}
+				</option>
 			</select>
 			<Row>
 				<Col>
@@ -69,7 +77,9 @@ const GroupSelect = ({ groups, currentDay }) => {
 								.filter(
 									(group) =>
 										group.groupType === groupType &&
-										group.days.includes(currentDay.getDay())
+										group.days.weekdays
+											.map((session) => session.day)
+											.includes(mapWeekDays[currentDay.getDay()]) === true
 								)
 								.map((group) => renderGroup(group, trainees))
 						) : (

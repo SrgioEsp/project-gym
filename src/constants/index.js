@@ -4,14 +4,15 @@ export const GROUP_TYPES = {
 	DUO: 'DUO',
 	TRIO: 'TRIO',
 	CUARTETO: 'CUARTETO',
+	GRUPO_GRANDE: 'GRUPO GRANDE',
 };
 
 export const daysOfWeek = [
 	'Lunes',
 	'Martes',
-	'Miércoles',
+	'Miercoles',
 	'Jueves',
 	'Viernes',
-	'Sábado',
+	'Sabado',
 	'Domingo',
 ];

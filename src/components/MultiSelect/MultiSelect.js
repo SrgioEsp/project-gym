@@ -7,6 +7,7 @@ const inputValue = (dropdownValue, setDropDownValue, obj) => {
 		<div key={obj.id}>
 			<input
 				type={'checkbox'}
+				checked={dropdownValue.includes(obj.id)}
 				value={dropdownValue}
 				onChange={(ev) => {
 					if (ev.target.checked) {
