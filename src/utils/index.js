@@ -42,3 +42,41 @@ export const mapWeekDays = {
 	6: 'Sabado',
 	0: 'Domingo',
 };
+
+export const convertWeekDaysToString = (numberOfDay) => {
+	switch (numberOfDay) {
+		case 1:
+			return 'Lunes';
+		case 2:
+			return 'Martes';
+		case 3:
+			return 'Miercoles';
+		case 4:
+			return 'Jueves';
+		case 5:
+			return 'Viernes';
+		case 6:
+			return 'Sabado';
+		case 0:
+			return 'Domingo';
+	}
+};
+
+export const convertWeekDaysToNumber = (stringOfDay) => {
+	switch (stringOfDay) {
+		case 'Lunes':
+			return 1;
+		case 'Martes':
+			return 2;
+		case 'Miercoles':
+			return 3;
+		case 'Jueves':
+			return 4;
+		case 'Viernes':
+			return 5;
+		case 'Sabado':
+			return 6;
+		case 'Domingo':
+			return 0;
+	}
+};
