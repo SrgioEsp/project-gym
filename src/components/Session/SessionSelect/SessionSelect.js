@@ -4,7 +4,7 @@ import TraineeInfo from '../../Trainee/TraineeInfo';
 import { AppContext } from '../../../contexts/AppContext';
 import { Col, Row } from 'react-bootstrap';
 import { SESSION_TYPES } from '../../../constants';
-import { mapWeekDays } from '../../../utils';
+import { convertWeekDaysToNumber, mapWeekDays } from '../../../utils';
 
 const renderTrainee = (filteredTrainee) => {
 	if (filteredTrainee && filteredTrainee.length !== 0) {
@@ -20,12 +20,26 @@ const renderTrainee = (filteredTrainee) => {
 	}
 };
 
-const renderSession = (session, trainees) => {
+const renderSession = (session, trainees, currentDay) => {
 	return (
 		<Row key={session.id}>
 			<Col>
 				<li>
-					<p>{session.name}</p>
+					<p>
+						{session.name} (
+						{session.days.weekdays.map((weekday) =>
+							convertWeekDaysToNumber(weekday.day) === currentDay.getDay()
+								? weekday.startTime
+								: ''
+						)}
+						-
+						{session.days.weekdays.map((weekday) =>
+							convertWeekDaysToNumber(weekday.day) === currentDay.getDay()
+								? weekday.endTime
+								: ''
+						)}
+						)
+					</p>
 					<ul>
 						{session.trainees && session.trainees !== 0 ? (
 							session.trainees.map((traineeId) => {
@@ -81,7 +95,7 @@ const SessionSelect = ({ sessions, currentDay }) => {
 											.map((weekday) => weekday.day)
 											.includes(mapWeekDays[currentDay.getDay()]) === true
 								)
-								.map((session) => renderSession(session, trainees))
+								.map((session) => renderSession(session, trainees, currentDay))
 						) : (
 							<p className='text-danger'>No se han encontrado sesiones</p>
 						)}
