@@ -1,15 +1,16 @@
 import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
+import { Col, Row } from 'react-bootstrap';
 
 const TraineeInfo = ({ trainee }) => {
 	return (
-		<div>
-			<p>
+		<Row className='justify-content-start p-2'>
+			<Col xs={'auto'}>
 				<b>
 					{trainee.name} {trainee.surname}
 				</b>
-			</p>
-		</div>
+			</Col>
+		</Row>
 	);
 };
 

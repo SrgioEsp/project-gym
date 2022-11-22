@@ -46,8 +46,8 @@ const TraineesPage = ({ spinner, setLoading }) => {
 					<TraineeModal></TraineeModal>
 				</Col>
 			</Row>
-			<Row>
-				<Col>
+			<Row className='justify-content-center'>
+				<Col xs='auto'>
 					{trainees && !spinner ? (
 						<TraineeList
 							onClickTrainee={(id) => {

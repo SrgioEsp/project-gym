@@ -4,28 +4,28 @@ import TraineeInfo from '../TraineeInfo';
 import { AppContext } from '../../../contexts/AppContext';
 import { useNavigate } from 'react-router-dom';
 import { BsFillPersonXFill } from 'react-icons/bs';
-import { Button, Col, Row } from 'react-bootstrap';
+import { Button, Card, Col, ListGroup, Row } from 'react-bootstrap';
 
 const renderTrainee = (eventOnClickTrainee, trainee, navigate) => {
 	return (
-		<Row key={trainee.id}>
-			<Col>
-				<li
-					onClick={() => navigate(`/trainees/${trainee.name}?id=${trainee.id}`)}
-				>
-					<TraineeInfo trainee={trainee}></TraineeInfo>
-				</li>
-			</Col>
-			<Col xs='auto'>
+		<Card key={trainee.id} className='m-2 d-flex flex-row border border-0'>
+			<Card.Header
+				className='w-75 p-2 mx-2'
+				onClick={() => navigate(`/trainees/${trainee.name}?id=${trainee.id}`)}
+			>
+				<TraineeInfo trainee={trainee}></TraineeInfo>
+			</Card.Header>
+			<Card.Body className='w-25 p-0'>
 				<Button
-					variant='danger'
+					className='h-100 w-100'
+					variant='secondary'
 					size='sm'
 					onClick={() => eventOnClickTrainee(trainee.id)}
 				>
 					Eliminar <BsFillPersonXFill></BsFillPersonXFill>
 				</Button>
-			</Col>
-		</Row>
+			</Card.Body>
+		</Card>
 	);
 };
 
@@ -37,15 +37,13 @@ const TraineeList = ({ onClickTrainee }) => {
 		<div className='mt-3'>
 			<Row>
 				<Col>
-					<ul>
-						{trainees.length !== 0 ? (
-							trainees.map((trainee) =>
-								renderTrainee(onClickTrainee, trainee, navigate)
-							)
-						) : (
-							<p className='text-danger'>No se han encontrado alumnos</p>
-						)}
-					</ul>
+					{trainees.length !== 0 ? (
+						trainees.map((trainee) =>
+							renderTrainee(onClickTrainee, trainee, navigate)
+						)
+					) : (
+						<p className='text-danger'>No se han encontrado alumnos</p>
+					)}
 				</Col>
 			</Row>
 		</div>
