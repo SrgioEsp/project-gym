@@ -5,7 +5,7 @@ export const SESSION_TYPES = {
 	TRIO: 'TRIO',
 	CUARTETO: 'CUARTETO',
 	QUINTETO: 'QUINTETO',
-	GRUPOS: 'GRUPOS',
+	GRUPO: 'GRUPO',
 };
 
 export const daysOfWeek = [

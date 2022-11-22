@@ -30,7 +30,7 @@ export const setSessionType = (session) => {
 			session.sessionType = 'QUINTETO';
 			break;
 		default:
-			session.sessionType = 'GRUPOS';
+			session.sessionType = 'GRUPO';
 			break;
 	}
 	return session;

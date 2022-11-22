@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import MultiSelect from '../../MultiSelect/MultiSelect';
 import SessionSessionInfo from '../SessionTableInfo/SessionTableInfo';
-import Calendar from '../../Calendar';
 import { createSession } from '../../../actions/SessionsActions';
 import { AppContext } from '../../../contexts/AppContext';
 import { daysOfWeek } from '../../../constants';
@@ -152,11 +151,6 @@ const SessionModal = () => {
 								></MultiSelect>
 							</Col>
 						</Row>
-						{/* <Row>
-							<Col>
-								<Calendar></Calendar>
-							</Col>
-						</Row> */}
 						<Row>
 							<Col>
 								Dia

@@ -6,6 +6,20 @@ import { Col, Row } from 'react-bootstrap';
 import { SESSION_TYPES } from '../../../constants';
 import { convertWeekDaysToNumber, mapWeekDays } from '../../../utils';
 
+const getNumOfSessionsDay = (sessions, currentDay, type) => {
+	let count = 0;
+	sessions.forEach((session) => {
+		if (session.sessionType === type) {
+			session.days.weekdays.forEach((weekday) => {
+				if (convertWeekDaysToNumber(weekday.day) === currentDay.getDay()) {
+					count++;
+				}
+			});
+		}
+	});
+	return count;
+};
+
 const renderTrainee = (filteredTrainee) => {
 	if (filteredTrainee && filteredTrainee.length !== 0) {
 		return (
@@ -65,7 +79,7 @@ const SessionSelect = ({ sessions, currentDay }) => {
 		<div>
 			<select
 				defaultValue={''}
-				className='form-select'
+				className='form-select mb-2'
 				aria-label='Floating label select example'
 				onChange={(ev) => {
 					setSessionType(ev.target.value);
@@ -75,13 +89,29 @@ const SessionSelect = ({ sessions, currentDay }) => {
 					Sesiones
 				</option>
 				<option value={SESSION_TYPES.INDIVIDUAL}>
-					{SESSION_TYPES.INDIVIDUAL}
+					{SESSION_TYPES.INDIVIDUAL} (
+					{getNumOfSessionsDay(sessions, currentDay, SESSION_TYPES.INDIVIDUAL)})
 				</option>
-				<option value={SESSION_TYPES.DUO}>{SESSION_TYPES.DUO}</option>
-				<option value={SESSION_TYPES.TRIO}>{SESSION_TYPES.TRIO}</option>
-				<option value={SESSION_TYPES.CUARTETO}>{SESSION_TYPES.CUARTETO}</option>
-				<option value={SESSION_TYPES.QUINTETO}>{SESSION_TYPES.QUINTETO}</option>
-				<option value={SESSION_TYPES.GRUPOS}>{SESSION_TYPES.GRUPOS}</option>
+				<option value={SESSION_TYPES.DUO}>
+					{SESSION_TYPES.DUO} (
+					{getNumOfSessionsDay(sessions, currentDay, SESSION_TYPES.DUO)})
+				</option>
+				<option value={SESSION_TYPES.TRIO}>
+					{SESSION_TYPES.TRIO} (
+					{getNumOfSessionsDay(sessions, currentDay, SESSION_TYPES.TRIO)})
+				</option>
+				<option value={SESSION_TYPES.CUARTETO}>
+					{SESSION_TYPES.CUARTETO} (
+					{getNumOfSessionsDay(sessions, currentDay, SESSION_TYPES.CUARTETO)})
+				</option>
+				<option value={SESSION_TYPES.QUINTETO}>
+					{SESSION_TYPES.QUINTETO} (
+					{getNumOfSessionsDay(sessions, currentDay, SESSION_TYPES.QUINTETO)})
+				</option>
+				<option value={SESSION_TYPES.GRUPO}>
+					{SESSION_TYPES.GRUPO} (
+					{getNumOfSessionsDay(sessions, currentDay, SESSION_TYPES.GRUPO)})
+				</option>
 			</select>
 			<Row>
 				<Col>
