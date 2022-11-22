@@ -26,7 +26,7 @@ const TraineePage = ({ spinner, setLoading }) => {
 	return (
 		<AppFrame>
 			<div>
-				<Row>
+				<Row className='mb-4'>
 					<Col xs='auto'>
 						<Link to={'/trainees'} className='btn btn-primary'>
 							Atrás
@@ -34,7 +34,7 @@ const TraineePage = ({ spinner, setLoading }) => {
 					</Col>
 				</Row>
 				{!spinner ? (
-					<Row className='justify-content-center'>
+					<Row className='justify-content-center mx-5 mt-2'>
 						<Col xs='auto'>
 							<TraineeForm
 								trainee={trainee}

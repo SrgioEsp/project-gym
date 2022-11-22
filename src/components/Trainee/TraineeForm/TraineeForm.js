@@ -3,175 +3,270 @@ import PropTypes from 'prop-types';
 import { AppContext } from '../../../contexts/AppContext';
 import { createTrainee, updateTrainee } from '../../../actions/TraineeActions';
 import { formatDate, inputDateFormat } from '../../../utils';
-import { Button, Col, Row } from 'react-bootstrap';
-
-const emptyFields = (setName, setfechaEntrada, ev) => {
-	setName('');
-	setfechaEntrada('');
-	ev.target.edad.value = '';
-	ev.target.peso.value = '';
-	ev.target.altura.value = '';
-};
-
-const validate = (nombre, fechaEntrada) => {
-	if (nombre === '') return 'Introduzca un nombre';
-	if (!fechaEntrada) return 'Introduzca una fecha';
-};
+import { Button, Col, Modal, Row } from 'react-bootstrap';
 
 const TraineeForm = ({ trainee, setTrainee }) => {
 	const { trainees, setTrainees, user } = useContext(AppContext);
 	const [name, setName] = useState(trainee?.name || '');
-	const [fechaEntrada, setfechaEntrada] = useState(
-		trainee?.date ? inputDateFormat(trainee.date) : ''
+	const [surname, setSurname] = useState(trainee?.surname || '');
+	const [birthDate, setBirthDate] = useState(trainee?.birthDate || '');
+	const [dni, setDni] = useState(trainee?.dni || '');
+	const [gender, setGender] = useState(trainee?.gender || '');
+	const [weight, setWeight] = useState(trainee?.weight || '');
+	const [height, setHeight] = useState(trainee?.height || '');
+	const [entryDate, setEntryDate] = useState(
+		inputDateFormat(formatDate(new Date(trainee?.entryDate))) || ''
 	);
-	const [edad, setEdad] = useState(trainee?.edad || undefined);
-	const [peso, setPeso] = useState(trainee?.peso || undefined);
-	const [altura, setAltura] = useState(trainee?.altura || undefined);
-	const [msgAdd, setMsgAdd] = useState(null);
+	const [months, setMonths] = useState(trainee?.months || '');
+	const [activationDate, setActivationDate] = useState(
+		inputDateFormat(formatDate(new Date(trainee?.activationDate))) || ''
+	);
+	const [expiryDate, setExpiryDate] = useState(
+		trainee?.expiryDate
+			? inputDateFormat(formatDate(new Date(trainee?.expiryDate)))
+			: ''
+	);
 
-	const delMsg = () => {
-		setTimeout(() => {
-			setMsgAdd(null);
-		}, 3000);
-	};
-	const errMsg = validate(name, fechaEntrada);
+	const [show, setShow] = useState(false);
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
 
 	const onSubmitHandler = (ev) => {
 		ev.preventDefault();
-		const date = formatDate(new Date(fechaEntrada));
-		const edad = ev.target.edad.value;
-		const peso = ev.target.peso.value;
-		const altura = ev.target.altura.value;
-		if (!trainee) {
-			createTrainee({
-				name,
-				date,
-				edad,
-				peso,
-				altura,
-				userId: user.id,
-			}).then((res) => {
-				setTrainees([...trainees, res]);
-				setMsgAdd('Alumno creado correctamente');
-				emptyFields(setName, setfechaEntrada, ev);
-			});
-		} else {
-			updateTrainee(trainee.id, {
-				name,
-				date,
-				edad,
-				peso,
-				altura,
-				userId: user.id,
-			}).then((res) => {
-				const trainneIndex = trainees.findIndex(
-					(trainee) => trainee.id === res.id
-				);
-				trainees[trainneIndex] = res;
-				setTrainees(trainees);
-				setMsgAdd('Alumno actualizado correctamente');
-			});
+		// POPUP
+		if (trainee) {
+			handleShow();
 		}
 	};
 
+	const handleUpdateTrainee = () => {
+		const body = {
+			name,
+			surname,
+			birthDate,
+			dni,
+			gender,
+			weight,
+			height,
+			entryDate: new Date(entryDate),
+			// months,
+			activationDate: new Date(activationDate),
+		};
+		updateTrainee(trainee.id, body).then((res) => {
+			console.log(res);
+			const trainneIndex = trainees.findIndex(
+				(trainee) => trainee.id === res.id
+			);
+			trainees[trainneIndex] = res;
+			setTrainees(trainees);
+			handleClose();
+		});
+	};
+
 	return (
-		<form onSubmit={onSubmitHandler}>
-			<Row className='justify-content-center'>
-				<Col xs='auto'>
-					<p className='text-danger'>{errMsg}</p>
-					{msgAdd && <p className='bg-success text-white'>{msgAdd}</p>}
-					{delMsg()}
-				</Col>
-			</Row>
-			<Row>
-				<Col>
-					<input
-						type='text'
-						name='nombre'
-						placeholder='Nombre Alumno'
-						autoComplete='off'
-						value={name}
-						onChange={(ev) => {
-							setName(ev.target.value);
-						}}
-					/>
-				</Col>
-			</Row>
-			<Row>
-				<Col>
-					<input
-						type='date'
-						name='fechaEntrada'
-						value={fechaEntrada}
-						onChange={(ev) => {
-							setfechaEntrada(ev.target.value);
-						}}
-					/>
-				</Col>
-			</Row>
-			<Row>
-				<Col>
-					<input
-						type={'number'}
-						name='edad'
-						autoComplete='off'
-						placeholder='Edad'
-						value={edad}
-						onChange={(ev) => {
-							setEdad(ev.target.value);
-						}}
-					/>
-				</Col>
-			</Row>
-			<Row>
-				<Col>
-					<input
-						type={'number'}
-						name='peso'
-						autoComplete='off'
-						placeholder='Peso'
-						value={peso}
-						onChange={(ev) => {
-							setPeso(ev.target.value);
-						}}
-					/>
-				</Col>
-			</Row>
-			<Row>
-				<Col>
-					<input
-						type={'number'}
-						name='altura'
-						autoComplete='off'
-						placeholder='Altura'
-						value={altura}
-						onChange={(ev) => {
-							setAltura(ev.target.value);
-						}}
-					/>
-				</Col>
-			</Row>
-			<Row>
-				<Col xs='auto'>
-					<Button type='submit' disabled={errMsg} variant='success' size='sm'>
-						{trainee ? 'Editar' : 'Añadir'}
-					</Button>
-					{!trainee && (
-						<Button
-							type='reset'
-							variant='danger'
-							size='sm'
-							onClick={() => {
-								setName('');
-								setfechaEntrada('');
+		<>
+			<form onSubmit={onSubmitHandler}>
+				<Row>
+					<Col>
+						<input
+							className='form-control'
+							type='text'
+							name='name'
+							placeholder='Nombre'
+							autoComplete='off'
+							value={name}
+							onChange={(ev) => setName(ev.target.value)}
+						/>
+					</Col>
+				</Row>
+				<Row className='my-3'>
+					<Col>
+						<input
+							className='form-control'
+							type='text'
+							name='surname'
+							placeholder='Apellidos'
+							autoComplete='off'
+							value={surname}
+							onChange={(ev) => {
+								setSurname(ev.target.value);
 							}}
+						/>
+					</Col>
+				</Row>
+				<Row className='my-3'>
+					<Col>
+						Fecha Nacimiento
+						<input
+							className='form-control'
+							type={'date'}
+							name='birthDate'
+							autoComplete='off'
+							value={birthDate}
+							onChange={(ev) => setBirthDate(ev.target.value)}
+						/>
+					</Col>
+				</Row>
+				<Row className='my-3'>
+					<Col>
+						<input
+							className='form-control'
+							type='text'
+							name='dni'
+							placeholder='DNI'
+							autoComplete='off'
+							value={dni}
+							onChange={(ev) => setDni(ev.target.value)}
+						/>
+					</Col>
+				</Row>
+				<Row className='my-3'>
+					<Col>
+						<select
+							defaultValue={gender}
+							className='form-select'
+							onChange={(ev) => setGender(ev.target.value)}
 						>
-							Cancelar
+							<option value={''} disabled>
+								Género
+							</option>
+							<option value={'M'}>Masculino</option>;
+							<option value={'F'}>Femenino</option>;
+							<option value={'O'}>Otro</option>;
+						</select>
+					</Col>
+				</Row>
+
+				<hr />
+
+				<Row className='my-3'>
+					<Col>
+						<div className='d-flex'>
+							<div className='input-group'>
+								<input
+									className='form-control w-50'
+									type={'number'}
+									name='weight'
+									placeholder='Peso'
+									autoComplete='off'
+									value={weight}
+									onChange={(ev) => setWeight(ev.target.value)}
+								/>
+								<span className='input-group-text' id='inputGroupPrepend'>
+									Kg
+								</span>
+							</div>
+							<div className='input-group'>
+								<input
+									className='form-control w-50'
+									type={'number'}
+									name='height'
+									placeholder='Altura'
+									autoComplete='off'
+									value={height}
+									onChange={(ev) => setHeight(ev.target.value)}
+								/>
+								<span className='input-group-text' id='inputGroupPrepend'>
+									cm
+								</span>
+							</div>
+						</div>
+					</Col>
+				</Row>
+
+				<hr />
+
+				<Row className='my-3'>
+					<Col>
+						Fecha Incorporación
+						<input
+							className='form-control'
+							type={'date'}
+							name='entryDate'
+							autoComplete='off'
+							value={entryDate}
+							onChange={(ev) => setEntryDate(ev.target.value)}
+						/>
+					</Col>
+				</Row>
+
+				<Row className='my-3'>
+					<Col>
+						Fecha Permanencia
+						<div className='d-flex'>
+							<input
+								className='form-control w-25'
+								type={'number'}
+								name='months'
+								placeholder='Meses'
+								autoComplete='off'
+								value={months}
+								onChange={(ev) => setMonths(ev.target.value)}
+							/>
+							<input
+								className='form-control w-75'
+								type={'date'}
+								name='activationDate'
+								autoComplete='off'
+								value={activationDate}
+								onChange={(ev) => setActivationDate(ev.target.value)}
+								disabled
+							/>
+						</div>
+					</Col>
+				</Row>
+				<Row className='my-3'>
+					<Col>
+						Fecha Expiración
+						<input
+							className='form-control'
+							type={'date'}
+							name='expiryDate'
+							autoComplete='off'
+							value={expiryDate}
+							onChange={(ev) => setExpiryDate(ev.target.value)}
+							disabled
+						/>
+					</Col>
+				</Row>
+
+				<hr />
+
+				<Row className='my-3'>
+					<Col>
+						<span>Entrenador Seleccionado: </span>
+						<input
+							className='form-control'
+							type={'text'}
+							value={`${user.name}/#${user.id}`}
+							onChange={(ev) => {}}
+							disabled
+						/>
+						<Button className='mt-1' variant='danger' size='sm'>
+							Cambiar
 						</Button>
-					)}
-				</Col>
-			</Row>
-		</form>
+					</Col>
+				</Row>
+
+				<Button className='w-100 my-3' variant='primary' type={'submit'}>
+					Actualizar
+				</Button>
+			</form>
+			<Modal show={show} onHide={handleClose}>
+				<Modal.Header closeButton>
+					<Modal.Title>Cuidado!</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>¿Seguro que quieres realizar cambios?</Modal.Body>
+				<Modal.Footer>
+					<Button variant='secondary' onClick={handleClose}>
+						Cancelar
+					</Button>
+					<Button variant='primary' onClick={handleUpdateTrainee}>
+						Aceptar
+					</Button>
+				</Modal.Footer>
+			</Modal>
+		</>
 	);
 };
 
