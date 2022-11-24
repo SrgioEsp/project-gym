@@ -7,14 +7,17 @@ import Spinner from './../components/Spinner';
 import { AppContext } from '../contexts/AppContext';
 import { getTraineesByUserId } from '../actions/TraineesActions';
 import { getSessionsByUserId } from '../actions/SessionsActions';
-import { setSessionType } from '../utils';
+import { convertWeekDaysToString, setSessionType } from '../utils';
 import { Link } from 'react-router-dom';
 import { Row, Col } from 'react-bootstrap';
+import VerticallyCenteredModal from '../components/Modals/VerticallyCenteredModal';
+import SessionList from '../components/Session/SessionList';
 
 const MainPage = ({ spinner, setLoading }) => {
 	const { trainees, setTrainees, user, sessions, setSessions } =
 		useContext(AppContext);
 	const [calendarDay, onChangeCalendarDay] = useState(new Date());
+	const [showModal, setShowModal] = useState(false);
 
 	useEffect(() => {
 		if (!trainees || trainees.length === 0) {
@@ -45,19 +48,8 @@ const MainPage = ({ spinner, setLoading }) => {
 					<Calendar
 						value={calendarDay}
 						onChange={onChangeCalendarDay}
+						setShowModal={setShowModal}
 					></Calendar>
-				</Col>
-			</Row>
-			<Row className='justify-content-center mt-3'>
-				<Col xs='auto'>
-					{sessions && !spinner ? (
-						<SessionSelect
-							sessions={sessions}
-							currentDay={calendarDay}
-						></SessionSelect>
-					) : (
-						<Spinner></Spinner>
-					)}
 				</Col>
 			</Row>
 			<Row className='justify-content-center mt-3'>
@@ -75,6 +67,24 @@ const MainPage = ({ spinner, setLoading }) => {
 					</Link>
 				</Col>
 			</Row>
+			<VerticallyCenteredModal
+				showModal={showModal}
+				setShowModal={setShowModal}
+			>
+				<Row className='justify-content-center mb-3'>
+					<Col xs='auto'>
+						<h4>
+							{convertWeekDaysToString(calendarDay.getDay())}{' '}
+							{calendarDay.toLocaleDateString()}
+						</h4>
+					</Col>
+				</Row>
+				<Row>
+					<Col>
+						<SessionList currentDate={calendarDay}></SessionList>
+					</Col>
+				</Row>
+			</VerticallyCenteredModal>
 		</AppFrame>
 	);
 };

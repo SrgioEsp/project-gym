@@ -41,7 +41,7 @@ const SessionsPage = ({ spinner, setLoading }) => {
 		}
 	}, []);
 
-	const onClickHandlerDelSession = (id) => {
+	const onClickHandleDelSession = (id) => {
 		const msj = confirm('Desea eliminar el grupo');
 		if (msj)
 			delSession(id).then((res) => {
@@ -80,10 +80,8 @@ const SessionsPage = ({ spinner, setLoading }) => {
 				<Col>
 					{sessions && !spinner ? (
 						<SessionList
-							onClickSession={(id) => {
-								onClickHandlerDelSession(id);
-							}}
 							handleUpdateSession={handleUpdateSession}
+							onClickHandleDelSession={onClickHandleDelSession}
 						></SessionList>
 					) : (
 						<Spinner></Spinner>
