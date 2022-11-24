@@ -2,82 +2,93 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import TraineeInfo from '../../Trainee/TraineeInfo';
 import { AppContext } from '../../../contexts/AppContext';
-import { Button, Col, Dropdown, Row } from 'react-bootstrap';
+import { Accordion, Button, Card, Col, Row } from 'react-bootstrap';
+import SessionModal from '../SessionModal';
 
 const renderTrainee = (filteredTrainee) => {
-	if (filteredTrainee && filteredTrainee.length !== 0) {
+	if (filteredTrainee) {
 		return (
-			<Row key={filteredTrainee[0].id}>
-				<Col>
-					<li>
-						<TraineeInfo trainee={filteredTrainee[0]}></TraineeInfo>
-					</li>
-				</Col>
-			</Row>
+			<Card key={filteredTrainee.id} className='m-2 border border-0'>
+				<Card.Header className='p-0'>
+					<TraineeInfo trainee={filteredTrainee}></TraineeInfo>
+				</Card.Header>
+			</Card>
 		);
 	}
 };
 
-const renderSession = (session, trainees, onClickSession) => {
+const renderSession = (
+	session,
+	trainees,
+	onClickSession,
+	handleUpdateSession
+) => {
 	return (
-		<Row key={session.id}>
-			<Col>
-				<li>
-					<div className='d-flex justify-content-between mb-2'>
-						{session.name} <i>{session.sessionType}</i>{' '}
-						<Dropdown>
-							<Dropdown.Toggle
+		<Accordion key={session.id} className='my-2'>
+			<Accordion.Item>
+				<Accordion.Header>
+					<Row>
+						<Col>{session.name}</Col>
+						<Col>
+							<i>{session.sessionType}</i>
+						</Col>
+					</Row>
+				</Accordion.Header>
+				<Accordion.Body>
+					<Row className='justify-content-center'>
+						<Col xs='auto'>
+							<SessionModal
+								textButton='Editar'
+								session={session}
+								handleUpdateSession={handleUpdateSession}
+							></SessionModal>
+						</Col>
+						<Col xs='auto'>
+							<Button
 								variant='secondary'
-								id={`action${session.id}`}
-								size='sm'
+								onClick={() => onClickSession(session.id)}
 							>
-								Acciones
-							</Dropdown.Toggle>
-							<Dropdown.Menu>
-								<Dropdown.Item>
-									<Button
-										variant='danger'
-										size='sm'
-										onClick={() => onClickSession(session.id)}
-									>
-										Eliminar Sesión
-									</Button>
-								</Dropdown.Item>
-							</Dropdown.Menu>
-						</Dropdown>
-					</div>
-					<ul>
-						{session.trainees && session.trainees !== 0 ? (
-							session.trainees.map((traineeId) => {
-								const filteredTrainee = trainees.filter(
-									(trainee) => trainee.id === traineeId
-								);
-								return renderTrainee(filteredTrainee);
-							})
-						) : (
-							<p className='text-danger'>No se han encontrado alumnos</p>
-						)}
-					</ul>
-				</li>
-			</Col>
-		</Row>
+								Eliminar
+							</Button>
+						</Col>
+					</Row>
+					<Row className='mt-2'>
+						<Col>
+							{session.trainees && session.trainees !== 0 ? (
+								session.trainees.map((traineeId) => {
+									const filteredTrainee = trainees.find(
+										(trainee) => trainee.id === traineeId
+									);
+									return renderTrainee(filteredTrainee);
+								})
+							) : (
+								<p className='text-danger'>No se han encontrado alumnos</p>
+							)}
+						</Col>
+					</Row>
+				</Accordion.Body>
+			</Accordion.Item>
+		</Accordion>
 	);
 };
 
-const SessionList = ({ onClickSession }) => {
+const SessionList = ({ onClickSession, handleUpdateSession }) => {
 	const { trainees, sessions } = useContext(AppContext);
 	return (
 		<Row>
 			<Col>
-				<ul>
-					{sessions && sessions.length !== 0 ? (
-						sessions.map((session) =>
-							renderSession(session, trainees, onClickSession)
+				{sessions && sessions.length !== 0 ? (
+					sessions.map((session) =>
+						renderSession(
+							session,
+							trainees,
+							onClickSession,
+							handleUpdateSession
 						)
-					) : (
-						<p className='text-danger'>No se han encontrado sesiones</p>
-					)}
-				</ul>
+					)
+				) : (
+					<p className='text-danger'>No se han encontrado sesiones</p>
+				)}
 			</Col>
 		</Row>
 	);
@@ -85,6 +96,7 @@ const SessionList = ({ onClickSession }) => {
 
 SessionList.propTypes = {
 	onClickSession: PropTypes.func,
+	handleUpdateSession: PropTypes.func,
 };
 
 export default SessionList;

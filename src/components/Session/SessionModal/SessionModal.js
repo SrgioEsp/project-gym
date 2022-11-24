@@ -42,28 +42,34 @@ const renderSessionDay = (session, onClickHandlerRemoveSessionDay) => {
 	);
 };
 
-const SessionModal = () => {
+const SessionModal = ({ textButton, session, handleUpdateSession }) => {
 	const [show, setShow] = useState(false);
 	const { trainees, user, sessions, setSessions } = useContext(AppContext);
-	const [name, setName] = useState('');
-	const [dropdownIdTrainee, setDropDownIdTrainee] = useState([]);
+	const [name, setName] = useState(session ? session.name : '');
+	const [dropdownIdTrainee, setDropDownIdTrainee] = useState(
+		session ? session.trainees : []
+	);
+	const [weekdays, setWeekdays] = useState(
+		session ? session.days.weekdays : []
+	);
 	const [day, setDay] = useState('');
 	const [startTime, setStartTime] = useState('');
 	const [endTime, setEndTime] = useState('');
-	const [weekdays, setWeekdays] = useState([]);
 
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
-	const closeModal = () => {
-		emptyFields(
-			setName,
-			setDropDownIdTrainee,
-			setDay,
-			setStartTime,
-			setEndTime,
-			setWeekdays
-		);
+	const closeModal = (textButton) => {
+		if (textButton !== 'Editar') {
+			emptyFields(
+				setName,
+				setDropDownIdTrainee,
+				setDay,
+				setStartTime,
+				setEndTime,
+				setWeekdays
+			);
+		}
 		handleClose();
 	};
 
@@ -101,30 +107,35 @@ const SessionModal = () => {
 			weekdays.length !== 0 &&
 			dropdownIdTrainee.length !== 0
 		) {
-			createSession({
+			const body = {
 				userId: user.id,
 				name,
 				trainees: dropdownIdTrainee,
 				days: {
 					weekdays,
 				},
-			}).then((res) => {
-				res = setSessionType(res);
-				setSessions([...sessions, res]);
-				closeModal();
-			});
+			};
+			if (session && textButton === 'Editar') {
+				handleUpdateSession(session, body);
+			} else {
+				createSession(body).then((res) => {
+					res = setSessionType(res);
+					setSessions([...sessions, res]);
+					closeModal();
+				});
+			}
 		}
 	};
 
 	return (
 		<>
 			<Button variant='success' onClick={handleShow}>
-				Añadir
+				{textButton}
 			</Button>
 
 			<Modal show={show} onHide={handleClose}>
 				<Modal.Header closeButton>
-					<Modal.Title>Crear Sesión</Modal.Title>
+					<Modal.Title>{textButton} Sesión</Modal.Title>
 				</Modal.Header>
 				<form onSubmit={onSubmitHandler}>
 					<Modal.Body>
@@ -219,7 +230,7 @@ const SessionModal = () => {
 						</Row>
 					</Modal.Body>
 					<Modal.Footer>
-						<Button variant='secondary' onClick={closeModal}>
+						<Button variant='secondary' onClick={() => closeModal(textButton)}>
 							Cerrar
 						</Button>
 						<Button variant='primary' type={'submit'}>
@@ -232,6 +243,10 @@ const SessionModal = () => {
 	);
 };
 
-SessionModal.propTypes = {};
+SessionModal.propTypes = {
+	textButton: PropTypes.string.isRequired,
+	session: PropTypes.object,
+	handleUpdateSession: PropTypes.func,
+};
 
 export default SessionModal;

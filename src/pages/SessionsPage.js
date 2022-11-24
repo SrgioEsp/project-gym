@@ -5,7 +5,11 @@ import SessionList from '../components/Session/SessionList';
 import SessionModal from '../components/Session/SessionModal';
 import Spinner from '../components/Spinner';
 import { AppContext } from '../contexts/AppContext';
-import { delSession, getSessionsByUserId } from '../actions/SessionsActions';
+import {
+	delSession,
+	getSessionsByUserId,
+	updateSession,
+} from '../actions/SessionsActions';
 import { getTraineesByUserId } from '../actions/TraineesActions';
 import { setSessionType } from '../utils';
 import { Link } from 'react-router-dom';
@@ -46,6 +50,17 @@ const SessionsPage = ({ spinner, setLoading }) => {
 			});
 	};
 
+	const handleUpdateSession = (session, body) => {
+		updateSession(session.id, body).then((res) => {
+			res = setSessionType(res);
+			const sessionIndex = sessions.findIndex(
+				(session) => session.id === res.id
+			);
+			sessions[sessionIndex] = res;
+			setSessions(sessions);
+		});
+	};
+
 	return (
 		<AppFrame>
 			<Row>
@@ -58,7 +73,7 @@ const SessionsPage = ({ spinner, setLoading }) => {
 					<h5>SESIONES</h5>
 				</Col>
 				<Col xs='auto'>
-					<SessionModal></SessionModal>
+					<SessionModal textButton={'Crear'}></SessionModal>
 				</Col>
 			</Row>
 			<Row className='mt-3'>
@@ -68,6 +83,7 @@ const SessionsPage = ({ spinner, setLoading }) => {
 							onClickSession={(id) => {
 								onClickHandlerDelSession(id);
 							}}
+							handleUpdateSession={handleUpdateSession}
 						></SessionList>
 					) : (
 						<Spinner></Spinner>

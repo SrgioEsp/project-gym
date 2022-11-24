@@ -30,6 +30,18 @@ export const createSession = async (data) => {
 	}
 };
 
+export const updateSession = async (id, body) => {
+	try {
+		const options = {
+			body,
+			headers: { 'content-type': 'application/json' },
+		};
+		return await helpHttp().put(`${urlSession}/${id}`, options);
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 export const delSession = async (id) => {
 	try {
 		return await helpHttp().del(`${urlSession}/${id}`);
