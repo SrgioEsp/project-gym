@@ -40,7 +40,7 @@ const TraineeModal = () => {
 			gender !== ''
 		) {
 			createTrainee({
-				userId: user.id,
+				user: user.id,
 				name,
 				surname,
 				birthDate,

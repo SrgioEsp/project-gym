@@ -91,7 +91,7 @@ const SessionUpdateComponent = ({
 			dropdownIdTrainee.length !== 0
 		) {
 			const body = {
-				userId: user.id,
+				user: user.id,
 				name,
 				trainees: dropdownIdTrainee,
 				days: {
