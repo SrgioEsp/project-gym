@@ -5,12 +5,7 @@ import SessionList from '../components/Session/SessionList';
 import SessionModal from '../components/Session/SessionModal';
 import Spinner from '../components/Spinner';
 import { AppContext } from '../contexts/AppContext';
-import {
-	delSession,
-	getSessionsByUserId,
-	updateSession,
-} from '../actions/SessionsActions';
-import { getTraineesByUserId } from '../actions/TraineesActions';
+import { delSession, updateSession } from '../actions/SessionsActions';
 import { setSessionType } from '../utils';
 import { Link } from 'react-router-dom';
 import { Row, Col } from 'react-bootstrap';
@@ -21,23 +16,15 @@ const SessionsPage = ({ spinner, setLoading }) => {
 
 	useEffect(() => {
 		if (!trainees || trainees.length === 0) {
-			setLoading(true);
-			getTraineesByUserId(user.id).then((res) => {
-				if (res) {
-					setTrainees(res);
-					setLoading(false);
-				}
-			});
+			if (user.trainees && user.trainees.length !== 0) {
+				setTrainees(user.trainees);
+			}
 		}
 		if (!sessions || sessions.length === 0) {
-			setLoading(true);
-			getSessionsByUserId(user.id).then((res) => {
-				if (res) {
-					res = res.map((session) => setSessionType(session));
-					setSessions(res);
-					setLoading(false);
-				}
-			});
+			if (user.sessions && user.sessions.length !== 0) {
+				user.sessions = user.sessions.map((session) => setSessionType(session));
+				setSessions(user.sessions);
+			}
 		}
 	}, []);
 

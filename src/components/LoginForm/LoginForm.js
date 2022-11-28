@@ -15,7 +15,10 @@ const login = async (data, navigate, setIsInvalid, setUser) => {
 	getLoginUser(data).then((res) => {
 		if (res && res.id && res.name) {
 			setUser(res);
-			storage.set('user_session', res);
+			storage.set('user_session', {
+				id: res.id,
+				name: res.name,
+			});
 			navigate('/home');
 		} else {
 			setIsInvalid(true);

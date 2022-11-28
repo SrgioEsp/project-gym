@@ -16,3 +16,11 @@ export const getLoginUser = async (data) => {
 	}
 	return result;
 };
+
+export const getUserById = async (id) => {
+	try {
+		return await helpHttp().get(`${urlUsers}/${id}`);
+	} catch (error) {
+		console.log(error);
+	}
+};

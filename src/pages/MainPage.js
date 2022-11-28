@@ -2,11 +2,8 @@ import React, { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AppFrame from '../components/AppFrame';
 import Calendar from '../components/Calendar';
-import SessionSelect from '../components/Session/SessionSelect';
 import Spinner from './../components/Spinner';
 import { AppContext } from '../contexts/AppContext';
-import { getTraineesByUserId } from '../actions/TraineesActions';
-import { getSessionsByUserId } from '../actions/SessionsActions';
 import { convertWeekDaysToString, setSessionType } from '../utils';
 import { Link } from 'react-router-dom';
 import { Row, Col } from 'react-bootstrap';
@@ -21,23 +18,15 @@ const MainPage = ({ spinner, setLoading }) => {
 
 	useEffect(() => {
 		if (!trainees || trainees.length === 0) {
-			setLoading(true);
-			getTraineesByUserId(user.id).then((res) => {
-				if (res) {
-					setTrainees(res);
-					setLoading(false);
-				}
-			});
+			if (user.trainees && user.trainees.length !== 0) {
+				setTrainees(user.trainees);
+			}
 		}
 		if (!sessions || sessions.length === 0) {
-			setLoading(true);
-			getSessionsByUserId(user.id).then((res) => {
-				if (res) {
-					res = res.map((grupo) => setSessionType(grupo));
-					setSessions(res);
-					setLoading(false);
-				}
-			});
+			if (user.sessions && user.sessions.length !== 0) {
+				user.sessions = user.sessions.map((session) => setSessionType(session));
+				setSessions(user.sessions);
+			}
 		}
 	}, []);
 

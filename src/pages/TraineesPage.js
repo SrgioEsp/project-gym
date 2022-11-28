@@ -4,7 +4,6 @@ import AppFrame from '../components/AppFrame';
 import TraineeList from '../components/Trainee/TraineeList';
 import Spinner from '../components/Spinner';
 import { AppContext } from '../contexts/AppContext';
-import { getTraineesByUserId } from '../actions/TraineesActions';
 import { delTrainee } from '../actions/TraineeActions';
 import { Link } from 'react-router-dom';
 import { Row, Col } from 'react-bootstrap';
@@ -15,13 +14,9 @@ const TraineesPage = ({ spinner, setLoading }) => {
 
 	useEffect(() => {
 		if (!trainees || trainees.length === 0) {
-			setLoading(true);
-			getTraineesByUserId(user.id).then((res) => {
-				if (res) {
-					setTrainees(res);
-					setLoading(false);
-				}
-			});
+			if (user.trainees && user.trainees.length !== 0) {
+				setTrainees(user.trainees);
+			}
 		}
 	}, []);
 

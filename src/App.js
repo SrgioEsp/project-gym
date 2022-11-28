@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import WelcomePage from './pages/WelcomePage';
 import LoginPage from './pages/LoginPage';
 import MainPage from './pages/MainPage';
@@ -11,6 +11,7 @@ import { storage } from './storage';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import './App.css';
+import { getUserById } from './actions/UserActions';
 
 function App() {
 	const [user, setUser] = useState(null);
@@ -18,11 +19,15 @@ function App() {
 	const [sessions, setSessions] = useState([]);
 	const [loading, setLoading] = useState(false);
 
-	if (storage.get('user_session')) {
-		if (!user) {
-			setUser(storage.get('user_session'));
+	useEffect(() => {
+		if (storage.get('user_session')) {
+			if (!user) {
+				getUserById(storage.get('user_session').id).then((res) => {
+					setUser(res);
+				});
+			}
 		}
-	}
+	}, []);
 
 	return (
 		<AppContext.Provider
