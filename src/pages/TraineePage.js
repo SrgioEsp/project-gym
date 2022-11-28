@@ -16,10 +16,12 @@ const TraineePage = ({ spinner, setLoading }) => {
 	useEffect(() => {
 		if (id) {
 			setLoading(true);
-			getTrainee(id).then((res) => {
-				setTrainee(res);
-				setLoading(false);
-			});
+			getTrainee(id)
+				.then((res) => {
+					setTrainee(res);
+					setLoading(false);
+				})
+				.catch(() => setLoading(false));
 		}
 	}, []);
 

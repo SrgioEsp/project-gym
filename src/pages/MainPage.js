@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AppFrame from '../components/AppFrame';
 import Calendar from '../components/Calendar';
-import Spinner from './../components/Spinner';
 import { AppContext } from '../contexts/AppContext';
 import { convertWeekDaysToString, setSessionType } from '../utils';
 import { Link } from 'react-router-dom';
@@ -10,7 +9,7 @@ import { Row, Col } from 'react-bootstrap';
 import VerticallyCenteredModal from '../components/Modals/VerticallyCenteredModal';
 import SessionList from '../components/Session/SessionList';
 
-const MainPage = ({ spinner, setLoading }) => {
+const MainPage = () => {
 	const { trainees, setTrainees, user, sessions, setSessions } =
 		useContext(AppContext);
 	const [calendarDay, onChangeCalendarDay] = useState(new Date());
@@ -78,9 +77,6 @@ const MainPage = ({ spinner, setLoading }) => {
 	);
 };
 
-MainPage.propTypes = {
-	spinner: PropTypes.bool.isRequired,
-	setLoading: PropTypes.func.isRequired,
-};
+MainPage.propTypes = {};
 
 export default MainPage;

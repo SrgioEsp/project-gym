@@ -10,7 +10,7 @@ import { setSessionType } from '../utils';
 import { Link } from 'react-router-dom';
 import { Row, Col } from 'react-bootstrap';
 
-const SessionsPage = ({ spinner, setLoading }) => {
+const SessionsPage = () => {
 	const { sessions, setSessions, user, trainees, setTrainees } =
 		useContext(AppContext);
 
@@ -65,23 +65,16 @@ const SessionsPage = ({ spinner, setLoading }) => {
 			</Row>
 			<Row className='mt-3'>
 				<Col>
-					{sessions && !spinner ? (
-						<SessionList
-							handleUpdateSession={handleUpdateSession}
-							onClickHandleDelSession={onClickHandleDelSession}
-						></SessionList>
-					) : (
-						<Spinner></Spinner>
-					)}
+					<SessionList
+						handleUpdateSession={handleUpdateSession}
+						onClickHandleDelSession={onClickHandleDelSession}
+					></SessionList>
 				</Col>
 			</Row>
 		</AppFrame>
 	);
 };
 
-SessionsPage.propTypes = {
-	spinner: PropTypes.bool.isRequired,
-	setLoading: PropTypes.func.isRequired,
-};
+SessionsPage.propTypes = {};
 
 export default SessionsPage;

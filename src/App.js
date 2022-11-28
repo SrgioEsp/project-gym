@@ -12,19 +12,23 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import './App.css';
 import { getUserById } from './actions/UserActions';
+import Spinner from './components/Spinner';
 
 function App() {
 	const [user, setUser] = useState(null);
 	const [trainees, setTrainees] = useState([]);
 	const [sessions, setSessions] = useState([]);
-	const [loading, setLoading] = useState(false);
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		if (storage.get('user_session')) {
 			if (!user) {
-				getUserById(storage.get('user_session').id).then((res) => {
-					setUser(res);
-				});
+				getUserById(storage.get('user_session').id)
+					.then((res) => {
+						setUser(res);
+						setLoading(false);
+					})
+					.catch(() => setLoading(false));
 			}
 		}
 	}, []);
@@ -37,24 +41,9 @@ function App() {
 				<Routes>
 					<Route path='/' element={<WelcomePage></WelcomePage>} />
 					{!user && <Route path='/login' element={<LoginPage></LoginPage>} />}
+					{user && <Route path='/home' element={<MainPage></MainPage>} />}
 					{user && (
-						<Route
-							path='/home'
-							element={
-								<MainPage spinner={loading} setLoading={setLoading}></MainPage>
-							}
-						/>
-					)}
-					{user && (
-						<Route
-							path='/trainees'
-							element={
-								<TraineesPage
-									spinner={loading}
-									setLoading={setLoading}
-								></TraineesPage>
-							}
-						/>
+						<Route path='/trainees' element={<TraineesPage></TraineesPage>} />
 					)}
 					{user && (
 						<Route
@@ -72,15 +61,17 @@ function App() {
 							path='/sessions'
 							element={
 								<SessionsPage
-									spinner={loading}
-									setLoading={setLoading}
 									sessions={sessions}
 									setSessions={setSessions}
 								></SessionsPage>
 							}
 						/>
 					)}
-					<Route path='*' element={<NotFoundPage></NotFoundPage>} />
+					{!loading ? (
+						<Route path='*' element={<NotFoundPage></NotFoundPage>} />
+					) : (
+						<Route path='*' element={<Spinner></Spinner>} />
+					)}
 				</Routes>
 			</Router>
 		</AppContext.Provider>
