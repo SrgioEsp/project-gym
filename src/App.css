@@ -120,3 +120,56 @@ body {
 	background-color: #f7f7f7;
 	border: 1px solid #f7f7f7;
 }
+
+@media screen and (max-width: 576px) {
+
+	.welcomePage {
+		height: 100vh;
+	}
+
+	.welcomeScreen {
+		height: 100vh;
+	}
+
+	.welcomeRow>* {
+		padding: 0%;
+		margin: 0%;
+		width: 100%;
+		height: 33.33333vh;
+	}
+
+	.welcomePage img {
+		width: 100%;
+		height: 100%;
+	}
+
+	.welcomePage .opc {
+		opacity: 30%;
+	}
+
+}
+
+@media screen and (min-width: 575px) {
+	.welcomePage {
+		height: 100vh;
+	}
+
+	.welcomeScreen {
+		height: 100vh;
+	}
+
+	.welcomeRow>* {
+		padding: 0%;
+		margin: 0%;
+		width: 100%;
+	}
+
+	.welcomePage img {
+		width: 100%;
+		height: 100%;
+	}
+
+	.welcomePage .opc {
+		opacity: 30%;
+	}
+}
