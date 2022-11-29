@@ -1,12 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SpinnerBootstrap from 'react-bootstrap/Spinner';
+import { Col, Container, Row } from 'react-bootstrap';
+import logo from './../../assets/img/logo.jpg';
 
 const Spinner = (props) => {
 	return (
-		<SpinnerBootstrap animation='border' role='status'>
-			<span className='visually-hidden'>Loading...</span>
-		</SpinnerBootstrap>
+		<Row className='loadingRow'>
+			<Col className='loadingCol'>
+				<img src={logo} alt='logo' className='mb-5' />
+				<SpinnerBootstrap animation='border' role='status'></SpinnerBootstrap>
+			</Col>
+		</Row>
 	);
 };
 

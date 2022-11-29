@@ -173,3 +173,20 @@ body {
 		opacity: 30%;
 	}
 }
+
+.loadingRow {
+	height: 100vh;
+}
+
+.loadingRow img {
+	border-radius: 50px;
+	width: 100px;
+	height: 100px;
+}
+
+.loadingCol {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
