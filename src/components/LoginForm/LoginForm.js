@@ -4,7 +4,7 @@ import { AppContext } from '../../contexts/AppContext';
 import { getLoginUser } from '../../actions/UserActions';
 import { storage } from '../../storage';
 import { useNavigate } from 'react-router-dom';
-import { Col, Container, Row } from 'react-bootstrap';
+import { Button, Col, Container, Row } from 'react-bootstrap';
 
 const validate = (name, password) => {
 	if (name === '') return 'Introduzca usuario';
@@ -44,7 +44,7 @@ const LoginForm = (props) => {
 	validate(name, password);
 
 	return (
-		<Container>
+		<Container className='loginForm'>
 			<Row className='justify-content-center'>
 				<Col xs='auto'>
 					<Row className='justify-content-center'>
@@ -57,6 +57,7 @@ const LoginForm = (props) => {
 						<Row className='justify-content-center mt-3'>
 							<Col xs='auto'>
 								<input
+									className='form-control'
 									type='text'
 									name='name'
 									placeholder='Nombre de Usuario'
@@ -72,6 +73,7 @@ const LoginForm = (props) => {
 						<Row className='justify-content-center mt-3'>
 							<Col xs='auto'>
 								<input
+									className='form-control'
 									type='password'
 									name='password'
 									placeholder='Contraseña'
@@ -84,10 +86,10 @@ const LoginForm = (props) => {
 							</Col>
 						</Row>
 						<Row className='justify-content-center mt-3'>
-							<Col xs='auto'>
-								<button type='submit' disabled={errMsg}>
+							<Col>
+								<Button className='buttonLogin' type='submit' disabled={errMsg}>
 									Iniciar sesión
-								</button>
+								</Button>
 							</Col>
 						</Row>
 					</form>
