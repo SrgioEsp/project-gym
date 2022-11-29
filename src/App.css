@@ -52,7 +52,7 @@ body {
 
 @media screen and (min-width: 575px) and (max-width: 992px) {
 	.loginPage {
-		border: 1px solid black;
+		border: 1px solid #f7f7f7;
 		height: 100vh;
 		background: rgb(255, 255, 255);
 		background: linear-gradient(148deg, rgba(255, 255, 255, 1) 70%, rgba(31, 206, 109, 1) 70%);
@@ -74,7 +74,7 @@ body {
 
 @media screen and (min-width: 991px) {
 	.loginPage {
-		border: 1px solid black;
+		border: 1px solid #f7f7f7;
 		height: 100vh;
 		background: rgb(255, 255, 255);
 		background: linear-gradient(148deg, rgba(255, 255, 255, 1) 70%, rgba(31, 206, 109, 1) 70%);
