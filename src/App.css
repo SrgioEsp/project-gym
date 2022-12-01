@@ -272,6 +272,10 @@ body {
 	border-radius: 20px !important;
 }
 
+.sessions-calendar-active {
+	background-color: rgba(31, 206, 109, 0.7);
+}
+
 .card {
 	/* height: 100px !important; */
 	display: flex;
