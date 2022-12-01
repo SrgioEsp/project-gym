@@ -10,8 +10,8 @@ import SessionFormComponent from './SessionFormComponent';
 const renderTrainee = (filteredTrainee) => {
 	if (filteredTrainee) {
 		return (
-			<Card key={filteredTrainee.id} className='m-2 border border-0'>
-				<Card.Header className='p-0'>
+			<Card key={filteredTrainee.id}>
+				<Card.Header>
 					<TraineeInfo trainee={filteredTrainee}></TraineeInfo>
 				</Card.Header>
 			</Card>
@@ -28,7 +28,7 @@ const renderSession = (
 	return (
 		<div
 			key={session.id}
-			className='mb-2'
+			className='sessionContainer'
 			onClick={() => !currentDate && onClickHandleUpdateSession(session)}
 		>
 			<Row className='d-flex justify-content-center'>
@@ -50,7 +50,7 @@ const renderSession = (
 						)}
 					</Col>
 				)}
-				<Col className='border border-1 rounded-pill d-flex justify-content-center'>
+				<Col className='border border-1 rounded-pill d-flex justify-content-center me-3'>
 					<i>{session.sessionType}</i>
 				</Col>
 			</Row>
@@ -93,8 +93,8 @@ const SessionList = ({
 	};
 	return (
 		<>
-			<Row className='justify-content-center'>
-				<Col xs='auto'>
+			<Row>
+				<Col className='session-list-contnainer'>
 					{handleSessions && handleSessions.length !== 0 ? (
 						handleSessions.map((session) =>
 							renderSession(

@@ -3,18 +3,18 @@ import PropTypes from 'prop-types';
 import { Calendar as ReactCalendar } from 'react-calendar';
 
 import 'react-calendar/dist/Calendar.css';
+import { Col, Row } from 'react-bootstrap';
 
 const Calendar = ({ value, onChange, setShowModal }) => {
 	return (
-		<div>
-			<ReactCalendar
-				onChange={onChange}
-				value={value}
-				onClickDay={(value, event) => {
-					setShowModal(true);
-				}}
-			/>
-		</div>
+		<ReactCalendar
+			onChange={onChange}
+			value={value}
+			onClickDay={(value, event) => {
+				setShowModal(true);
+			}}
+			className='calendar'
+		/>
 	);
 };
 

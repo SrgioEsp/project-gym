@@ -8,8 +8,8 @@ import { storage } from '../../storage';
 const AppFrame = ({ children }) => {
 	const { user } = useContext(AppContext);
 	return (
-		<Container>
-			<Row className='border p-3 mb-3'>
+		<Container className='appFrameContent'>
+			<Row className='appFrameNavBar'>
 				<Col>
 					<Navbar>
 						<Container>
@@ -30,7 +30,9 @@ const AppFrame = ({ children }) => {
 					</Navbar>
 				</Col>
 			</Row>
-			{children}
+			<Row className='appFrameChildren'>
+				<Col>{children}</Col>
+			</Row>
 		</Container>
 	);
 };

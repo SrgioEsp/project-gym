@@ -31,8 +31,8 @@ const MainPage = () => {
 
 	return (
 		<AppFrame>
-			<Row className='justify-content-center'>
-				<Col xs='auto'>
+			<Row className='calendarRowContainer'>
+				<Col className='calendarColContainer'>
 					<Calendar
 						value={calendarDay}
 						onChange={onChangeCalendarDay}
@@ -40,19 +40,22 @@ const MainPage = () => {
 					></Calendar>
 				</Col>
 			</Row>
-			<Row className='justify-content-center mt-3'>
+			<Row className='justify-content-center'>
 				<Col xs='auto'>
-					<Link to={'/trainees'} className='btn btn-primary'>
-						Alumnos
-					</Link>
-				</Col>
-			</Row>
-
-			<Row className='justify-content-center mt-3'>
-				<Col xs='auto'>
-					<Link to={'/sessions'} className='btn btn-success'>
-						Sesiones
-					</Link>
+					<Row className='btnAlumnosRow'>
+						<Col>
+							<Link to={'/trainees'} className='btn btn-primary btnAlumnos'>
+								Alumnos
+							</Link>
+						</Col>
+					</Row>
+					<Row className='btnSesionesRow'>
+						<Col>
+							<Link to={'/sessions'} className='btn btn-success btnSesiones'>
+								Sesiones
+							</Link>
+						</Col>
+					</Row>
 				</Col>
 			</Row>
 			<VerticallyCenteredModal

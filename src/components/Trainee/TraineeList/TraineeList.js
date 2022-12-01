@@ -8,17 +8,15 @@ import { Button, Card, Col, ListGroup, Row } from 'react-bootstrap';
 
 const renderTrainee = (eventOnClickTrainee, trainee, navigate) => {
 	return (
-		<Card key={trainee.id} className='m-2 d-flex flex-row border border-0'>
+		<Card key={trainee.id} className='cardAlumDel'>
 			<Card.Header
-				className='w-75 p-2 mx-2'
 				onClick={() => navigate(`/trainees/${trainee.name}?id=${trainee.id}`)}
 			>
 				<TraineeInfo trainee={trainee}></TraineeInfo>
 			</Card.Header>
-			<Card.Body className='w-25 p-0'>
+			<Card.Body>
 				<Button
-					className='h-100 w-100'
-					variant='secondary'
+					className='h-100 w-100 btnDelAlum'
 					size='sm'
 					onClick={() => eventOnClickTrainee(trainee.id)}
 				>
@@ -36,7 +34,7 @@ const TraineeList = ({ onClickTrainee }) => {
 	return (
 		<div className='mt-3'>
 			<Row>
-				<Col>
+				<Col className='trainee-list-Container'>
 					{trainees.length !== 0 ? (
 						trainees.map((trainee) =>
 							renderTrainee(onClickTrainee, trainee, navigate)
