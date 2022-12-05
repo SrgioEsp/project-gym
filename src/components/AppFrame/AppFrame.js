@@ -13,16 +13,19 @@ const AppFrame = ({ children }) => {
 				<Col>
 					<Navbar>
 						<Container>
-							<Navbar.Brand href='#home'>Mi Gimnasio</Navbar.Brand>
+							<div className='avatar'></div>
+							<Navbar.Text className='user-name-container'>
+								{user.name.toUpperCase()}
+							</Navbar.Text>
 							<Navbar.Toggle />
 							<Navbar.Collapse className='justify-content-end'>
-								<Navbar.Text>
-									Usuario:{' '}
+								<Navbar.Text className='btnLogoutContainer'>
 									<a
+										className='btnLogout'
 										href='/login'
 										onClick={() => storage.remove('user_session')}
 									>
-										{user.name}
+										Salir
 									</a>
 								</Navbar.Text>
 							</Navbar.Collapse>

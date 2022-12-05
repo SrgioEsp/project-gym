@@ -2,9 +2,7 @@ body {
 	background-color: rgba(31, 206, 109, 0.7);
 }
 
-#root {
-	/* height: 100vh; */
-}
+#root {}
 
 @media screen and (max-width: 333px) {
 	.loginPage {
@@ -128,6 +126,11 @@ body {
 		width: 100%;
 	}
 
+	.avatar {
+		width: 50px !important;
+		height: 50px !important;
+	}
+
 }
 
 @media screen and (min-width: 575px) {
@@ -204,6 +207,7 @@ body {
 .appFrameContent {}
 
 .appFrameNavBar {
+	min-width: 265px;
 	background-color: #1FCE6D;
 	padding: 5%;
 	box-shadow: 0px 10px 10px 0px #1FCE6D;
@@ -239,6 +243,7 @@ body {
 	flex-wrap: nowrap;
 	justify-content: center;
 	align-items: center;
+	margin-bottom: 20px;
 }
 
 .calendar {
@@ -259,12 +264,9 @@ body {
 	color: black !important;
 }
 
-.react-calendar__month-view__days__day {
-	/* font-weight: bolder; */
-}
+.react-calendar__month-view__days__day {}
 
 .react-calendar__month-view__days__day>abbr::after {
-	/* content: " -Sesión 1-Sesión2"; */
 	color: grey;
 }
 
@@ -277,7 +279,6 @@ body {
 }
 
 .card {
-	/* height: 100px !important; */
 	display: flex;
 	flex-direction: row;
 	margin: 1px !important;
@@ -319,4 +320,36 @@ body {
 	flex-wrap: wrap;
 	justify-content: center;
 	align-items: center;
+}
+
+.avatar {
+	width: 75px;
+	height: 75px;
+	margin-right: 10px;
+	border-radius: 75px;
+	background-image: url('./assets/img/logo.jpg');
+	background-size: cover;
+}
+
+.btnLogoutContainer {
+	width: 25%;
+	/* min-width: 50px; */
+	position: absolute;
+}
+
+.btnLogout {
+	background-color: #BD5A5A;
+	border-radius: 75px;
+	padding: 10px;
+	text-decoration: none;
+	min-width: 50px;
+	max-width: 150px;
+	width: 100% !important;
+	display: flex;
+	justify-content: center;
+	color: #f7f7f7 !important;
+}
+
+.user-name-container {
+	color: #f7f7f7 !important;
 }
