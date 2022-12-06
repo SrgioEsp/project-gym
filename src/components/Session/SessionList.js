@@ -37,14 +37,14 @@ const renderSession = (
 					<Col>
 						<b>
 							{session.days.weekdays.map((weekday) =>
-								convertWeekDaysToNumber(weekday.day) === currentDate.getDay()
+								new Date(weekday.day).getDay() === currentDate.getDay()
 									? weekday.startTime
 									: ''
 							)}
 						</b>
 						/
 						{session.days.weekdays.map((weekday) =>
-							convertWeekDaysToNumber(weekday.day) === currentDate.getDay()
+							new Date(weekday.day).getDay() === currentDate.getDay()
 								? weekday.endTime
 								: ''
 						)}
@@ -83,8 +83,8 @@ const SessionList = ({
 				(session) =>
 					currentDate &&
 					session.days.weekdays
-						.map((weekday) => weekday.day)
-						.includes(mapWeekDays[currentDate.getDay()]) === true
+						.map((weekday) => new Date(weekday.day).getDate())
+						.includes(currentDate.getDate()) === true
 		  )
 		: sessions;
 	const onClickHandleUpdateSession = (selectSession) => {

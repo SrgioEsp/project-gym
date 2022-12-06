@@ -1,18 +1,19 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import AppFrame from '../components/AppFrame';
+import VerticallyCenteredModal from '../components/Modals/VerticallyCenteredModal';
+import SessionFormComponent from './../components/Session/SessionFormComponent';
 import SessionList from '../components/Session/SessionList';
-import SessionModal from '../components/Session/SessionModal';
-import Spinner from '../components/Spinner';
 import { AppContext } from '../contexts/AppContext';
 import { delSession, updateSession } from '../actions/SessionsActions';
 import { setSessionType } from '../utils';
 import { Link } from 'react-router-dom';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
 
 const SessionsPage = () => {
 	const { sessions, setSessions, user, trainees, setTrainees } =
 		useContext(AppContext);
+	const [showModal, setShowModal] = useState(false);
 
 	useEffect(() => {
 		if (!trainees || trainees.length === 0) {
@@ -60,7 +61,17 @@ const SessionsPage = () => {
 					<h5>SESIONES</h5>
 				</Col>
 				<Col xs='auto'>
-					<SessionModal textButton={'Crear'}></SessionModal>
+					<Button onClick={() => setShowModal(true)} variant='success'>
+						Crear
+					</Button>
+					<VerticallyCenteredModal
+						showModal={showModal}
+						setShowModal={setShowModal}
+					>
+						<SessionFormComponent
+							setShowModal={setShowModal}
+						></SessionFormComponent>
+					</VerticallyCenteredModal>
 				</Col>
 			</Row>
 			<Row className='mt-3'>

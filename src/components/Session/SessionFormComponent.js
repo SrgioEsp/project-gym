@@ -5,6 +5,8 @@ import SessionTableInfo from './SessionTableInfo/SessionTableInfo';
 import { daysOfWeek } from '../../constants';
 import { AppContext } from '../../contexts/AppContext';
 import { Button, Col, Row, Table } from 'react-bootstrap';
+import { createSession } from '../../actions/SessionsActions';
+import { setSessionType } from '../../utils';
 
 const emptyFields = (
 	setName,
@@ -25,7 +27,7 @@ const emptyFields = (
 const renderSessionDay = (session, onClickHandlerRemoveSessionDay) => {
 	return (
 		<tr key={session.day}>
-			<SessionTableInfo session={session}></SessionTableInfo>
+			<SessionTableInfo weekday={session}></SessionTableInfo>
 			<td>
 				<Button
 					variant='danger'
@@ -44,7 +46,7 @@ const SessionUpdateComponent = ({
 	onClickHandleDelSession,
 	setShowModal,
 }) => {
-	const { trainees, user } = useContext(AppContext);
+	const { trainees, user, sessions, setSessions } = useContext(AppContext);
 	const [name, setName] = useState(session ? session.name : '');
 	const [dropdownIdTrainee, setDropDownIdTrainee] = useState(
 		session ? session.trainees : []
@@ -56,22 +58,35 @@ const SessionUpdateComponent = ({
 	const [startTime, setStartTime] = useState('');
 	const [endTime, setEndTime] = useState('');
 
+	const closeModal = () => {
+		if (!session) {
+			emptyFields(
+				setName,
+				setDropDownIdTrainee,
+				setDay,
+				setStartTime,
+				setEndTime,
+				setWeekdays
+			);
+		}
+		setShowModal(false);
+		// handleClose();
+	};
+
 	const onClickHandleCreateSessionDay = () => {
-		if (weekdays.length < dropdownIdTrainee.length) {
-			if (day !== '' && startTime !== '' && endTime !== '') {
-				const duplicateDay = weekdays.find((obj) => obj.day === day);
-				if (duplicateDay === undefined) {
-					setWeekdays([
-						...weekdays,
-						{
-							day,
-							startTime,
-							endTime,
-						},
-					]);
-				} else {
-					console.log('Ya se ha creado una sesión para este día');
-				}
+		if (day !== '' && startTime !== '' && endTime !== '') {
+			const duplicateDay = weekdays.find((obj) => obj.day === day);
+			if (duplicateDay === undefined) {
+				setWeekdays([
+					...weekdays,
+					{
+						day,
+						startTime,
+						endTime,
+					},
+				]);
+			} else {
+				console.log('Ya se ha creado una sesión para este día');
 			}
 		}
 	};
@@ -100,6 +115,12 @@ const SessionUpdateComponent = ({
 			};
 			if (session) {
 				handleUpdateSession(session, body);
+			} else {
+				createSession(body).then((res) => {
+					res = setSessionType(res);
+					setSessions([...sessions, res]);
+					closeModal();
+				});
 			}
 		}
 	};
@@ -132,21 +153,6 @@ const SessionUpdateComponent = ({
 				</Row>
 				<Row>
 					<Col>
-						Dia
-						<select
-							defaultValue={day}
-							className='form-select'
-							onChange={(ev) => setDay(ev.target.value)}
-						>
-							<option value={''} disabled>
-								- - -
-							</option>
-							{daysOfWeek.map((d) => {
-								return <option key={d}>{d}</option>;
-							})}
-						</select>
-					</Col>
-					<Col>
 						Hora Inicio
 						<input
 							className='form-control'
@@ -162,6 +168,15 @@ const SessionUpdateComponent = ({
 							type={'time'}
 							value={endTime}
 							onChange={(ev) => setEndTime(ev.target.value)}
+						/>
+					</Col>
+					<Col>
+						Día
+						<input
+							className='form-control'
+							type={'date'}
+							value={day}
+							onChange={(ev) => setDay(ev.target.value)}
 						/>
 					</Col>
 				</Row>

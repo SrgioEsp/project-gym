@@ -1,39 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const SessionTableInfo = ({ session }) => {
+const SessionTableInfo = ({ weekday }) => {
 	return (
 		<>
 			<td>
-				<input
-					className='form-control'
-					type={'text'}
-					readOnly
-					value={session.day}
-				/>
+				<span>{weekday.day}</span>
 			</td>
 			<td>
-				<input
-					className='form-control'
-					type={'text'}
-					readOnly
-					value={session.startTime}
-				/>
+				<span>{weekday.startTime}</span>
 			</td>
 			<td>
-				<input
-					className='form-control'
-					type={'text'}
-					readOnly
-					value={session.endTime}
-				/>
+				<span>{weekday.endTime}</span>
 			</td>
 		</>
 	);
 };
 
 SessionTableInfo.propTypes = {
-	session: PropTypes.any,
+	weekday: PropTypes.any,
 };
 
 export default SessionTableInfo;

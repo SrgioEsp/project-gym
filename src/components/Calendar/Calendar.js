@@ -22,7 +22,7 @@ const Calendar = ({ value, onChange, setShowModal }) => {
 					let isActive = false;
 					sessions.forEach((session) => {
 						session.days.weekdays.forEach((weekday) => {
-							if (weekday.day === mapWeekDays[date.getDay()]) {
+							if (new Date(weekday.day).getDate() === date.getDate()) {
 								isActive = true;
 							}
 						});
