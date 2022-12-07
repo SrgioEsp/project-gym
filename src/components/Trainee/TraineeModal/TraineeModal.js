@@ -5,12 +5,22 @@ import { Button, Col, Row } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 import { createTrainee } from '../../../actions/TraineeActions';
 
-const emptyFields = (setName, setSurname, setBirthDate, setDni, setGender) => {
+const emptyFields = (
+	setName,
+	setSurname,
+	setBirthDate,
+	setDni,
+	setGender,
+	setPermanenceMonths,
+	setShowPermanenceField
+) => {
 	setName('');
 	setSurname('');
 	setBirthDate('');
 	setDni('');
 	setGender('');
+	setPermanenceMonths(0);
+	setShowPermanenceField(false);
 };
 
 const TraineeModal = () => {
@@ -21,24 +31,28 @@ const TraineeModal = () => {
 	const [birthDate, setBirthDate] = useState('');
 	const [dni, setDni] = useState('');
 	const [gender, setGender] = useState('');
+	const [permanenceMonths, setPermanenceMonths] = useState(0);
+	const [showPermanenceField, setShowPermanenceField] = useState(false);
 
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
 	const closeModal = () => {
-		emptyFields(setName, setSurname, setBirthDate, setDni, setGender);
+		emptyFields(
+			setName,
+			setSurname,
+			setBirthDate,
+			setDni,
+			setGender,
+			setPermanenceMonths,
+			setShowPermanenceField
+		);
 		handleClose();
 	};
 
 	const onSubmitHandler = (ev) => {
 		ev.preventDefault();
-		if (
-			name !== '' &&
-			surname !== '' &&
-			birthDate !== '' &&
-			dni !== '' &&
-			gender !== ''
-		) {
+		if (!!name && !!surname && !!birthDate && !!dni && !!gender) {
 			createTrainee({
 				user: user.id,
 				name,
@@ -46,6 +60,7 @@ const TraineeModal = () => {
 				birthDate,
 				dni,
 				gender,
+				permanenceMonths,
 			}).then((res) => {
 				if (res) {
 					setTrainees([...trainees, res]);
@@ -137,6 +152,37 @@ const TraineeModal = () => {
 								</select>
 							</Col>
 						</Row>
+						<Row>
+							<Col>
+								<input
+									type={'checkbox'}
+									checked={permanenceMonths !== 0}
+									onChange={(ev) => {
+										if (ev.target.checked) {
+											setShowPermanenceField(true);
+											setPermanenceMonths(3);
+										} else {
+											setShowPermanenceField(false);
+											setPermanenceMonths(0);
+										}
+									}}
+								/>{' '}
+								Permanencia
+							</Col>
+						</Row>
+						{showPermanenceField && (
+							<Row>
+								<Col>
+									<input
+										type='number'
+										className='form-control inputPermanence'
+										placeholder='Permanencia desde 3 a 12 meses'
+										value={permanenceMonths}
+										onChange={(ev) => setPermanenceMonths(ev.target.value)}
+									/>
+								</Col>
+							</Row>
+						)}
 					</Modal.Body>
 					<Modal.Footer>
 						<Button variant='secondary' onClick={closeModal}>

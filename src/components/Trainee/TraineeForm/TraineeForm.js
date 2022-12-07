@@ -1,7 +1,7 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { AppContext } from '../../../contexts/AppContext';
-import { createTrainee, updateTrainee } from '../../../actions/TraineeActions';
+import { updateTrainee } from '../../../actions/TraineeActions';
 import { formatDate, inputDateFormat } from '../../../utils';
 import { Button, Col, Modal, Row } from 'react-bootstrap';
 
@@ -17,17 +17,39 @@ const TraineeForm = ({ trainee, setTrainee }) => {
 	const [entryDate, setEntryDate] = useState(
 		inputDateFormat(formatDate(new Date(trainee?.entryDate))) || ''
 	);
-	const [months, setMonths] = useState(trainee?.months || '');
+	const [months, setMonths] = useState(trainee?.permanence?.months || 0);
 	const [activationDate, setActivationDate] = useState(
-		inputDateFormat(formatDate(new Date(trainee?.activationDate))) || ''
-	);
-	const [expiryDate, setExpiryDate] = useState(
-		trainee?.expiryDate
-			? inputDateFormat(formatDate(new Date(trainee?.expiryDate)))
+		trainee?.permanence?.activationDate
+			? inputDateFormat(
+					formatDate(new Date(trainee?.permanence?.activationDate))
+			  )
 			: ''
 	);
-
+	const [expiryDate, setExpiryDate] = useState(
+		trainee?.permanence?.expiryDate
+			? inputDateFormat(formatDate(new Date(trainee?.permanence?.expiryDate)))
+			: ''
+	);
 	const [show, setShow] = useState(false);
+
+	useEffect(() => {
+		if (!months || months < 3) {
+			setActivationDate('');
+			setExpiryDate('');
+		} else {
+			setActivationDate(inputDateFormat(formatDate(new Date())));
+			setExpiryDate(
+				inputDateFormat(
+					formatDate(
+						new Date(
+							new Date().setMonth(new Date().getMonth() + Number(months))
+						)
+					)
+				)
+			);
+		}
+	}, [months, setActivationDate, setExpiryDate]);
+
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
@@ -48,9 +70,7 @@ const TraineeForm = ({ trainee, setTrainee }) => {
 			gender,
 			weight,
 			height,
-			entryDate: new Date(entryDate),
-			// months,
-			activationDate: new Date(activationDate),
+			permanenceMonths: Number(months),
 		};
 		updateTrainee(trainee.id, body).then((res) => {
 			console.log(res);
