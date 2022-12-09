@@ -23,7 +23,7 @@ const TraineesPage = () => {
 	const onClickHandlerDelTrainee = (id) => {
 		const msj = confirm('Desea eliminar el alumno');
 		if (msj)
-			delTrainee(id).then((res) => {
+			delTrainee(id, user.token).then((res) => {
 				const newData = trainees.filter((trainee) => trainee.id !== id);
 				setTrainees(newData);
 			});

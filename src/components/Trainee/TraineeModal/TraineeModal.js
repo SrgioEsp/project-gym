@@ -53,15 +53,17 @@ const TraineeModal = () => {
 	const onSubmitHandler = (ev) => {
 		ev.preventDefault();
 		if (!!name && !!surname && !!birthDate && !!dni && !!gender) {
-			createTrainee({
-				user: user.id,
-				name,
-				surname,
-				birthDate,
-				dni,
-				gender,
-				permanenceMonths,
-			}).then((res) => {
+			createTrainee(
+				{
+					name,
+					surname,
+					birthDate,
+					dni,
+					gender,
+					permanenceMonths,
+				},
+				user.token
+			).then((res) => {
 				if (res) {
 					setTrainees([...trainees, res]);
 					closeModal();

@@ -11,13 +11,13 @@ const validate = (name, password) => {
 	if (password === '') return 'Introduzca contraseña';
 };
 
-const login = async (data, navigate, setIsInvalid, setUser) => {
+const login = (data, navigate, setIsInvalid, setUser) => {
 	getLoginUser(data).then((res) => {
 		if (res && res.id && res.name) {
 			setUser(res);
 			storage.set('user_session', {
 				id: res.id,
-				name: res.name,
+				token: res.token,
 			});
 			navigate('/home');
 		} else {
