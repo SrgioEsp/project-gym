@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 import AppFrame from '../components/AppFrame';
 import TraineeForm from '../components/Trainee/TraineeForm';
@@ -6,8 +6,10 @@ import Spinner from '../components/Spinner';
 import { getTrainee } from '../actions/TraineeActions';
 import { Link, useLocation } from 'react-router-dom';
 import { Col, Row } from 'react-bootstrap';
+import { AppContext } from '../contexts/AppContext';
 
 const TraineePage = ({ spinner, setLoading }) => {
+	const { user } = useContext(AppContext);
 	const [trainee, setTrainee] = useState(null);
 	const location = useLocation();
 	const query = new URLSearchParams(location.search);
@@ -16,7 +18,7 @@ const TraineePage = ({ spinner, setLoading }) => {
 	useEffect(() => {
 		if (id) {
 			setLoading(true);
-			getTrainee(id)
+			getTrainee(id, user.token)
 				.then((res) => {
 					setTrainee(res);
 					setLoading(false);
@@ -35,7 +37,7 @@ const TraineePage = ({ spinner, setLoading }) => {
 						</Link>
 					</Col>
 				</Row>
-				{!spinner ? (
+				{!spinner && trainee ? (
 					<Row className='justify-content-center mx-5 mt-2'>
 						<Col xs='auto'>
 							<TraineeForm

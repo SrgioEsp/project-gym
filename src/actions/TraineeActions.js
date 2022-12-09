@@ -1,10 +1,14 @@
 import { urlTrainee } from '../api/urls';
 import { helpHttp } from '../helpers/helpHttp';
 
-export const getTrainee = async (id) => {
+export const getTrainee = async (id, token) => {
 	let result;
 	try {
-		const res = await helpHttp().get(`${urlTrainee}/${id}`);
+		const res = await helpHttp().get(`${urlTrainee}/${id}`, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
 		result = res;
 	} catch (error) {
 		console.log(error);
