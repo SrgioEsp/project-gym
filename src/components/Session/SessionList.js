@@ -2,19 +2,19 @@ import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import TraineeInfo from '../Trainee/TraineeInfo';
 import { AppContext } from '../../contexts/AppContext';
-import { Card, Col, Row } from 'react-bootstrap';
-import { convertWeekDaysToNumber, mapWeekDays } from '../../utils';
+import { Col, Row } from 'react-bootstrap';
 import VerticallyCenteredModal from '../Modals/VerticallyCenteredModal';
 import SessionFormComponent from './SessionFormComponent';
+import TraineeShow from '../Trainee/TraineeShow/TraineeShow';
 
 const renderTrainee = (filteredTrainee) => {
 	if (filteredTrainee) {
 		return (
-			<Card key={filteredTrainee.id}>
-				<Card.Header>
+			<div key={filteredTrainee.id}>
+				<TraineeShow>
 					<TraineeInfo trainee={filteredTrainee}></TraineeInfo>
-				</Card.Header>
-			</Card>
+				</TraineeShow>
+			</div>
 		);
 	}
 };

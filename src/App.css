@@ -2,7 +2,9 @@ body {
 	background-color: rgba(31, 206, 109, 0.7);
 }
 
-#root {}
+#root {
+	min-width: 265px;
+}
 
 @media screen and (max-width: 333px) {
 	.loginPage {
@@ -278,21 +280,6 @@ body {
 	background-color: rgba(31, 206, 109, 0.7);
 }
 
-.card {
-	display: flex;
-	flex-direction: row;
-	margin: 1px !important;
-	height: auto !important;
-}
-
-.card-header {
-	background-color: inherit !important;
-	border: none !important;
-	height: inherit !important;
-	border-radius: inherit !important;
-	/* width: 65%; */
-}
-
 .btnDelAlum {
 	opacity: 75%;
 	margin: 10px;
@@ -306,15 +293,6 @@ body {
 
 .btnDelAlum:hover {
 	opacity: 90%;
-}
-
-.cardAlumDel {
-	height: 100px !important;
-}
-
-.cardAlumDel>.card-header {
-	padding: 0%;
-	height: 100% !important;
 }
 
 .sessionContainer {
@@ -366,19 +344,18 @@ body {
 }
 
 .container-trainee-show {
-	/* background-color: aqua; */
 	background-image: url('./assets/img/logo.jpg');
-	background-position: center;
 	background-size: cover;
 	border-radius: 10px;
-	/* padding: 20px; */
 	display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
 	justify-content: space-around;
 	margin: 10px;
+}
+
+.container-trainee-show-full {
 	width: 100%;
-	height: 100px;
 }
 
 .trainee-info-row {
