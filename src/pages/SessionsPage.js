@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom';
 import { Row, Col, Button } from 'react-bootstrap';
 
 const SessionsPage = () => {
-	const { sessions, setSessions, user, trainees, setTrainees } =
+	const { sessions, setSessions, user, setUser, trainees, setTrainees } =
 		useContext(AppContext);
 	const [showModal, setShowModal] = useState(false);
 
@@ -32,14 +32,16 @@ const SessionsPage = () => {
 	const onClickHandleDelSession = (id) => {
 		const msj = confirm('Desea eliminar el grupo');
 		if (msj)
-			delSession(id).then((res) => {
+			delSession(id, user.token).then((res) => {
 				const newData = sessions.filter((session) => session.id !== id);
+				user.sessions = newData;
+				setUser(user);
 				setSessions(newData);
 			});
 	};
 
 	const handleUpdateSession = (session, body) => {
-		updateSession(session.id, body).then((res) => {
+		updateSession(session.id, body, user.token).then((res) => {
 			res = setSessionType(res);
 			const sessionIndex = sessions.findIndex(
 				(session) => session.id === res.id

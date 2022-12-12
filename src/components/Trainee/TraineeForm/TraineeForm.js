@@ -72,7 +72,7 @@ const TraineeForm = ({ trainee, setTrainee }) => {
 			height,
 			permanenceMonths: Number(months),
 		};
-		updateTrainee(trainee.id, body).then((res) => {
+		updateTrainee(trainee.id, body, user.token).then((res) => {
 			console.log(res);
 			const trainneIndex = trainees.findIndex(
 				(trainee) => trainee.id === res.id

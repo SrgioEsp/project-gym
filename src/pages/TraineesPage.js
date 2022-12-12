@@ -10,7 +10,7 @@ import { Row, Col } from 'react-bootstrap';
 import TraineeModal from '../components/Trainee/TraineeModal/TraineeModal';
 
 const TraineesPage = () => {
-	const { trainees, setTrainees, user } = useContext(AppContext);
+	const { trainees, setTrainees, user, setUser } = useContext(AppContext);
 
 	useEffect(() => {
 		if (!trainees || trainees.length === 0) {
@@ -23,8 +23,10 @@ const TraineesPage = () => {
 	const onClickHandlerDelTrainee = (id) => {
 		const msj = confirm('Desea eliminar el alumno');
 		if (msj)
-			delTrainee(id).then((res) => {
+			delTrainee(id, user.token).then((res) => {
 				const newData = trainees.filter((trainee) => trainee.id !== id);
+				user.trainees = newData;
+				setUser(user);
 				setTrainees(newData);
 			});
 	};
@@ -44,7 +46,7 @@ const TraineesPage = () => {
 			<Row className='justify-content-center'>
 				<Col xs='auto'>
 					<TraineeList
-						onClickTrainee={(id) => {
+						onClickDelTrainee={(id) => {
 							onClickHandlerDelTrainee(id);
 						}}
 					></TraineeList>

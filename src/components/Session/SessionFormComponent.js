@@ -116,7 +116,7 @@ const SessionUpdateComponent = ({
 			if (session) {
 				handleUpdateSession(session, body);
 			} else {
-				createSession(body).then((res) => {
+				createSession(body, user.token).then((res) => {
 					res = setSessionType(res);
 					setSessions([...sessions, res]);
 					closeModal();

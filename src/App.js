@@ -6,13 +6,13 @@ import TraineesPage from './pages/TraineesPage';
 import NotFoundPage from './pages/NotFoundPage';
 import TraineePage from './pages/TraineePage';
 import SessionsPage from './pages/SessionsPage';
+import Spinner from './components/Spinner';
 import { AppContext } from './contexts/AppContext';
 import { storage } from './storage';
+import { getUserById } from './actions/UserActions';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import './App.css';
-import { getUserById } from './actions/UserActions';
-import Spinner from './components/Spinner';
 
 function App() {
 	const [user, setUser] = useState(null);
@@ -23,7 +23,10 @@ function App() {
 	useEffect(() => {
 		if (storage.get('user_session')) {
 			if (!user) {
-				getUserById(storage.get('user_session').id)
+				getUserById(
+					storage.get('user_session').id,
+					storage.get('user_session').token
+				)
 					.then((res) => {
 						setUser(res);
 						setLoading(false);

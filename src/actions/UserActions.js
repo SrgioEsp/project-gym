@@ -17,9 +17,11 @@ export const getLoginUser = async (data) => {
 	return result;
 };
 
-export const getUserById = async (id) => {
+export const getUserById = async (id, token) => {
 	try {
-		return await helpHttp().get(`${urlUsers}/${id}`);
+		return await helpHttp().get(`${urlUsers}/${id}`, {
+			headers: { Authorization: `Bearer ${token}` },
+		});
 	} catch (error) {
 		console.log(error);
 	}
