@@ -57,13 +57,17 @@ const SessionsPage = () => {
 	};
 
 	const btnBack = (
-		<Link to={'/home'} className='btn btn-primary'>
+		<Link to={'/home'} className='btn btn-primary bbtn-r'>
 			Atrás
 		</Link>
 	);
 	const btnAct = (
 		<>
-			<Button onClick={() => setShowModal(true)} variant='success'>
+			<Button
+				className='bbtn-r'
+				onClick={() => setShowModal(true)}
+				variant='success'
+			>
 				Crear
 			</Button>
 			<VerticallyCenteredModal
@@ -104,10 +108,15 @@ const SessionsPage = () => {
 				modalFooter={
 					<>
 						{' '}
-						<Button variant='secondary' onClick={handleClose}>
+						<Button
+							className='bbtn-r'
+							variant='secondary'
+							onClick={handleClose}
+						>
 							Cancelar
 						</Button>
 						<Button
+							className='bbtn-r'
 							variant='primary'
 							onClick={() => onClickHandleDelSession(sessionId)}
 						>

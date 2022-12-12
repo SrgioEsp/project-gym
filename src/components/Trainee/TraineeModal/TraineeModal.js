@@ -74,7 +74,7 @@ const TraineeModal = () => {
 
 	return (
 		<>
-			<Button variant='success' onClick={handleShow}>
+			<Button className='bbtn-r' variant='success' onClick={handleShow}>
 				Añadir
 			</Button>
 
@@ -187,10 +187,10 @@ const TraineeModal = () => {
 						)}
 					</Modal.Body>
 					<Modal.Footer>
-						<Button variant='secondary' onClick={closeModal}>
+						<Button className='bbtn-r' variant='secondary' onClick={closeModal}>
 							Cerrar
 						</Button>
-						<Button variant='primary' type={'submit'}>
+						<Button className='bbtn-r' variant='primary' type={'submit'}>
 							Guardar
 						</Button>
 					</Modal.Footer>

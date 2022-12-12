@@ -381,3 +381,7 @@ body {
 	flex-direction: row;
 	justify-content: end;
 }
+
+.bbtn-r {
+	border-radius: 20px;
+}

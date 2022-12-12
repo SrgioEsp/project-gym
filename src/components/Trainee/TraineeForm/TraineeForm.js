@@ -263,13 +263,13 @@ const TraineeForm = ({ trainee, setTrainee }) => {
 							onChange={(ev) => {}}
 							disabled
 						/>
-						<Button className='mt-1' variant='danger' size='sm'>
+						<Button className='mt-1 bbtn-r' variant='danger' size='sm'>
 							Cambiar
 						</Button>
 					</Col>
 				</Row>
 
-				<Button className='w-100 my-3' variant='primary' type={'submit'}>
+				<Button className='w-100 my-3 bbtn-r' variant='primary' type={'submit'}>
 					Actualizar
 				</Button>
 			</form>
@@ -281,10 +281,18 @@ const TraineeForm = ({ trainee, setTrainee }) => {
 				modalFooter={
 					<>
 						{' '}
-						<Button variant='secondary' onClick={handleClose}>
+						<Button
+							className='bbtn-r'
+							variant='secondary'
+							onClick={handleClose}
+						>
 							Cancelar
 						</Button>
-						<Button variant='primary' onClick={handleUpdateTrainee}>
+						<Button
+							className='bbtn-r'
+							variant='primary'
+							onClick={handleUpdateTrainee}
+						>
 							Aceptar
 						</Button>
 					</>

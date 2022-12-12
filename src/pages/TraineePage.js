@@ -29,7 +29,7 @@ const TraineePage = ({ spinner, setLoading }) => {
 	}, []);
 
 	const btnBack = (
-		<Link to={'/trainees'} className='btn btn-primary'>
+		<Link to={'/trainees'} className='btn btn-primary bbtn-r'>
 			Atrás
 		</Link>
 	);

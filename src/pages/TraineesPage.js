@@ -36,7 +36,7 @@ const TraineesPage = () => {
 	};
 
 	const btnBack = (
-		<Link to={'/home'} className='btn btn-primary'>
+		<Link to={'/home'} className='btn btn-primary bbtn-r'>
 			Atrás
 		</Link>
 	);
@@ -70,10 +70,15 @@ const TraineesPage = () => {
 				modalFooter={
 					<>
 						{' '}
-						<Button variant='secondary' onClick={handleClose}>
+						<Button
+							className='bbtn-r'
+							variant='secondary'
+							onClick={handleClose}
+						>
 							Cancelar
 						</Button>
 						<Button
+							className='bbtn-r'
 							variant='primary'
 							onClick={() => onClickHandlerDelTrainee(idTrainee)}
 						>

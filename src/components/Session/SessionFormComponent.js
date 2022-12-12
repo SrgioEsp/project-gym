@@ -30,6 +30,7 @@ const renderSessionDay = (session, onClickHandlerRemoveSessionDay) => {
 			<SessionTableInfo weekday={session}></SessionTableInfo>
 			<td>
 				<Button
+					className='bbtn-r'
 					variant='danger'
 					onClick={() => onClickHandlerRemoveSessionDay(session.day)}
 				>
@@ -183,6 +184,7 @@ const SessionUpdateComponent = ({
 				<Row>
 					<Col xs='auto' className='mt-3'>
 						<Button
+							className='bbtn-r'
 							disabled={dropdownIdTrainee.length === 0}
 							variant='success'
 							size='sm'
@@ -215,6 +217,7 @@ const SessionUpdateComponent = ({
 					{session && (
 						<Col xs='auto'>
 							<Button
+								className='bbtn-r'
 								variant='danger'
 								onClick={() => {
 									setShowModal(false);
@@ -226,7 +229,9 @@ const SessionUpdateComponent = ({
 						</Col>
 					)}
 					<Col xs='auto'>
-						<Button type='submit'>Guardar</Button>
+						<Button className='bbtn-r' type='submit'>
+							Guardar
+						</Button>
 					</Col>
 				</Row>
 			</form>
