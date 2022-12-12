@@ -94,6 +94,7 @@ const TraineeModal = () => {
 									autoComplete='off'
 									value={name}
 									onChange={(ev) => setName(ev.target.value)}
+									minLength='3'
 								/>
 							</Col>
 						</Row>
@@ -109,6 +110,7 @@ const TraineeModal = () => {
 									onChange={(ev) => {
 										setSurname(ev.target.value);
 									}}
+									minLength='6'
 								/>
 							</Col>
 						</Row>
@@ -131,10 +133,11 @@ const TraineeModal = () => {
 									className='form-control'
 									type='text'
 									name='dni'
-									placeholder='DNI'
+									placeholder='DNI ej: 12345678A'
 									autoComplete='off'
 									value={dni}
 									onChange={(ev) => setDni(ev.target.value)}
+									pattern='[0-9]{8}[A-Za-z]{1}'
 								/>
 							</Col>
 						</Row>
@@ -181,6 +184,8 @@ const TraineeModal = () => {
 										placeholder='Permanencia desde 3 a 12 meses'
 										value={permanenceMonths}
 										onChange={(ev) => setPermanenceMonths(ev.target.value)}
+										min='3'
+										max='12'
 									/>
 								</Col>
 							</Row>

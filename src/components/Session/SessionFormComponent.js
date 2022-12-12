@@ -138,6 +138,7 @@ const SessionUpdateComponent = ({
 							autoComplete='off'
 							value={name}
 							onChange={(ev) => setName(ev.target.value)}
+							minLength='3'
 						/>
 					</Col>
 				</Row>

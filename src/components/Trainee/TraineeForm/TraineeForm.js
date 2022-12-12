@@ -97,6 +97,7 @@ const TraineeForm = ({ trainee, setTrainee }) => {
 							autoComplete='off'
 							value={name}
 							onChange={(ev) => setName(ev.target.value)}
+							minLength='3'
 						/>
 					</Col>
 				</Row>
@@ -112,6 +113,7 @@ const TraineeForm = ({ trainee, setTrainee }) => {
 							onChange={(ev) => {
 								setSurname(ev.target.value);
 							}}
+							minLength='6'
 						/>
 					</Col>
 				</Row>
@@ -138,6 +140,7 @@ const TraineeForm = ({ trainee, setTrainee }) => {
 							autoComplete='off'
 							value={dni}
 							onChange={(ev) => setDni(ev.target.value)}
+							pattern='[0-9]{8}[A-Za-z]{1}'
 						/>
 					</Col>
 				</Row>
@@ -223,6 +226,8 @@ const TraineeForm = ({ trainee, setTrainee }) => {
 								autoComplete='off'
 								value={months}
 								onChange={(ev) => setMonths(ev.target.value)}
+								min='3'
+								max='12'
 							/>
 							<input
 								className='form-control w-75'
