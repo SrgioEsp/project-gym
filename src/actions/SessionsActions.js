@@ -18,11 +18,14 @@ export const getSessionsByUserId = async (userId) => {
 	return result;
 };
 
-export const createSession = async (data) => {
+export const createSession = async (data, token) => {
 	try {
 		const options = {
 			body: data,
-			headers: { 'content-type': 'application/json' },
+			headers: {
+				'content-type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
 		};
 		return await helpHttp().post(urlSession, options);
 	} catch (error) {
@@ -30,11 +33,14 @@ export const createSession = async (data) => {
 	}
 };
 
-export const updateSession = async (id, body) => {
+export const updateSession = async (id, body, token) => {
 	try {
 		const options = {
 			body,
-			headers: { 'content-type': 'application/json' },
+			headers: {
+				'content-type': 'application/json',
+				Authorization: `Bearer ${token}`,
+			},
 		};
 		return await helpHttp().put(`${urlSession}/${id}`, options);
 	} catch (error) {
@@ -42,10 +48,14 @@ export const updateSession = async (id, body) => {
 	}
 };
 
-export const delSession = async (id) => {
+export const delSession = async (id, token) => {
 	try {
-		return await helpHttp().del(`${urlSession}/${id}`);
+		return await helpHttp().del(`${urlSession}/${id}`, {
+			headers: {
+				Authorization: `Bearer ${token}`,
+			},
+		});
 	} catch (error) {
-		console.log(error);
+		// console.log(error);
 	}
 };

@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { BsFillPersonXFill } from 'react-icons/bs';
 import { Button, Card, Col, ListGroup, Row } from 'react-bootstrap';
 
-const renderTrainee = (eventOnClickTrainee, trainee, navigate) => {
+const renderTrainee = (onClickDelTrainee, trainee, navigate) => {
 	return (
 		<Card key={trainee.id} className='cardAlumDel'>
 			<Card.Header
@@ -18,7 +18,7 @@ const renderTrainee = (eventOnClickTrainee, trainee, navigate) => {
 				<Button
 					className='h-100 w-100 btnDelAlum'
 					size='sm'
-					onClick={() => eventOnClickTrainee(trainee.id)}
+					onClick={() => onClickDelTrainee(trainee.id)}
 				>
 					Eliminar <BsFillPersonXFill></BsFillPersonXFill>
 				</Button>
@@ -27,7 +27,7 @@ const renderTrainee = (eventOnClickTrainee, trainee, navigate) => {
 	);
 };
 
-const TraineeList = ({ onClickTrainee }) => {
+const TraineeList = ({ onClickDelTrainee }) => {
 	const { trainees } = useContext(AppContext);
 	const navigate = useNavigate();
 
@@ -37,7 +37,7 @@ const TraineeList = ({ onClickTrainee }) => {
 				<Col className='trainee-list-Container'>
 					{trainees.length !== 0 ? (
 						trainees.map((trainee) =>
-							renderTrainee(onClickTrainee, trainee, navigate)
+							renderTrainee(onClickDelTrainee, trainee, navigate)
 						)
 					) : (
 						<p className='text-danger'>No se han encontrado alumnos</p>
@@ -49,7 +49,7 @@ const TraineeList = ({ onClickTrainee }) => {
 };
 
 TraineeList.propTypes = {
-	onClickTrainee: PropTypes.func.isRequired,
+	onClickDelTrainee: PropTypes.func.isRequired,
 };
 
 export default TraineeList;
