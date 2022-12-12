@@ -32,7 +32,9 @@ const renderSession = (
 			onClick={() => !currentDate && onClickHandleUpdateSession(session)}
 		>
 			<Row className='d-flex justify-content-center'>
-				<Col xs='auto'>{session.name}</Col>
+				<Col xs='auto'>
+					<h6>{session.name}</h6>
+				</Col>
 				{currentDate && (
 					<Col>
 						<b>

@@ -6,6 +6,7 @@ const inputValue = (dropdownValue, setDropDownValue, obj) => {
 	return (
 		<div key={obj.id}>
 			<input
+				id={obj.id}
 				type={'checkbox'}
 				checked={dropdownValue.includes(obj.id)}
 				value={dropdownValue}
@@ -16,8 +17,23 @@ const inputValue = (dropdownValue, setDropDownValue, obj) => {
 						setDropDownValue(dropdownValue.filter((id) => id !== obj.id));
 					}
 				}}
-			/>
-			{' ' + obj.name + ' '}
+			/>{' '}
+			<label
+				onClick={() => {
+					if (document.getElementById(obj.id).checked) {
+						document.getElementById(obj.id).checked = false;
+						setDropDownValue(dropdownValue.filter((id) => id !== obj.id));
+					} else {
+						document.getElementById(obj.id).checked = true;
+						setDropDownValue([...dropdownValue, obj.id]);
+					}
+				}}
+			>
+				<h6>
+					{obj.name} {obj.surname}
+				</h6>
+			</label>
+			{/* {' ' + obj.name + ' '} */}
 		</div>
 	);
 };
