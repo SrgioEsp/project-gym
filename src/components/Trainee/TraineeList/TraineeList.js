@@ -4,26 +4,30 @@ import TraineeInfo from '../TraineeInfo';
 import { AppContext } from '../../../contexts/AppContext';
 import { useNavigate } from 'react-router-dom';
 import { BsFillPersonXFill } from 'react-icons/bs';
-import { Button, Card, Col, ListGroup, Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
+import TraineeShow from '../TraineeShow/TraineeShow';
 
 const renderTrainee = (onClickDelTrainee, trainee, navigate) => {
+	const delBtn = (
+		<button
+			className='btnDelAlum'
+			size='sm'
+			onClick={() => onClickDelTrainee(trainee.id)}
+		>
+			Eliminar <BsFillPersonXFill></BsFillPersonXFill>
+		</button>
+	);
 	return (
-		<Card key={trainee.id} className='cardAlumDel'>
-			<Card.Header
-				onClick={() => navigate(`/trainees/${trainee.name}?id=${trainee.id}`)}
-			>
-				<TraineeInfo trainee={trainee}></TraineeInfo>
-			</Card.Header>
-			<Card.Body>
-				<Button
-					className='h-100 w-100 btnDelAlum'
-					size='sm'
-					onClick={() => onClickDelTrainee(trainee.id)}
-				>
-					Eliminar <BsFillPersonXFill></BsFillPersonXFill>
-				</Button>
-			</Card.Body>
-		</Card>
+		<TraineeShow
+			key={trainee.id}
+			delBtn={delBtn}
+			onClickHandler={() =>
+				navigate(`/trainees/${trainee.name}?id=${trainee.id}`)
+			}
+			width={'container-trainee-show-full'}
+		>
+			<TraineeInfo trainee={trainee}></TraineeInfo>
+		</TraineeShow>
 	);
 };
 
@@ -34,7 +38,7 @@ const TraineeList = ({ onClickDelTrainee }) => {
 	return (
 		<div className='mt-3'>
 			<Row>
-				<Col className='trainee-list-Container'>
+				<Col className='trainee-list-container'>
 					{trainees.length !== 0 ? (
 						trainees.map((trainee) =>
 							renderTrainee(onClickDelTrainee, trainee, navigate)

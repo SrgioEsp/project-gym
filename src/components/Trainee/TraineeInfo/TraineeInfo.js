@@ -4,11 +4,12 @@ import { Col, Row } from 'react-bootstrap';
 
 const TraineeInfo = ({ trainee }) => {
 	return (
-		<Row className='justify-content-start p-2'>
-			<Col xs={'auto'}>
-				<b>
-					{trainee.name} {trainee.surname}
-				</b>
+		<Row className='trainee-info-row'>
+			<Col>
+				<b>{trainee.name}</b>
+			</Col>
+			<Col>
+				<b>{trainee.surname}</b>
 			</Col>
 		</Row>
 	);

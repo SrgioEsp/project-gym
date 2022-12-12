@@ -2,7 +2,9 @@ body {
 	background-color: rgba(31, 206, 109, 0.7);
 }
 
-#root {}
+#root {
+	min-width: 265px;
+}
 
 @media screen and (max-width: 333px) {
 	.loginPage {
@@ -278,32 +280,19 @@ body {
 	background-color: rgba(31, 206, 109, 0.7);
 }
 
-.card {
-	display: flex;
-	flex-direction: row;
-	margin: 1px !important;
-	height: auto !important;
-}
-
-.card-header {
-	background-color: inherit !important;
-	border: none !important;
-	height: inherit !important;
-	border-radius: inherit !important;
-	/* width: 65%; */
-}
-
 .btnDelAlum {
-	box-shadow: 5px 0px 10px 0px #1FCE6D;
+	opacity: 75%;
+	margin: 10px;
+	background-color: #BD5A5A;
+	border: none;
+	border-radius: 5px;
+	color: #f7f7f7 !important;
+	padding: 3px;
+	width: 70px;
 }
 
-.cardAlumDel {
-	height: 100px !important;
-}
-
-.cardAlumDel>.card-header {
-	padding: 0%;
-	height: 100% !important;
+.btnDelAlum:hover {
+	opacity: 90%;
 }
 
 .sessionContainer {
@@ -314,7 +303,7 @@ body {
 	border-radius: 10px;
 }
 
-.trainee-list-Container,
+.trainee-list-container,
 .session-list-contnainer {
 	display: flex;
 	flex-wrap: wrap;
@@ -352,4 +341,25 @@ body {
 
 .user-name-container {
 	color: #f7f7f7 !important;
+}
+
+.container-trainee-show {
+	background-image: url('./assets/img/logo.jpg');
+	background-size: cover;
+	border-radius: 10px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	margin: 10px;
+}
+
+.container-trainee-show-full {
+	width: 100%;
+}
+
+.trainee-info-row {
+	display: flex;
+	flex-direction: column;
+	margin: 10px;
 }

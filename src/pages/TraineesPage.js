@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import AppFrame from '../components/AppFrame';
 import TraineeList from '../components/Trainee/TraineeList';
-import Spinner from '../components/Spinner';
 import { AppContext } from '../contexts/AppContext';
 import { delTrainee } from '../actions/TraineeActions';
 import { Link } from 'react-router-dom';
