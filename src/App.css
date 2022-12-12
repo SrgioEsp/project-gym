@@ -363,3 +363,21 @@ body {
 	flex-direction: column;
 	margin: 10px;
 }
+
+.nav-top-buttons-back {
+	display: flex;
+	flex-direction: row;
+	justify-content: start;
+}
+
+.nav-top-buttons-text {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+}
+
+.nav-top-buttons-act {
+	display: flex;
+	flex-direction: row;
+	justify-content: end;
+}

@@ -7,6 +7,7 @@ import { delTrainee } from '../actions/TraineeActions';
 import { Link } from 'react-router-dom';
 import { Row, Col } from 'react-bootstrap';
 import TraineeModal from '../components/Trainee/TraineeModal/TraineeModal';
+import NavTopButton from '../components/NavTopButton/NavTopButton';
 
 const TraineesPage = () => {
 	const { trainees, setTrainees, user, setUser } = useContext(AppContext);
@@ -30,18 +31,23 @@ const TraineesPage = () => {
 			});
 	};
 
+	const btnBack = (
+		<Link to={'/home'} className='btn btn-primary'>
+			Atrás
+		</Link>
+	);
+
+	const btnAct = <TraineeModal></TraineeModal>;
+
+	const text = 'ALUMNOS';
+
 	return (
 		<AppFrame>
-			<Row>
-				<Col>
-					<Link to={'/home'} className='btn btn-primary'>
-						Atrás
-					</Link>
-				</Col>
-				<Col xs='auto'>
-					<TraineeModal></TraineeModal>
-				</Col>
-			</Row>
+			<NavTopButton
+				btnBack={btnBack}
+				btnAct={btnAct}
+				text={text}
+			></NavTopButton>
 			<Row className='justify-content-center'>
 				<Col xs='auto'>
 					<TraineeList

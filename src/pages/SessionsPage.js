@@ -9,6 +9,7 @@ import { delSession, updateSession } from '../actions/SessionsActions';
 import { setSessionType } from '../utils';
 import { Link } from 'react-router-dom';
 import { Row, Col, Button } from 'react-bootstrap';
+import NavTopButton from '../components/NavTopButton/NavTopButton';
 
 const SessionsPage = () => {
 	const { sessions, setSessions, user, setUser, trainees, setTrainees } =
@@ -51,31 +52,35 @@ const SessionsPage = () => {
 		});
 	};
 
+	const btnBack = (
+		<Link to={'/home'} className='btn btn-primary'>
+			Atrás
+		</Link>
+	);
+	const btnAct = (
+		<>
+			<Button onClick={() => setShowModal(true)} variant='success'>
+				Crear
+			</Button>
+			<VerticallyCenteredModal
+				showModal={showModal}
+				setShowModal={setShowModal}
+			>
+				<SessionFormComponent
+					setShowModal={setShowModal}
+				></SessionFormComponent>
+			</VerticallyCenteredModal>
+		</>
+	);
+	const text = 'SESIONES';
+
 	return (
 		<AppFrame>
-			<Row>
-				<Col>
-					<Link to={'/home'} className='btn btn-primary'>
-						Atrás
-					</Link>
-				</Col>
-				<Col>
-					<h5>SESIONES</h5>
-				</Col>
-				<Col xs='auto'>
-					<Button onClick={() => setShowModal(true)} variant='success'>
-						Crear
-					</Button>
-					<VerticallyCenteredModal
-						showModal={showModal}
-						setShowModal={setShowModal}
-					>
-						<SessionFormComponent
-							setShowModal={setShowModal}
-						></SessionFormComponent>
-					</VerticallyCenteredModal>
-				</Col>
-			</Row>
+			<NavTopButton
+				btnBack={btnBack}
+				btnAct={btnAct}
+				text={text}
+			></NavTopButton>
 			<Row className='mt-3'>
 				<Col>
 					<SessionList

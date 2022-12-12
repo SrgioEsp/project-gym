@@ -7,6 +7,7 @@ import { getTrainee } from '../actions/TraineeActions';
 import { Link, useLocation } from 'react-router-dom';
 import { Col, Row } from 'react-bootstrap';
 import { AppContext } from '../contexts/AppContext';
+import NavTopButton from '../components/NavTopButton/NavTopButton';
 
 const TraineePage = ({ spinner, setLoading }) => {
 	const { user } = useContext(AppContext);
@@ -27,18 +28,18 @@ const TraineePage = ({ spinner, setLoading }) => {
 		}
 	}, []);
 
+	const btnBack = (
+		<Link to={'/trainees'} className='btn btn-primary'>
+			Atrás
+		</Link>
+	);
+
 	return (
 		<AppFrame>
 			<div>
-				<Row className='mb-4'>
-					<Col xs='auto'>
-						<Link to={'/trainees'} className='btn btn-primary'>
-							Atrás
-						</Link>
-					</Col>
-				</Row>
+				<NavTopButton btnBack={btnBack}></NavTopButton>
 				{!spinner && trainee ? (
-					<Row className='justify-content-center mx-5 mt-2'>
+					<Row className='justify-content-center mx-5 mt-4'>
 						<Col xs='auto'>
 							<TraineeForm
 								trainee={trainee}
