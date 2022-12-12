@@ -1,16 +1,19 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import AppFrame from '../components/AppFrame';
 import TraineeList from '../components/Trainee/TraineeList';
 import { AppContext } from '../contexts/AppContext';
 import { delTrainee } from '../actions/TraineeActions';
 import { Link } from 'react-router-dom';
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
 import TraineeModal from '../components/Trainee/TraineeModal/TraineeModal';
 import NavTopButton from '../components/NavTopButton/NavTopButton';
+import ModalAction from '../components/Modals/ModalAction';
 
 const TraineesPage = () => {
 	const { trainees, setTrainees, user, setUser } = useContext(AppContext);
+	const [show, setShow] = useState(false);
+	const [idTrainee, setIdTrainee] = useState('');
 
 	useEffect(() => {
 		if (!trainees || trainees.length === 0) {
@@ -20,15 +23,16 @@ const TraineesPage = () => {
 		}
 	}, []);
 
+	const handleClose = () => setShow(false);
+
 	const onClickHandlerDelTrainee = (id) => {
-		const msj = confirm('Desea eliminar el alumno');
-		if (msj)
-			delTrainee(id, user.token).then((res) => {
-				const newData = trainees.filter((trainee) => trainee.id !== id);
-				user.trainees = newData;
-				setUser(user);
-				setTrainees(newData);
-			});
+		delTrainee(id, user.token).then((res) => {
+			const newData = trainees.filter((trainee) => trainee.id !== id);
+			user.trainees = newData;
+			setUser(user);
+			setTrainees(newData);
+		});
+		handleClose();
 	};
 
 	const btnBack = (
@@ -52,11 +56,32 @@ const TraineesPage = () => {
 				<Col xs='auto'>
 					<TraineeList
 						onClickDelTrainee={(id) => {
-							onClickHandlerDelTrainee(id);
+							setIdTrainee(id);
+							setShow(true);
 						}}
 					></TraineeList>
 				</Col>
 			</Row>
+			<ModalAction
+				showModal={show}
+				handlerCloseModal={handleClose}
+				modalTitle='Cuidado!'
+				modalBody={'¿Desea eliminar el alumno?'}
+				modalFooter={
+					<>
+						{' '}
+						<Button variant='secondary' onClick={handleClose}>
+							Cancelar
+						</Button>
+						<Button
+							variant='primary'
+							onClick={() => onClickHandlerDelTrainee(idTrainee)}
+						>
+							Aceptar
+						</Button>
+					</>
+				}
+			></ModalAction>
 		</AppFrame>
 	);
 };

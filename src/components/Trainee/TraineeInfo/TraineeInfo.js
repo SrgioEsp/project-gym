@@ -2,9 +2,9 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Col, Row } from 'react-bootstrap';
 
-const TraineeInfo = ({ trainee }) => {
+const TraineeInfo = ({ trainee, onClickHandler }) => {
 	return (
-		<Row className='trainee-info-row'>
+		<Row className='trainee-info-row' onClick={onClickHandler}>
 			<Col>
 				<b>{trainee.name}</b>
 			</Col>
@@ -17,6 +17,7 @@ const TraineeInfo = ({ trainee }) => {
 
 TraineeInfo.propTypes = {
 	trainee: PropTypes.object.isRequired,
+	onClickHandler: PropTypes.func,
 };
 
 export default TraineeInfo;

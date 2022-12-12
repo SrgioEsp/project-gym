@@ -10,11 +10,14 @@ import { setSessionType } from '../utils';
 import { Link } from 'react-router-dom';
 import { Row, Col, Button } from 'react-bootstrap';
 import NavTopButton from '../components/NavTopButton/NavTopButton';
+import ModalAction from '../components/Modals/ModalAction';
 
 const SessionsPage = () => {
 	const { sessions, setSessions, user, setUser, trainees, setTrainees } =
 		useContext(AppContext);
 	const [showModal, setShowModal] = useState(false);
+	const [show, setShow] = useState(false);
+	const [sessionId, setSessionId] = useState('');
 
 	useEffect(() => {
 		if (!trainees || trainees.length === 0) {
@@ -30,15 +33,16 @@ const SessionsPage = () => {
 		}
 	}, []);
 
+	const handleClose = () => setShow(false);
+
 	const onClickHandleDelSession = (id) => {
-		const msj = confirm('Desea eliminar el grupo');
-		if (msj)
-			delSession(id, user.token).then((res) => {
-				const newData = sessions.filter((session) => session.id !== id);
-				user.sessions = newData;
-				setUser(user);
-				setSessions(newData);
-			});
+		delSession(id, user.token).then((res) => {
+			const newData = sessions.filter((session) => session.id !== id);
+			user.sessions = newData;
+			setUser(user);
+			setSessions(newData);
+		});
+		handleClose();
 	};
 
 	const handleUpdateSession = (session, body) => {
@@ -85,10 +89,33 @@ const SessionsPage = () => {
 				<Col>
 					<SessionList
 						handleUpdateSession={handleUpdateSession}
-						onClickHandleDelSession={onClickHandleDelSession}
+						onClickHandleDelSession={(id) => {
+							setSessionId(id);
+							setShow(true);
+						}}
 					></SessionList>
 				</Col>
 			</Row>
+			<ModalAction
+				showModal={show}
+				handlerCloseModal={handleClose}
+				modalTitle={'Cuidado!'}
+				modalBody={'¿Desea eliminar la sesión?'}
+				modalFooter={
+					<>
+						{' '}
+						<Button variant='secondary' onClick={handleClose}>
+							Cancelar
+						</Button>
+						<Button
+							variant='primary'
+							onClick={() => onClickHandleDelSession(sessionId)}
+						>
+							Aceptar
+						</Button>
+					</>
+				}
+			></ModalAction>
 		</AppFrame>
 	);
 };

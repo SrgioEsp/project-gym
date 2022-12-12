@@ -4,6 +4,7 @@ import { AppContext } from '../../../contexts/AppContext';
 import { updateTrainee } from '../../../actions/TraineeActions';
 import { formatDate, inputDateFormat } from '../../../utils';
 import { Button, Col, Modal, Row } from 'react-bootstrap';
+import ModalAction from '../../Modals/ModalAction';
 
 const TraineeForm = ({ trainee, setTrainee }) => {
 	const { trainees, setTrainees, user } = useContext(AppContext);
@@ -272,20 +273,23 @@ const TraineeForm = ({ trainee, setTrainee }) => {
 					Actualizar
 				</Button>
 			</form>
-			<Modal show={show} onHide={handleClose}>
-				<Modal.Header closeButton>
-					<Modal.Title>Cuidado!</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>¿Seguro que quieres realizar cambios?</Modal.Body>
-				<Modal.Footer>
-					<Button variant='secondary' onClick={handleClose}>
-						Cancelar
-					</Button>
-					<Button variant='primary' onClick={handleUpdateTrainee}>
-						Aceptar
-					</Button>
-				</Modal.Footer>
-			</Modal>
+			<ModalAction
+				showModal={show}
+				handlerCloseModal={handleClose}
+				modalTitle={'Cuidado!'}
+				modalBody={'¿Seguro que quieres realizar cambios?'}
+				modalFooter={
+					<>
+						{' '}
+						<Button variant='secondary' onClick={handleClose}>
+							Cancelar
+						</Button>
+						<Button variant='primary' onClick={handleUpdateTrainee}>
+							Aceptar
+						</Button>
+					</>
+				}
+			></ModalAction>
 		</>
 	);
 };

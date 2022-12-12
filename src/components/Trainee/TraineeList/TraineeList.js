@@ -21,12 +21,14 @@ const renderTrainee = (onClickDelTrainee, trainee, navigate) => {
 		<TraineeShow
 			key={trainee.id}
 			delBtn={delBtn}
-			onClickHandler={() =>
-				navigate(`/trainees/${trainee.name}?id=${trainee.id}`)
-			}
 			width={'container-trainee-show-full'}
 		>
-			<TraineeInfo trainee={trainee}></TraineeInfo>
+			<TraineeInfo
+				trainee={trainee}
+				onClickHandler={() =>
+					navigate(`/trainees/${trainee.name}?id=${trainee.id}`)
+				}
+			></TraineeInfo>
 		</TraineeShow>
 	);
 };
