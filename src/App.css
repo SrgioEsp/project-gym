@@ -98,30 +98,30 @@ body {
 	}
 }
 
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 575px) {
 
 	.welcomePage {
 		height: 100vh;
+		padding: 0% !important;
 	}
 
 	.welcomeScreen {
 		height: 100vh;
 	}
 
-	.welcomeRow>* {
+	.welcomeRow {
 		padding: 0%;
 		margin: 0%;
 		width: 100%;
 		height: 33.33333vh;
 	}
 
-	.welcomePage img {
-		width: 100%;
-		height: 100%;
-	}
-
-	.welcomePage .opc {
-		opacity: 30%;
+	.welcome-row-center {
+		background-image: url('./assets/img/moverte2.jpg');
+		background-color: #ffff !important;
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: center;
 	}
 
 	.calendar {
@@ -138,30 +138,46 @@ body {
 @media screen and (min-width: 575px) {
 	.welcomePage {
 		height: 100vh;
+		padding: 0% !important;
 	}
 
 	.welcomeScreen {
 		height: 100vh;
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
 	}
 
-	.welcomeRow>* {
+	.welcomeRow {
 		padding: 0%;
 		margin: 0%;
-		width: 100%;
-	}
-
-	.welcomePage img {
-		width: 100%;
 		height: 100%;
+		width: 33.333%;
 	}
 
-	.welcomePage .opc {
-		opacity: 30%;
+	.welcome-row-center {
+		background-image: url('./assets/img/frase.jpg'), url('./assets/img/moverte2.jpg');
+		background-size: contain;
+		background-position: center;
+		background-repeat: no-repeat, repeat;
 	}
 
 	.calendar {
 		width: 90%;
 	}
+}
+
+.welcome-row-top {
+	background-image: url('./assets/img/moverte3.jpg');
+	background-size: cover;
+	opacity: 30%;
+}
+
+.welcome-row-bottom {
+	background-image: url('./assets/img/moverte4.jpg');
+	background-size: cover;
+	opacity: 30%;
 }
 
 .loginForm .buttonLogin {

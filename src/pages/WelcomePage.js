@@ -1,34 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import WelcomeScreen from '../components/WelcomeScreen';
 import { storage } from './../storage';
-import { Link } from 'react-router-dom';
-import { Col, Container, Row } from 'react-bootstrap';
-import topImg from './../assets/img/moverte3.jpg';
-import logo from './../assets/img/moverte2.jpg';
-import bottomImg from './../assets/img/moverte4.jpg';
+import { Container, Row } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 const WelcomePage = (props) => {
+	const navigate = useNavigate();
+	
+	const redirect = () => {
+		const route = storage.get('user_session') ? '/home' : '/login';
+		navigate(route);
+	};
 	return (
-		<Container className='welcomePage'>
+		<Container className='welcomePage' onClick={redirect}>
 			<WelcomeScreen>
-				<Row className='welcomeRow opc'>
-					<Col>
-						<img src={topImg} alt='logo' />
-					</Col>
-				</Row>
-				<Row className='welcomeRow'>
-					<Col>
-						<Link to={storage.get('user_session') ? '/home' : '/login'}>
-							<img src={logo} alt='logo' />
-						</Link>
-					</Col>
-				</Row>
-				<Row className='welcomeRow opc'>
-					<Col>
-						<img src={bottomImg} alt='logo' />
-					</Col>
-				</Row>
+				<Row className='welcomeRow welcome-row-top'></Row>
+				<Row className='welcomeRow welcome-row-center'></Row>
+				<Row className='welcomeRow welcome-row-bottom'></Row>
 			</WelcomeScreen>
 		</Container>
 	);
