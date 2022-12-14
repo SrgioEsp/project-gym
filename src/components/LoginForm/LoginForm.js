@@ -5,6 +5,7 @@ import { getLoginUser } from '../../actions/UserActions';
 import { storage } from '../../storage';
 import { useNavigate } from 'react-router-dom';
 import { Button, Col, Container, Row } from 'react-bootstrap';
+import { removeWhiteSpaces } from '../../utils';
 
 const validate = (name, password) => {
 	if (name === '') return 'Introduzca usuario';
@@ -34,12 +35,19 @@ const LoginForm = (props) => {
 	const [isInvalid, setIsInvalid] = useState(false);
 	const navigate = useNavigate();
 
-	const errMsg = validate(name, password);
+	const invalidData = validate(name, password);
 
 	const onSubmitHandler = (ev) => {
 		ev.preventDefault();
-		login({ name, password }, navigate, setIsInvalid, setUser);
+		login(
+			{ name: removeWhiteSpaces(name), password },
+			navigate,
+			setIsInvalid,
+			setUser
+		);
 	};
+
+	const formControlClass = 'form-control';
 
 	validate(name, password);
 
@@ -47,25 +55,26 @@ const LoginForm = (props) => {
 		<Container className='loginForm'>
 			<Row className='justify-content-center'>
 				<Col xs='auto'>
-					<Row className='justify-content-center'>
-						<Col xs='auto'>
-							<p className='text-danger'>{errMsg}</p>
-							{isInvalid && <p className='text-danger'>Usuario Incorrecto</p>}
-						</Col>
-					</Row>
 					<form onSubmit={onSubmitHandler}>
 						<Row className='justify-content-center mt-3'>
 							<Col xs='auto'>
 								<input
-									className='form-control'
+									className={formControlClass}
 									type='text'
-									name='name'
 									placeholder='Nombre de Usuario'
-									autoComplete='off'
+									autoComplete='on'
 									value={name}
-									onChange={(ev) => setName(ev.target.value)}
+									onChange={(ev) => {
+										setName(ev.target.value);
+										if (name) ev.target.className = formControlClass;
+									}}
 									onFocus={(ev) => {
 										if (isInvalid) setIsInvalid(false);
+									}}
+									onBlur={(ev) => {
+										if (!name)
+											ev.target.className =
+												formControlClass + ' login-field-empty';
 									}}
 								/>
 							</Col>
@@ -75,19 +84,34 @@ const LoginForm = (props) => {
 								<input
 									className='form-control'
 									type='password'
-									name='password'
 									placeholder='Contraseña'
+									autoComplete='on'
 									value={password}
-									onChange={(ev) => setPassword(ev.target.value)}
+									onChange={(ev) => {
+										setPassword(ev.target.value);
+										if (password) ev.target.className = formControlClass;
+									}}
 									onFocus={(ev) => {
 										if (isInvalid) setIsInvalid(false);
+									}}
+									onBlur={(ev) => {
+										if (!password)
+											ev.target.className =
+												formControlClass + ' login-field-empty';
 									}}
 								/>
 							</Col>
 						</Row>
+						<Row className='login-error-row'>
+							{isInvalid && <span>usuario o contraseña incorrecto</span>}
+						</Row>
 						<Row className='justify-content-center mt-3'>
 							<Col>
-								<Button className='buttonLogin' type='submit' disabled={errMsg}>
+								<Button
+									className='buttonLogin'
+									type='submit'
+									disabled={invalidData}
+								>
 									Iniciar sesión
 								</Button>
 							</Col>
