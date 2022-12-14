@@ -12,7 +12,7 @@ const validate = (name, password) => {
 	if (password === '') return 'Introduzca contraseña';
 };
 
-const login = (data, navigate, setIsInvalid, setUser) => {
+const login = (data, navigate, setIsUserInvalid, setUser) => {
 	getLoginUser(data).then((res) => {
 		if (res && res.id && res.name) {
 			setUser(res);
@@ -22,7 +22,7 @@ const login = (data, navigate, setIsInvalid, setUser) => {
 			});
 			navigate('/home');
 		} else {
-			setIsInvalid(true);
+			setIsUserInvalid(true);
 		}
 	});
 };
@@ -32,22 +32,29 @@ const LoginForm = (props) => {
 
 	const [name, setName] = useState('');
 	const [password, setPassword] = useState('');
-	const [isInvalid, setIsInvalid] = useState(false);
+	const [isUserInvalid, setIsUserInvalid] = useState(false);
 	const navigate = useNavigate();
 
 	const invalidData = validate(name, password);
+	const formControlClass = 'form-control';
 
 	const onSubmitHandler = (ev) => {
 		ev.preventDefault();
-		login(
-			{ name: removeWhiteSpaces(name), password },
-			navigate,
-			setIsInvalid,
-			setUser
-		);
-	};
+		if (!invalidData) {
+			login(
+				{ name: removeWhiteSpaces(name), password },
+				navigate,
+				setIsUserInvalid,
+				setUser
+			);
+		} else {
+			if (!name)
+				ev.target.name.className = formControlClass + ' login-field-empty';
 
-	const formControlClass = 'form-control';
+			if (!password)
+				ev.target.password.className = formControlClass + ' login-field-empty';
+		}
+	};
 
 	validate(name, password);
 
@@ -59,6 +66,7 @@ const LoginForm = (props) => {
 						<Row className='justify-content-center mt-3'>
 							<Col xs='auto'>
 								<input
+									name='name'
 									className={formControlClass}
 									type='text'
 									placeholder='Nombre de Usuario'
@@ -69,12 +77,7 @@ const LoginForm = (props) => {
 										if (name) ev.target.className = formControlClass;
 									}}
 									onFocus={(ev) => {
-										if (isInvalid) setIsInvalid(false);
-									}}
-									onBlur={(ev) => {
-										if (!name)
-											ev.target.className =
-												formControlClass + ' login-field-empty';
+										if (isUserInvalid) setIsUserInvalid(false);
 									}}
 								/>
 							</Col>
@@ -82,6 +85,7 @@ const LoginForm = (props) => {
 						<Row className='justify-content-center mt-3'>
 							<Col xs='auto'>
 								<input
+									name='password'
 									className='form-control'
 									type='password'
 									placeholder='Contraseña'
@@ -92,26 +96,17 @@ const LoginForm = (props) => {
 										if (password) ev.target.className = formControlClass;
 									}}
 									onFocus={(ev) => {
-										if (isInvalid) setIsInvalid(false);
-									}}
-									onBlur={(ev) => {
-										if (!password)
-											ev.target.className =
-												formControlClass + ' login-field-empty';
+										if (isUserInvalid) setIsUserInvalid(false);
 									}}
 								/>
 							</Col>
 						</Row>
 						<Row className='login-error-row'>
-							{isInvalid && <span>usuario o contraseña incorrecto</span>}
+							{isUserInvalid && <span>usuario o contraseña incorrecto</span>}
 						</Row>
 						<Row className='justify-content-center mt-3'>
 							<Col>
-								<Button
-									className='buttonLogin'
-									type='submit'
-									disabled={invalidData}
-								>
+								<Button className='buttonLogin' type='submit'>
 									Iniciar sesión
 								</Button>
 							</Col>
