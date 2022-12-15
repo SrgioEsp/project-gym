@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { AppContext } from '../../contexts/AppContext';
 import { getLoginUser } from '../../actions/UserActions';
 import { storage } from '../../storage';
+import { removeWhiteSpaces } from '../../utils';
 import { useNavigate } from 'react-router-dom';
 import { Button, Col, Container, Row } from 'react-bootstrap';
-import { removeWhiteSpaces } from '../../utils';
 
 const validate = (name, password) => {
 	if (name === '') return 'Introduzca usuario';
@@ -37,6 +37,7 @@ const LoginForm = (props) => {
 
 	const invalidData = validate(name, password);
 	const formControlClass = 'form-control';
+	const fieldEmptyClass = 'form-field-empty';
 
 	const onSubmitHandler = (ev) => {
 		ev.preventDefault();
@@ -49,10 +50,10 @@ const LoginForm = (props) => {
 			);
 		} else {
 			if (!name)
-				ev.target.name.className = formControlClass + ' login-field-empty';
+				ev.target.name.className = `${formControlClass} ${fieldEmptyClass}`;
 
 			if (!password)
-				ev.target.password.className = formControlClass + ' login-field-empty';
+				ev.target.password.className = `${formControlClass} ${fieldEmptyClass}`;
 		}
 	};
 
