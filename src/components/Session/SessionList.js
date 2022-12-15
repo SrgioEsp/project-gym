@@ -6,6 +6,7 @@ import { Col, Row } from 'react-bootstrap';
 import VerticallyCenteredModal from '../Modals/VerticallyCenteredModal';
 import SessionFormComponent from './SessionFormComponent';
 import TraineeShow from '../Trainee/TraineeShow/TraineeShow';
+import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
 
 const renderTrainee = (filteredTrainee) => {
 	if (filteredTrainee) {
@@ -23,17 +24,20 @@ const renderSession = (
 	session,
 	trainees,
 	currentDate,
-	onClickHandleUpdateSession
+	onClickHandleUpdateSession,
+	showRenderTrainee,
+	setShowRenderTrainee,
+	clickedSessionId,
+	setClickedSessionId
 ) => {
 	return (
-		<div
-			key={session.id}
-			className='sessionContainer'
-			onClick={() => !currentDate && onClickHandleUpdateSession(session)}
-		>
-			<Row className='d-flex justify-content-center'>
-				<Col xs='auto'>
-					<h6>{session.name}</h6>
+		<div key={session.id} className='sessionContainer'>
+			<Row
+				onClick={() => !currentDate && onClickHandleUpdateSession(session)}
+				className='session-list-row'
+			>
+				<Col>
+					<p className='fs-6 fw-bolder'>{session.name}</p>
 				</Col>
 				{currentDate && (
 					<Col>
@@ -52,22 +56,53 @@ const renderSession = (
 						)}
 					</Col>
 				)}
-				<Col className='border border-1 rounded-pill d-flex justify-content-center me-3'>
+				<Col className='session-type'>
 					<i>{session.sessionType}</i>
 				</Col>
 			</Row>
-			<Row className='mt-2'>
-				<Col>
-					{session.trainees &&
-						session.trainees !== 0 &&
-						session.trainees.map((traineeId) => {
-							const filteredTrainee = trainees.find(
-								(trainee) => trainee.id === traineeId
-							);
-							return renderTrainee(filteredTrainee);
-						})}
+			<Row>
+				<Col className='btn-show-trainees-col'>
+					<button
+						className='btn-show-trainees bg-show-trainees'
+						onClick={() => {
+							if (showRenderTrainee) {
+								if (session.id !== clickedSessionId) {
+									setShowRenderTrainee(true);
+								} else {
+									setShowRenderTrainee(false);
+								}
+							} else {
+								setShowRenderTrainee(true);
+							}
+							setClickedSessionId(session.id);
+						}}
+					>
+						{showRenderTrainee && session.id === clickedSessionId ? (
+							<BsChevronUp></BsChevronUp>
+						) : (
+							<BsChevronDown></BsChevronDown>
+						)}
+					</button>
 				</Col>
 			</Row>
+			{showRenderTrainee && (
+				<Row>
+					<Col
+						className='bg-show-trainees'
+						onClick={() => !currentDate && onClickHandleUpdateSession(session)}
+					>
+						{session.trainees &&
+							session.trainees !== 0 &&
+							session.id === clickedSessionId &&
+							session.trainees.map((traineeId) => {
+								const filteredTrainee = trainees.find(
+									(trainee) => trainee.id === traineeId
+								);
+								return renderTrainee(filteredTrainee);
+							})}
+					</Col>
+				</Row>
+			)}
 		</div>
 	);
 };
@@ -80,6 +115,9 @@ const SessionList = ({
 	const { trainees, sessions } = useContext(AppContext);
 	const [showModal, setShowModal] = useState(false);
 	const [session, setSession] = useState({});
+	const [showRenderTrainee, setShowRenderTrainee] = useState(false);
+	const [clickedSessionId, setClickedSessionId] = useState('');
+
 	const handleSessions = currentDate
 		? sessions.filter(
 				(session) =>
@@ -103,7 +141,11 @@ const SessionList = ({
 								session,
 								trainees,
 								currentDate,
-								onClickHandleUpdateSession
+								onClickHandleUpdateSession,
+								showRenderTrainee,
+								setShowRenderTrainee,
+								clickedSessionId,
+								setClickedSessionId
 							)
 						)
 					) : (

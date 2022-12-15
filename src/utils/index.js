@@ -83,3 +83,7 @@ export const convertWeekDaysToNumber = (stringOfDay) => {
 			return 0;
 	}
 };
+
+export const removeWhiteSpaces = (string) => {
+	return string.trim();
+};

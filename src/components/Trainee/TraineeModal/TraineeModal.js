@@ -1,9 +1,10 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-import { AppContext } from '../../../contexts/AppContext';
-import { Button, Col, Row } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
+import { AppContext } from '../../../contexts/AppContext';
+import { removeWhiteSpaces } from '../../../utils';
 import { createTrainee } from '../../../actions/TraineeActions';
+import { Button, Col, Row } from 'react-bootstrap';
 
 const emptyFields = (
 	setName,
@@ -23,6 +24,11 @@ const emptyFields = (
 	setShowPermanenceField(false);
 };
 
+const validate = (name, surname, gender) => {
+	if (name === '' || surname === '' || gender === '') return true;
+	return false;
+};
+
 const TraineeModal = () => {
 	const { trainees, setTrainees, user } = useContext(AppContext);
 	const [show, setShow] = useState(false);
@@ -33,6 +39,8 @@ const TraineeModal = () => {
 	const [gender, setGender] = useState('');
 	const [permanenceMonths, setPermanenceMonths] = useState(0);
 	const [showPermanenceField, setShowPermanenceField] = useState(false);
+
+	const invalidData = validate(name, surname, gender);
 
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
@@ -50,13 +58,17 @@ const TraineeModal = () => {
 		handleClose();
 	};
 
+	const formControlClass = 'form-control';
+	const formSelectClass = 'form-select';
+	const fieldEmptyClass = 'form-field-empty';
+
 	const onSubmitHandler = (ev) => {
 		ev.preventDefault();
-		if (!!name && !!surname && !!birthDate && !!dni && !!gender) {
+		if (!invalidData) {
 			createTrainee(
 				{
-					name,
-					surname,
+					name: removeWhiteSpaces(name),
+					surname: removeWhiteSpaces(surname),
 					birthDate,
 					dni,
 					gender,
@@ -69,6 +81,13 @@ const TraineeModal = () => {
 					closeModal();
 				}
 			});
+		} else {
+			if (!name)
+				ev.target.name.className = `${formControlClass} ${fieldEmptyClass}`;
+			if (!surname)
+				ev.target.surname.className = `${formControlClass} ${fieldEmptyClass}`;
+			if (!gender)
+				ev.target.gender.className = `${formSelectClass} ${fieldEmptyClass}`;
 		}
 	};
 
@@ -93,7 +112,10 @@ const TraineeModal = () => {
 									placeholder='Nombre'
 									autoComplete='off'
 									value={name}
-									onChange={(ev) => setName(ev.target.value)}
+									onChange={(ev) => {
+										setName(ev.target.value);
+										if (name) ev.target.className = formControlClass;
+									}}
 									minLength='3'
 								/>
 							</Col>
@@ -109,6 +131,7 @@ const TraineeModal = () => {
 									value={surname}
 									onChange={(ev) => {
 										setSurname(ev.target.value);
+										if (surname) ev.target.className = formControlClass;
 									}}
 									minLength='6'
 								/>
@@ -144,9 +167,13 @@ const TraineeModal = () => {
 						<Row className='my-3'>
 							<Col>
 								<select
+									name='gender'
 									defaultValue={gender}
 									className='form-select'
-									onChange={(ev) => setGender(ev.target.value)}
+									onChange={(ev) => {
+										setGender(ev.target.value);
+										ev.target.className = formSelectClass;
+									}}
 								>
 									<option value={''} disabled>
 										Género

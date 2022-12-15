@@ -1,10 +1,16 @@
 import React, { useState, useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import ModalAction from '../../Modals/ModalAction';
 import { AppContext } from '../../../contexts/AppContext';
 import { updateTrainee } from '../../../actions/TraineeActions';
-import { formatDate, inputDateFormat } from '../../../utils';
-import { Button, Col, Modal, Row } from 'react-bootstrap';
-import ModalAction from '../../Modals/ModalAction';
+import { formatDate, inputDateFormat, removeWhiteSpaces } from '../../../utils';
+import { Button, Col, Row } from 'react-bootstrap';
+
+const validate = (name, surname, gender, entryDate) => {
+	if (name === '' || surname === '' || gender === '' || entryDate === '')
+		return true;
+	return false;
+};
 
 const TraineeForm = ({ trainee, setTrainee }) => {
 	const { trainees, setTrainees, user } = useContext(AppContext);
@@ -51,21 +57,37 @@ const TraineeForm = ({ trainee, setTrainee }) => {
 		}
 	}, [months, setActivationDate, setExpiryDate]);
 
+	const invalidData = validate(name, surname, gender, entryDate);
+
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
 
+	const formControlClass = 'form-control';
+	const formSelectClass = 'form-select';
+	const fieldEmptyClass = 'form-field-empty';
+
 	const onSubmitHandler = (ev) => {
 		ev.preventDefault();
-		// POPUP
 		if (trainee) {
-			handleShow();
+			if (!invalidData) {
+				handleShow();
+			} else {
+				if (!name)
+					ev.target.name.className = `${formControlClass} ${fieldEmptyClass}`;
+				if (!surname)
+					ev.target.surname.className = `${formControlClass} ${fieldEmptyClass}`;
+				if (!gender)
+					ev.target.gender.className = `${formSelectClass} ${fieldEmptyClass}`;
+				if (!entryDate)
+					ev.target.entryDate.className = `${formControlClass} ${fieldEmptyClass}`;
+			}
 		}
 	};
 
 	const handleUpdateTrainee = () => {
 		const body = {
-			name,
-			surname,
+			name: removeWhiteSpaces(name),
+			surname: removeWhiteSpaces(surname),
 			birthDate,
 			dni,
 			gender,
@@ -74,7 +96,6 @@ const TraineeForm = ({ trainee, setTrainee }) => {
 			permanenceMonths: Number(months),
 		};
 		updateTrainee(trainee.id, body, user.token).then((res) => {
-			console.log(res);
 			const trainneIndex = trainees.findIndex(
 				(trainee) => trainee.id === res.id
 			);
@@ -84,11 +105,14 @@ const TraineeForm = ({ trainee, setTrainee }) => {
 		});
 	};
 
+	validate(name, surname, gender, entryDate);
+
 	return (
 		<>
 			<form onSubmit={onSubmitHandler}>
 				<Row>
 					<Col>
+						Nombre
 						<input
 							className='form-control'
 							type='text'
@@ -96,13 +120,17 @@ const TraineeForm = ({ trainee, setTrainee }) => {
 							placeholder='Nombre'
 							autoComplete='off'
 							value={name}
-							onChange={(ev) => setName(ev.target.value)}
+							onChange={(ev) => {
+								setName(ev.target.value);
+								if (name) ev.target.className = formControlClass;
+							}}
 							minLength='3'
 						/>
 					</Col>
 				</Row>
 				<Row className='my-3'>
 					<Col>
+						Apellidos
 						<input
 							className='form-control'
 							type='text'
@@ -112,6 +140,7 @@ const TraineeForm = ({ trainee, setTrainee }) => {
 							value={surname}
 							onChange={(ev) => {
 								setSurname(ev.target.value);
+								if (surname) ev.target.className = formControlClass;
 							}}
 							minLength='6'
 						/>
@@ -132,6 +161,7 @@ const TraineeForm = ({ trainee, setTrainee }) => {
 				</Row>
 				<Row className='my-3'>
 					<Col>
+						DNI
 						<input
 							className='form-control'
 							type='text'
@@ -146,10 +176,15 @@ const TraineeForm = ({ trainee, setTrainee }) => {
 				</Row>
 				<Row className='my-3'>
 					<Col>
+						Género
 						<select
+							name='gender'
 							defaultValue={gender}
 							className='form-select'
-							onChange={(ev) => setGender(ev.target.value)}
+							onChange={(ev) => {
+								setGender(ev.target.value);
+								ev.target.className = formSelectClass;
+							}}
 						>
 							<option value={''} disabled>
 								Género
@@ -209,7 +244,10 @@ const TraineeForm = ({ trainee, setTrainee }) => {
 							name='entryDate'
 							autoComplete='off'
 							value={entryDate}
-							onChange={(ev) => setEntryDate(ev.target.value)}
+							onChange={(ev) => {
+								setEntryDate(ev.target.value);
+								ev.target.className = formControlClass;
+							}}
 						/>
 					</Col>
 				</Row>
@@ -226,7 +264,6 @@ const TraineeForm = ({ trainee, setTrainee }) => {
 								autoComplete='off'
 								value={months}
 								onChange={(ev) => setMonths(ev.target.value)}
-								min='3'
 								max='12'
 							/>
 							<input
@@ -264,7 +301,7 @@ const TraineeForm = ({ trainee, setTrainee }) => {
 						<input
 							className='form-control'
 							type={'text'}
-							value={`${user.name}/#${user.id}`}
+							value={`${user.name}`}
 							onChange={(ev) => {}}
 							disabled
 						/>

@@ -33,6 +33,8 @@ function App() {
 					})
 					.catch(() => setLoading(false));
 			}
+		} else {
+			setLoading(false);
 		}
 	}, []);
 
