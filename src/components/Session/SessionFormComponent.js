@@ -2,11 +2,11 @@ import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import MultiSelect from '../MultiSelect/MultiSelect';
 import SessionTableInfo from './SessionTableInfo/SessionTableInfo';
-import { daysOfWeek } from '../../constants';
 import { AppContext } from '../../contexts/AppContext';
-import { Button, Col, Row, Table } from 'react-bootstrap';
 import { createSession } from '../../actions/SessionsActions';
-import { setSessionType } from '../../utils';
+import { removeWhiteSpaces, setSessionType } from '../../utils';
+import { Button, Col, Row, Table } from 'react-bootstrap';
+import { RiDeleteBin2Fill } from 'react-icons/ri';
 
 const emptyFields = (
 	setName,
@@ -29,18 +29,29 @@ const renderSessionDay = (session, onClickHandlerRemoveSessionDay) => {
 		<tr key={session.day}>
 			<SessionTableInfo weekday={session}></SessionTableInfo>
 			<td>
-				<Button
-					variant='danger'
-					onClick={() => onClickHandlerRemoveSessionDay(session.day)}
-				>
-					-
-				</Button>
+				{RiDeleteBin2Fill ? (
+					<RiDeleteBin2Fill
+						onClick={() => onClickHandlerRemoveSessionDay(session.day)}
+					></RiDeleteBin2Fill>
+				) : (
+					<Button
+						variant='danger'
+						onClick={() => onClickHandlerRemoveSessionDay(session.day)}
+					>
+						-
+					</Button>
+				)}
 			</td>
 		</tr>
 	);
 };
 
-const SessionUpdateComponent = ({
+const validate = (name, dropdownIdTrainee) => {
+	if (name === '' || dropdownIdTrainee.length === 0) return true;
+	return false;
+};
+
+const SessionFormComponent = ({
 	session,
 	handleUpdateSession,
 	onClickHandleDelSession,
@@ -57,6 +68,8 @@ const SessionUpdateComponent = ({
 	const [day, setDay] = useState('');
 	const [startTime, setStartTime] = useState('');
 	const [endTime, setEndTime] = useState('');
+
+	const invalidData = validate(name, dropdownIdTrainee);
 
 	const closeModal = () => {
 		if (!session) {
@@ -85,8 +98,6 @@ const SessionUpdateComponent = ({
 						endTime,
 					},
 				]);
-			} else {
-				console.log('Ya se ha creado una sesión para este día');
 			}
 		}
 	};
@@ -98,16 +109,15 @@ const SessionUpdateComponent = ({
 		setWeekdays(weekdaysWithoutDay);
 	};
 
+	const formControlClass = 'form-control';
+	const fieldEmptyClass = 'form-field-empty';
+
 	const onSubmitHandler = (ev) => {
 		ev.preventDefault();
-		if (
-			name !== '' &&
-			weekdays.length !== 0 &&
-			dropdownIdTrainee.length !== 0
-		) {
+		if (!invalidData) {
 			const body = {
 				user: user.id,
-				name,
+				name: removeWhiteSpaces(name),
 				trainees: dropdownIdTrainee,
 				days: {
 					weekdays,
@@ -122,6 +132,9 @@ const SessionUpdateComponent = ({
 					closeModal();
 				});
 			}
+		} else {
+			if (!name)
+				ev.target.name.className = `${formControlClass} ${fieldEmptyClass}`;
 		}
 	};
 
@@ -137,7 +150,10 @@ const SessionUpdateComponent = ({
 							placeholder='Nombre Sesión'
 							autoComplete='off'
 							value={name}
-							onChange={(ev) => setName(ev.target.value)}
+							onChange={(ev) => {
+								setName(ev.target.value);
+								if (name) ev.target.className = formControlClass;
+							}}
 							minLength='3'
 						/>
 					</Col>
@@ -150,6 +166,15 @@ const SessionUpdateComponent = ({
 							arrayValues={trainees}
 							textDropdown={'Selección alumnos'}
 						></MultiSelect>
+					</Col>
+					<Col>
+						<span
+							style={dropdownIdTrainee.length === 0 ? { color: 'red' } : {}}
+						>
+							{dropdownIdTrainee.length === 0
+								? 'Ningún alumno seleccionado'
+								: ''}
+						</span>
 					</Col>
 				</Row>
 				<Row>
@@ -184,7 +209,6 @@ const SessionUpdateComponent = ({
 				<Row>
 					<Col xs='auto' className='mt-3'>
 						<Button
-							disabled={dropdownIdTrainee.length === 0}
 							variant='success'
 							size='sm'
 							onClick={() => onClickHandleCreateSessionDay()}
@@ -210,9 +234,12 @@ const SessionUpdateComponent = ({
 									)}
 							</tbody>
 						</Table>
+						<span className='m-2'>
+							{weekdays.length === 0 ? '*No hay ninguna fecha' : ''}
+						</span>
 					</Col>
 				</Row>
-				<Row className='justify-content-end'>
+				<Row className='justify-content-end mt-4'>
 					{session && (
 						<Col xs='auto'>
 							<Button
@@ -238,11 +265,11 @@ const SessionUpdateComponent = ({
 	);
 };
 
-SessionUpdateComponent.propTypes = {
+SessionFormComponent.propTypes = {
 	session: PropTypes.object,
 	handleUpdateSession: PropTypes.func,
 	onClickHandleDelSession: PropTypes.func,
 	setShowModal: PropTypes.func,
 };
 
-export default SessionUpdateComponent;
+export default SessionFormComponent;

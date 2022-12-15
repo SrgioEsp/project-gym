@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { AppContext } from '../../contexts/AppContext';
 import { getLoginUser } from '../../actions/UserActions';
 import { storage } from '../../storage';
+import { removeWhiteSpaces } from '../../utils';
 import { useNavigate } from 'react-router-dom';
 import { Button, Col, Container, Row } from 'react-bootstrap';
 
@@ -11,7 +12,7 @@ const validate = (name, password) => {
 	if (password === '') return 'Introduzca contraseña';
 };
 
-const login = (data, navigate, setIsInvalid, setUser) => {
+const login = (data, navigate, setIsUserInvalid, setUser) => {
 	getLoginUser(data).then((res) => {
 		if (res && res.id && res.name) {
 			setUser(res);
@@ -21,7 +22,7 @@ const login = (data, navigate, setIsInvalid, setUser) => {
 			});
 			navigate('/home');
 		} else {
-			setIsInvalid(true);
+			setIsUserInvalid(true);
 		}
 	});
 };
@@ -31,14 +32,29 @@ const LoginForm = (props) => {
 
 	const [name, setName] = useState('');
 	const [password, setPassword] = useState('');
-	const [isInvalid, setIsInvalid] = useState(false);
+	const [isUserInvalid, setIsUserInvalid] = useState(false);
 	const navigate = useNavigate();
 
-	const errMsg = validate(name, password);
+	const invalidData = validate(name, password);
+	const formControlClass = 'form-control';
+	const fieldEmptyClass = 'form-field-empty';
 
 	const onSubmitHandler = (ev) => {
 		ev.preventDefault();
-		login({ name, password }, navigate, setIsInvalid, setUser);
+		if (!invalidData) {
+			login(
+				{ name: removeWhiteSpaces(name), password },
+				navigate,
+				setIsUserInvalid,
+				setUser
+			);
+		} else {
+			if (!name)
+				ev.target.name.className = `${formControlClass} ${fieldEmptyClass}`;
+
+			if (!password)
+				ev.target.password.className = `${formControlClass} ${fieldEmptyClass}`;
+		}
 	};
 
 	validate(name, password);
@@ -47,25 +63,22 @@ const LoginForm = (props) => {
 		<Container className='loginForm'>
 			<Row className='justify-content-center'>
 				<Col xs='auto'>
-					<Row className='justify-content-center'>
-						<Col xs='auto'>
-							<p className='text-danger'>{errMsg}</p>
-							{isInvalid && <p className='text-danger'>Usuario Incorrecto</p>}
-						</Col>
-					</Row>
 					<form onSubmit={onSubmitHandler}>
 						<Row className='justify-content-center mt-3'>
 							<Col xs='auto'>
 								<input
-									className='form-control'
-									type='text'
 									name='name'
+									className={formControlClass}
+									type='text'
 									placeholder='Nombre de Usuario'
-									autoComplete='off'
+									autoComplete='on'
 									value={name}
-									onChange={(ev) => setName(ev.target.value)}
+									onChange={(ev) => {
+										setName(ev.target.value);
+										if (name) ev.target.className = formControlClass;
+									}}
 									onFocus={(ev) => {
-										if (isInvalid) setIsInvalid(false);
+										if (isUserInvalid) setIsUserInvalid(false);
 									}}
 								/>
 							</Col>
@@ -73,21 +86,28 @@ const LoginForm = (props) => {
 						<Row className='justify-content-center mt-3'>
 							<Col xs='auto'>
 								<input
+									name='password'
 									className='form-control'
 									type='password'
-									name='password'
 									placeholder='Contraseña'
+									autoComplete='on'
 									value={password}
-									onChange={(ev) => setPassword(ev.target.value)}
+									onChange={(ev) => {
+										setPassword(ev.target.value);
+										if (password) ev.target.className = formControlClass;
+									}}
 									onFocus={(ev) => {
-										if (isInvalid) setIsInvalid(false);
+										if (isUserInvalid) setIsUserInvalid(false);
 									}}
 								/>
 							</Col>
 						</Row>
+						<Row className='login-error-row'>
+							{isUserInvalid && <span>usuario o contraseña incorrecto</span>}
+						</Row>
 						<Row className='justify-content-center mt-3'>
 							<Col>
-								<Button className='buttonLogin' type='submit' disabled={errMsg}>
+								<Button className='buttonLogin' type='submit'>
 									Iniciar sesión
 								</Button>
 							</Col>

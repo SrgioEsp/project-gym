@@ -401,3 +401,26 @@ body {
 .bbtn-r {
 	border-radius: 20px;
 }
+
+.login-error-row {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	background-color: #BD5A5A;
+	color: #ffff;
+	margin-top: 1rem;
+	border-radius: 10px;
+}
+
+.login-error-row>span {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: row;
+	justify-content: center;
+	align-items: centers;
+	padding-bottom: 2px;
+}
+
+.form-field-empty {
+	border: 3px solid #BD5A5A !important;
+}
