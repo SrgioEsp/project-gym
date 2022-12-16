@@ -43,14 +43,14 @@ const renderSession = (
 					<Col>
 						<b>
 							{session.days.weekdays.map((weekday) =>
-								new Date(weekday.day).getDay() === currentDate.getDay()
+								new Date(weekday.day).getDate() === currentDate.getDate()
 									? weekday.startTime
 									: ''
 							)}
 						</b>
 						/
 						{session.days.weekdays.map((weekday) =>
-							new Date(weekday.day).getDay() === currentDate.getDay()
+							new Date(weekday.day).getDate() === currentDate.getDate()
 								? weekday.endTime
 								: ''
 						)}
