@@ -3,9 +3,9 @@
 	"name": "Moverte da Vida",
 	"icons": [
 		{
-			"src": "favicon.jpg",
+			"src": "moverte.png",
 			"sizes": "64x64 32x32 24x24 16x16",
-			"type": "image/jpg"
+			"type": "image/png"
 		},
 		{
 			"src": "moverte192.png",
