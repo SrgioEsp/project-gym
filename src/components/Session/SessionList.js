@@ -7,6 +7,7 @@ import VerticallyCenteredModal from '../Modals/VerticallyCenteredModal';
 import SessionFormComponent from './SessionFormComponent';
 import TraineeShow from '../Trainee/TraineeShow/TraineeShow';
 import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
+import { formatDate } from '../../utils';
 
 const renderTrainee = (filteredTrainee) => {
 	if (filteredTrainee) {
@@ -123,8 +124,8 @@ const SessionList = ({
 				(session) =>
 					currentDate &&
 					session.days.weekdays
-						.map((weekday) => new Date(weekday.day).getDate())
-						.includes(currentDate.getDate()) === true
+						.map((weekday) => formatDate(new Date(weekday.day)))
+						.includes(formatDate(currentDate)) === true
 		  )
 		: sessions;
 	const onClickHandleUpdateSession = (selectSession) => {
