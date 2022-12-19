@@ -142,7 +142,7 @@ const TraineeForm = ({ trainee, setTrainee }) => {
 								setSurname(ev.target.value);
 								if (surname) ev.target.className = formControlClass;
 							}}
-							minLength='6'
+							minLength='3'
 						/>
 					</Col>
 				</Row>

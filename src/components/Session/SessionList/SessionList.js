@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import TraineeInfo from '../Trainee/TraineeInfo';
-import { AppContext } from '../../contexts/AppContext';
+import TraineeInfo from '../../Trainee/TraineeInfo';
+import { AppContext } from '../../../contexts/AppContext';
 import { Col, Row } from 'react-bootstrap';
-import VerticallyCenteredModal from '../Modals/VerticallyCenteredModal';
-import SessionFormComponent from './SessionFormComponent';
-import TraineeShow from '../Trainee/TraineeShow/TraineeShow';
+import VerticallyCenteredModal from '../../Modals/VerticallyCenteredModal';
+import SessionFormComponent from '../SessionFormComponent';
+import TraineeShow from '../../Trainee/TraineeShow/TraineeShow';
 import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
-import { formatDate } from '../../utils';
+import { formatDate } from '../../../utils';
 
 const renderTrainee = (filteredTrainee) => {
 	if (filteredTrainee) {

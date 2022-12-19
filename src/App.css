@@ -222,8 +222,6 @@ body {
 	align-items: center;
 }
 
-.appFrameContent {}
-
 .appFrameNavBar {
 	min-width: 265px;
 	background-color: #1FCE6D;
@@ -281,8 +279,6 @@ body {
 .react-calendar__tile--active>abbr::after {
 	color: black !important;
 }
-
-.react-calendar__month-view__days__day {}
 
 .react-calendar__month-view__days__day>abbr::after {
 	color: grey;
@@ -362,6 +358,7 @@ body {
 .container-trainee-show {
 	background-image: url('./assets/img/logo.jpg');
 	background-size: cover;
+	background-position: center;
 	border-radius: 10px;
 	display: flex;
 	flex-direction: row;
@@ -383,7 +380,7 @@ body {
 .nav-top-buttons-back {
 	display: flex;
 	flex-direction: row;
-	justify-content: start;
+	justify-content: flex-start;
 }
 
 .nav-top-buttons-text {
@@ -395,7 +392,7 @@ body {
 .nav-top-buttons-act {
 	display: flex;
 	flex-direction: row;
-	justify-content: end;
+	justify-content: flex-end;
 }
 
 .bbtn-r {
