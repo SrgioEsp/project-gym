@@ -1,21 +1,21 @@
 {
-	"short_name": "React App",
-	"name": "Create React App Sample",
+	"short_name": "Moverte App",
+	"name": "Moverte da Vida",
 	"icons": [
 		{
-			"src": "favicon.ico",
+			"src": "favicon.jpg",
 			"sizes": "64x64 32x32 24x24 16x16",
-			"type": "image/x-icon"
+			"type": "image/jpg"
 		},
 		{
-			"src": "logo192.png",
+			"src": "moverte192.png",
 			"type": "image/png",
-			"sizes": "192x192"
+			"sizes": "192x116"
 		},
 		{
-			"src": "logo512.png",
+			"src": "moverte512.png",
 			"type": "image/png",
-			"sizes": "512x512"
+			"sizes": "512x310"
 		}
 	],
 	"start_url": ".",

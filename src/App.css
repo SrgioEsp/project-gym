@@ -358,6 +358,7 @@ body {
 .container-trainee-show {
 	background-image: url('./assets/img/logo.jpg');
 	background-size: cover;
+	background-position: center;
 	border-radius: 10px;
 	display: flex;
 	flex-direction: row;
