@@ -1,22 +1,5 @@
-import { urlSession, urlSessions } from '../api/urls';
+import { urlSession } from '../api/urls';
 import { helpHttp } from '../helpers/helpHttp';
-
-export const getSessionsByUserId = async (userId) => {
-	let result;
-	try {
-		await helpHttp()
-			.get(`${urlSessions}/${userId}`)
-			.then((res) => {
-				if (res) {
-					result = res;
-				}
-			});
-	} catch (error) {
-		console.log(error);
-		result = [];
-	}
-	return result;
-};
 
 export const createSession = async (data, token) => {
 	try {

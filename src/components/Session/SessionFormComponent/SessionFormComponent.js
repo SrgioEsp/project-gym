@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
-import MultiSelect from '../MultiSelect/MultiSelect';
-import SessionTableInfo from './SessionTableInfo/SessionTableInfo';
-import { AppContext } from '../../contexts/AppContext';
-import { createSession } from '../../actions/SessionsActions';
-import { removeWhiteSpaces, setSessionType } from '../../utils';
+import MultiSelect from '../../MultiSelect/MultiSelect';
+import SessionTableInfo from '../SessionTableInfo/SessionTableInfo';
+import { AppContext } from '../../../contexts/AppContext';
+import { createSession } from '../../../actions/SessionsActions';
+import { removeWhiteSpaces, setSessionType } from '../../../utils';
 import { Button, Col, Row, Table } from 'react-bootstrap';
 import { RiDeleteBin2Fill } from 'react-icons/ri';
 
