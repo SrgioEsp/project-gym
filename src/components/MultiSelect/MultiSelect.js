@@ -41,7 +41,7 @@ const inputValue = (dropdownValue, setDropDownValue, obj) => {
 const MultiSelect = ({ state, setState, arrayValues, textDropdown }) => {
 	return (
 		<Dropdown>
-			<Dropdown.Toggle variant='secondary' id='dropdown-basic'>
+			<Dropdown.Toggle variant='secondary' id='dropdown-basic' className='w-100'>
 				{textDropdown}
 			</Dropdown.Toggle>
 

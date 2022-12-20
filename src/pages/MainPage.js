@@ -56,6 +56,13 @@ const MainPage = () => {
 							</Link>
 						</Col>
 					</Row>
+					<Row className='btnSesionesRow'>
+						<Col>
+							<Link to={'/training'} className='btn btn-warning btnSesiones'>
+								Entrenamientos
+							</Link>
+						</Col>
+					</Row>
 				</Col>
 			</Row>
 			<VerticallyCenteredModal

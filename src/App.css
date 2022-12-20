@@ -316,7 +316,8 @@ body {
 }
 
 .trainee-list-container,
-.session-list-contnainer {
+.session-list-contnainer,
+.training-list-container {
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
@@ -453,4 +454,17 @@ body {
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
+}
+
+.trainingSession-row-container {
+	display: flex;
+	flex-direction: column;
+	padding: 10px;
+	background-image: url('./assets/img/moverte4.jpg');
+	background-position: left;
+	border-radius: inherit;
+	width: inherit !important;
+	margin: inherit !important;
+	height: inherit !important;
+	color: #f7f7f7 !important;
 }

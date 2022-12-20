@@ -6,6 +6,7 @@ import TraineesPage from './pages/TraineesPage';
 import NotFoundPage from './pages/NotFoundPage';
 import TraineePage from './pages/TraineePage';
 import SessionsPage from './pages/SessionsPage';
+import TrainingPage from './pages/TrainingPage';
 import Spinner from './components/Spinner';
 import { AppContext } from './contexts/AppContext';
 import { storage } from './storage';
@@ -71,6 +72,9 @@ function App() {
 								></SessionsPage>
 							}
 						/>
+					)}
+					{user && (
+						<Route path='/training' element={<TrainingPage></TrainingPage>} />
 					)}
 					{!loading ? (
 						<Route path='*' element={<NotFoundPage></NotFoundPage>} />
