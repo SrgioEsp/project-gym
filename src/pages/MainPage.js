@@ -56,9 +56,9 @@ const MainPage = () => {
 							</Link>
 						</Col>
 					</Row>
-					<Row className='btnSesionesRow'>
+					<Row className='btnTrainingRow'>
 						<Col>
-							<Link to={'/training'} className='btn btn-warning btnSesiones'>
+							<Link to={'/training'} className='btn btn-warning btnTraining'>
 								Entrenamientos
 							</Link>
 						</Col>
