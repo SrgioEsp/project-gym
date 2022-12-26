@@ -6,6 +6,7 @@ import TraineesPage from './pages/TraineesPage';
 import NotFoundPage from './pages/NotFoundPage';
 import TraineePage from './pages/TraineePage';
 import SessionsPage from './pages/SessionsPage';
+import TrainingPage from './pages/TrainingPage';
 import Spinner from './components/Spinner';
 import { AppContext } from './contexts/AppContext';
 import { storage } from './storage';
@@ -18,6 +19,7 @@ function App() {
 	const [user, setUser] = useState(null);
 	const [trainees, setTrainees] = useState([]);
 	const [sessions, setSessions] = useState([]);
+	const [training, setTraining] = useState([]);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
@@ -40,7 +42,16 @@ function App() {
 
 	return (
 		<AppContext.Provider
-			value={{ user, setUser, trainees, setTrainees, sessions, setSessions }}
+			value={{
+				user,
+				setUser,
+				trainees,
+				setTrainees,
+				sessions,
+				setSessions,
+				training,
+				setTraining,
+			}}
 		>
 			<Router>
 				<Routes>
@@ -71,6 +82,9 @@ function App() {
 								></SessionsPage>
 							}
 						/>
+					)}
+					{user && (
+						<Route path='/training' element={<TrainingPage></TrainingPage>} />
 					)}
 					{!loading ? (
 						<Route path='*' element={<NotFoundPage></NotFoundPage>} />

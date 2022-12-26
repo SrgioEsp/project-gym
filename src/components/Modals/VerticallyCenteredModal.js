@@ -15,11 +15,11 @@ function MyVerticallyCenteredModal(props) {
 				<Modal.Title id='contained-modal-title-vcenter'></Modal.Title>
 			</Modal.Header>
 			<Modal.Body>{props.body}</Modal.Body>
-			<Modal.Footer>
+			{/* <Modal.Footer>
 				<Button className='bbtn-r' variant='secondary' onClick={props.onHide}>
 					Cerrar
 				</Button>
-			</Modal.Footer>
+			</Modal.Footer> */}
 		</Modal>
 	);
 }

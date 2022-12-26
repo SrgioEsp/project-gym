@@ -7,3 +7,4 @@ export const urlTrainee = `${urlBaseApi}/trainee`;
 export const urlUsers = `${urlBaseApi}/users`;
 export const urlSessions = `${urlBaseApi}/sessions`;
 export const urlSession = `${urlBaseApi}/session`;
+export const urlTraining = `${urlBaseApi}/training`;
