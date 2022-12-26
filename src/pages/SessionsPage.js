@@ -45,14 +45,16 @@ const SessionsPage = () => {
 		handleClose();
 	};
 
-	const handleUpdateSession = (session, body) => {
-		updateSession(session.id, body, user.token).then((res) => {
-			res = setSessionType(res);
-			const sessionIndex = sessions.findIndex(
-				(session) => session.id === res.id
-			);
-			sessions[sessionIndex] = res;
-			setSessions(sessions);
+	const handleUpdateSession = (sessionId, body) => {
+		updateSession(sessionId, body, user.token).then((res) => {
+			if (res) {
+				res = setSessionType(res);
+				const sessionIndex = sessions.findIndex(
+					(session) => session.id === res.id
+				);
+				sessions[sessionIndex] = res;
+				setSessions(sessions);
+			}
 		});
 	};
 

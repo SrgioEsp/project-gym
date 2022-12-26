@@ -69,7 +69,7 @@ const SessionFormComponent = ({
 	const [startTime, setStartTime] = useState('');
 	const [endTime, setEndTime] = useState('');
 
-	const invalidData = validate(name, dropdownIdTrainee);
+	const invalidData = validate(removeWhiteSpaces(name), dropdownIdTrainee);
 
 	const closeModal = () => {
 		if (!session) {
@@ -124,7 +124,7 @@ const SessionFormComponent = ({
 				},
 			};
 			if (session) {
-				handleUpdateSession(session, body);
+				handleUpdateSession(session.id, body);
 			} else {
 				createSession(body, user.token).then((res) => {
 					res = setSessionType(res);
@@ -133,7 +133,7 @@ const SessionFormComponent = ({
 				});
 			}
 		} else {
-			if (!name)
+			if (!removeWhiteSpaces(name))
 				ev.target.name.className = `${formControlClass} ${fieldEmptyClass}`;
 		}
 	};
