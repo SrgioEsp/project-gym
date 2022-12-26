@@ -5,11 +5,18 @@ import { removeWhiteSpaces } from '../../../utils';
 import { Button, Col, Row, Table } from 'react-bootstrap';
 import { RiDeleteBin2Fill } from 'react-icons/ri';
 import MultiSelect from '../../MultiSelect/MultiSelect';
+import { createTraining } from '../../../actions/TrainingActions';
 
-const emptyFields = () => {};
-
-const validate = (name) => {
-	return false;
+const emptyFields = (
+	setName,
+	setExercise,
+	setExercises,
+	setDropdownIdSession
+) => {
+	setName('');
+	setExercise('');
+	setExercises([]);
+	setDropdownIdSession([]);
 };
 
 const renderExercise = (exercise, onClickHandlerRemoveExercise) => {
@@ -34,27 +41,35 @@ const renderExercise = (exercise, onClickHandlerRemoveExercise) => {
 	);
 };
 
+const validate = (name) => {
+	if (name === '') return true;
+	return false;
+};
+
 const TrainingForm = ({
-	onClickHandlerDelTraining,
-	onClickHandlerUpdateTraining,
+	handleUpdateTrainingSession,
+	onClickHandlerDelTrainingSession,
 	setShowModal,
-	training,
-	setTraining,
 	trainingSession,
 }) => {
-	const { user, sessions } = useContext(AppContext);
+	const { user, sessions, training, setTraining } = useContext(AppContext);
+	const [exercise, setExercise] = useState('');
+	const [exercises, setExercises] = useState(trainingSession?.exercises || []);
 	const [name, setName] = useState(
 		(trainingSession && trainingSession.name) || ''
 	);
-	const [dropdownIdSession, setDropdownIdSession] = useState([]);
-	const [exercise, setExercise] = useState('');
-	const [exercises, setExercises] = useState(
-		(trainingSession && trainingSession.exercises) || []
+	const [dropdownIdSession, setDropdownIdSession] = useState(
+		trainingSession?.sessions ? trainingSession.sessions : []
 	);
 
-	const invalidData = validate(name);
+	const invalidData = validate(removeWhiteSpaces(name));
 
-	const closeModal = () => {};
+	const closeModal = () => {
+		if (!training) {
+			emptyFields(setName, setExercise, setExercises, setDropdownIdSession);
+		}
+		setShowModal(false);
+	};
 
 	const onClickHandlerRemoveExercise = (exercise) => {
 		const exercisesWithoutExercise = exercises.filter((e) => e !== exercise);
@@ -67,16 +82,22 @@ const TrainingForm = ({
 	const onSubmitHandler = (ev) => {
 		ev.preventDefault();
 		if (!invalidData) {
-			setTraining([
-				...training,
-				{
-					id: Math.random(),
-					name,
-					exercises,
-				},
-			]);
+			const body = {
+				user: user.id,
+				name: removeWhiteSpaces(name),
+				sessions: dropdownIdSession,
+				exercises,
+			};
+			if (trainingSession) {
+				handleUpdateTrainingSession(trainingSession.id, body);
+			} else {
+				createTraining(body, user.token).then((res) => {
+					setTraining([...training, res]);
+					closeModal();
+				});
+			}
 		} else {
-			if (!name)
+			if (!removeWhiteSpaces(name))
 				ev.target.name.className = `${formControlClass} ${fieldEmptyClass}`;
 		}
 	};
@@ -138,8 +159,10 @@ const TrainingForm = ({
 						<Button
 							variant='success'
 							onClick={() => {
-								setExercise('');
-								setExercises([...exercises, exercise]);
+								if (removeWhiteSpaces(exercise)) {
+									setExercise('');
+									setExercises([...exercises, exercise]);
+								}
 							}}
 						>
 							Añadir
@@ -167,6 +190,20 @@ const TrainingForm = ({
 					</Col>
 				</Row>
 				<Row className='justify-content-end mt-4'>
+					{trainingSession && (
+						<Col xs='auto'>
+							<Button
+								className='bbtn-r'
+								variant='danger'
+								onClick={() => {
+									setShowModal(false);
+									onClickHandlerDelTrainingSession(trainingSession.id);
+								}}
+							>
+								Eliminar
+							</Button>
+						</Col>
+					)}
 					<Col xs='auto'>
 						<Button className='bbtn-r' type='submit'>
 							Guardar
@@ -179,11 +216,9 @@ const TrainingForm = ({
 };
 
 TrainingForm.propTypes = {
-	onClickHandlerDelTraining: PropTypes.func,
-	onClickHandlerUpdateTraining: PropTypes.func,
+	handleUpdateTrainingSession: PropTypes.func,
+	onClickHandlerDelTrainingSession: PropTypes.func,
 	setShowModal: PropTypes.func,
-	training: PropTypes.array,
-	setTraining: PropTypes.func,
 	trainingSession: PropTypes.object,
 };
 

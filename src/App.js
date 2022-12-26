@@ -19,6 +19,7 @@ function App() {
 	const [user, setUser] = useState(null);
 	const [trainees, setTrainees] = useState([]);
 	const [sessions, setSessions] = useState([]);
+	const [training, setTraining] = useState([]);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
@@ -41,7 +42,16 @@ function App() {
 
 	return (
 		<AppContext.Provider
-			value={{ user, setUser, trainees, setTrainees, sessions, setSessions }}
+			value={{
+				user,
+				setUser,
+				trainees,
+				setTrainees,
+				sessions,
+				setSessions,
+				training,
+				setTraining,
+			}}
 		>
 			<Router>
 				<Routes>

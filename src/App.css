@@ -307,7 +307,8 @@ body {
 	opacity: 90%;
 }
 
-.sessionContainer {
+.sessionContainer,
+.trainingContainer {
 	background-color: #f7f7f7;
 	margin-bottom: 2%;
 	width: 100% !important;
@@ -465,6 +466,7 @@ body {
 	border-radius: inherit;
 	width: inherit !important;
 	margin: inherit !important;
+	margin-bottom: 0% !important;
 	height: inherit !important;
 	color: #f7f7f7 !important;
 }

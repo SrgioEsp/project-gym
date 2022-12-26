@@ -1,37 +1,51 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Col, Row } from 'react-bootstrap';
 import VerticallyCenteredModal from '../../Modals/VerticallyCenteredModal';
 import TrainingForm from '../TrainingForm/TrainingForm';
+import { AppContext } from '../../../contexts/AppContext';
 
 const renderTrainingSession = (
 	trainingSession,
-	onClickHandlerTrainingSession
+	sessions,
+	onClickHandlerUpdateTrainingSession
 ) => {
 	return (
 		<div
 			key={trainingSession.id}
-			className='sessionContainer'
-			onClick={() => onClickHandlerTrainingSession(trainingSession)}
+			className='trainingContainer'
+			onClick={() => onClickHandlerUpdateTrainingSession(trainingSession)}
 		>
 			<Row className='trainingSession-row-container'>
 				<Col>
 					<b>{trainingSession.name}</b>
 				</Col>
-				<Col>No hay sesiones asociadas</Col>
+				<Col>
+					{trainingSession?.sessions.length !== 0 && sessions
+						? sessions.map((session) =>
+								trainingSession?.sessions.includes(session.id)
+									? ` -${session.name}`
+									: ''
+						  )
+						: 'No hay sesiones asociadas'}
+				</Col>
 				<Col className='mt-2'>{`${trainingSession.exercises.length} Ejercicios`}</Col>
 			</Row>
 		</div>
 	);
 };
 
-const TrainingList = ({ training }) => {
+const TrainingList = ({
+	handleUpdateTrainingSession,
+	onClickHandlerDelTrainingSession,
+}) => {
+	const { training, sessions } = useContext(AppContext);
 	const [showModal, setShowModal] = useState(false);
 	const [trainingSession, setTrainingSession] = useState({});
 
-	const onClickHandlerTrainingSession = (trainingSession) => {
-		setTrainingSession(trainingSession);
+	const onClickHandlerUpdateTrainingSession = (selectTrainingSession) => {
 		setShowModal(true);
+		setTrainingSession(selectTrainingSession);
 	};
 
 	return (
@@ -42,7 +56,8 @@ const TrainingList = ({ training }) => {
 						training.map((trainingSession) =>
 							renderTrainingSession(
 								trainingSession,
-								onClickHandlerTrainingSession
+								sessions,
+								onClickHandlerUpdateTrainingSession
 							)
 						)
 					) : (
@@ -55,8 +70,10 @@ const TrainingList = ({ training }) => {
 				setShowModal={setShowModal}
 			>
 				<TrainingForm
-					training={training}
+					handleUpdateTrainingSession={handleUpdateTrainingSession}
+					onClickHandlerDelTrainingSession={onClickHandlerDelTrainingSession}
 					trainingSession={trainingSession}
+					setShowModal={setShowModal}
 				></TrainingForm>
 			</VerticallyCenteredModal>
 		</>
@@ -64,8 +81,8 @@ const TrainingList = ({ training }) => {
 };
 
 TrainingList.propTypes = {
-	training: PropTypes.array,
-	onClickHandlerTrainingSession: PropTypes.func,
+	handleUpdateTrainingSession: PropTypes.func,
+	onClickHandlerDelTrainingSession: PropTypes.func,
 };
 
 export default TrainingList;
