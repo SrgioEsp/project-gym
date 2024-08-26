@@ -19,7 +19,7 @@
   "trainees": [
     {
       "userId": 1,
-      "name": "Sergio Espejo Illanes",
+      "name": "usu1",
       "date": "7/11/2022",
       "edad": "20",
       "peso": "72",
@@ -28,7 +28,7 @@
     },
     {
       "userId": 2,
-      "name": "Ana Granados López",
+      "name": "usu2",
       "date": "7/11/2022",
       "edad": "20",
       "peso": "48",
@@ -36,7 +36,7 @@
       "id": 2
     },
     {
-      "name": "Clara Quintana",
+      "name": "usu3",
       "date": "7/11/2022",
       "edad": "",
       "peso": "",
@@ -45,7 +45,7 @@
       "id": 4
     },
     {
-      "name": "Victor Espejo",
+      "name": "usu4",
       "date": "7/11/2022",
       "edad": "",
       "peso": "",
@@ -54,7 +54,7 @@
       "id": 5
     },
     {
-      "name": "Alvaro Espejo",
+      "name": "usu5",
       "date": "7/11/2022",
       "edad": "",
       "peso": "",
